@@ -17,4 +17,20 @@ public class Estoque {
     private String local;
     private LocalDateTime dataCadastro;
     private Conversao conversao;
+
+    public Estoque(
+       Produto produto,
+       Restaurante restaurante,
+       double valorUnitario,
+       int codEstoque,
+       LocalDate dataValidade,
+       Conversao conversao
+   ){
+        this.produto = produto;
+        this.restaurante = restaurante;
+        this.valorUnitario = valorUnitario;
+        this.codEstoque = codEstoque;
+        this.dataValidade = dataValidade;
+        this.conversao = conversao;
+    }
 }
