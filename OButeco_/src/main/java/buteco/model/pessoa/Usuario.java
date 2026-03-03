@@ -1,4 +1,4 @@
 package buteco.model.pessoa;
 
-public class Usuario {
+public class Usuario  extends Pessoa{
 }
