@@ -15,35 +15,19 @@ public class Produto {
         this.dataCadastro = dataCadastro;
     }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getNome() { return nome; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public int getCodigo() {
-        return codigo;
-    }
+    public int getCodigo() { return codigo; }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+    public void setCodigo(int codigo) { this.codigo = codigo; }
 
-    public double getPrecoVenda() {
-        return precoVenda;
-    }
+    public double getPrecoVenda() { return precoVenda; }
 
-    public void setPrecoVenda(double precoVenda) {
-        this.precoVenda = precoVenda;
-    }
+    public void setPrecoVenda(double precoVenda) { this.precoVenda = precoVenda; }
 
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
-    }
+    public LocalDateTime getDataCadastro() { return dataCadastro; }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
+    public void setDataCadastro(LocalDateTime dataCadastro) { this.dataCadastro = dataCadastro; }
 }
