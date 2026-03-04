@@ -20,43 +20,23 @@ public class Entrada {
         this.dataMovimentacao = dataMovimentacao;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
+    public Produto getProduto() { return produto; }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
+    public void setProduto(Produto produto) { this.produto = produto; }
 
-    public Estoque getEstoque() {
-        return estoque;
-    }
+    public Estoque getEstoque() { return estoque; }
 
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
-    }
+    public void setEstoque(Estoque estoque) { this.estoque = estoque; }
 
-    public double getPreco() {
-        return preco;
-    }
+    public double getPreco() { return preco; }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
+    public void setPreco(double preco) { this.preco = preco; }
 
-    public int getQtde() {
-        return qtde;
-    }
+    public int getQtde() { return qtde; }
 
-    public void setQtde(int qtde) {
-        this.qtde = qtde;
-    }
+    public void setQtde(int qtde) { this.qtde = qtde; }
 
-    public LocalDateTime getDataMovimentacao() {
-        return dataMovimentacao;
-    }
+    public LocalDateTime getDataMovimentacao() { return dataMovimentacao; }
 
-    public void setDataMovimentacao(LocalDateTime dataMovimentacao) {
-        this.dataMovimentacao = dataMovimentacao;
-    }
+    public void setDataMovimentacao(LocalDateTime dataMovimentacao) { this.dataMovimentacao = dataMovimentacao; }
 }
