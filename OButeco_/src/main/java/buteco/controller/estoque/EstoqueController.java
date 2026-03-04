@@ -10,7 +10,7 @@ public class EstoqueController {
         int opcao = 0;
 
         do{
-            System.out.println("[1] - LISTAR ESTOQUE; [2] - LISTAR ENTRADAS; [3] - LISTAR SAIDAS;  [0] - SAIR");
+            System.out.println("[1] CADASTRAR ENTRADA; [2] - LISTAR ESTOQUE; [3] - MOVIMENTACOES ENTRADAS; [4] - MOVIMENTACOES SAIDAS;  [0] - SAIR");
             opcao = sc.nextInt();
 
         }while(opcao != 0 );
