@@ -1,5 +1,6 @@
 package buteco.model.estoque;
 
+import buteco.model.conversao.Conversao;
 import buteco.model.produto.Produto;
 import buteco.model.restaurante.Restaurante;
 

@@ -1,4 +1,4 @@
-package buteco.model.estoque;
+package buteco.model.conversao;
 
 public class Conversao {
     private String conversao;

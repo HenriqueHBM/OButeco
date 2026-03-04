@@ -1,5 +1,7 @@
 package buteco.model.produto;
 
+import buteco.model.conversao.Conversao;
+
 import java.time.LocalDateTime;
 
 public class Produto {
@@ -7,12 +9,14 @@ public class Produto {
     private int codigo;
     private double precoVenda;
     private LocalDateTime dataCadastro;
+    private double qtdeConversao;
 
-    public Produto(String nome, int codigo, double precoVenda, LocalDateTime dataCadastro) {
+    public Produto(String nome, int codigo, double precoVenda, double qtdeConversao) {
         this.nome = nome;
         this.codigo = codigo;
         this.precoVenda = precoVenda;
-        this.dataCadastro = dataCadastro;
+        this.dataCadastro = LocalDateTime.now();
+        this.qtdeConversao = qtdeConversao;
     }
 
     public String getNome() {
@@ -45,5 +49,13 @@ public class Produto {
 
     public void setDataCadastro(LocalDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public double getQtdeConversao() {
+        return qtdeConversao;
+    }
+
+    public void setQtdeConversao(double qtdeConversao) {
+        this.qtdeConversao = qtdeConversao;
     }
 }
