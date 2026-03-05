@@ -11,11 +11,14 @@ import java.util.Scanner;
 public class ProdutosController {
     private ProdutosView view;
     static List<Produto> produtos;
+    private Scanner sc;
+
 
     // constructor da classe,
     public ProdutosController(Scanner sc, List<Produto> produtos){
         this.view = new ProdutosView(sc);
         this.produtos = produtos;
+        this.sc = sc;
     }
     public void index(){
 
@@ -34,7 +37,17 @@ public class ProdutosController {
     }
 
     public void cadastrarProduto(){
-        Produto produto = new Produto("Pera", 123456789, 20.50, 100, ETipoProduto.NORMAL);
+        view.exibirMensagem("Insira o nome do Produto:");
+        String nome = sc.next();
+        view.exibirMensagem("Insira o valor unitario:");
+        double valUnit = sc.nextDouble();
+        view.exibirMensagem("Quantidade de conversao:");
+        double qtdeConversao = sc.nextDouble();
+        view.exibirMensagem("Tipo de produto: [1] - NORMAL; [2] - INGREDIENTE; [3] - SERVICO(NAO DESCONTA DO ESTOQUE);");
+        int opcao = sc.nextInt();
+        int codigo = produtos.size() + 1;
+
+        Produto produto = new Produto(nome, codigo, valUnit, qtdeConversao, ETipoProduto.NORMAL);
         System.out.println("Produto Cadastrado!!");
         this.produtos.add(produto);
     }

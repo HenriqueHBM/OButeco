@@ -1,10 +1,15 @@
 package buteco.controller.estoque;
 
+import buteco.model.produto.Produto;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class EstoqueController {
     Scanner sc = new Scanner(System.in);
+    public EstoqueController(List<Produto> produtos){
 
+    }
     public void index(){
 
         int opcao = 0;
