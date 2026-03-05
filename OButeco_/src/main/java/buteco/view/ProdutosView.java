@@ -21,7 +21,7 @@ public class ProdutosView {
         System.out.println("Produtos Cadastrados");
 
         for (Produto p : produto){
-            System.out.println("Nome: " + p.getNome()+ " aa "+p.getTipoProduto());
+            System.out.println("Nome: " + p.getNome()+ " aa "+p.getCodigo());
         }
     }
 
