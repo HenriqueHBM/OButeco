@@ -1,5 +1,6 @@
 package buteco.controller.produtos;
 
+import buteco.enums.ETipoProduto;
 import buteco.model.produto.Produto;
 import buteco.view.ProdutosView;
 
@@ -33,7 +34,7 @@ public class ProdutosController {
     }
 
     public void cadastrarProduto(){
-        Produto produto = new Produto("Pera", 123456789, 20.50, 100);
+        Produto produto = new Produto("Pera", 123456789, 20.50, 100, ETipoProduto.NORMAL);
         System.out.println("Produto Cadastrado!!");
         this.produtos.add(produto);
     }
