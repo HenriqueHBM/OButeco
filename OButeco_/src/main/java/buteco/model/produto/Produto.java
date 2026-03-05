@@ -37,4 +37,20 @@ public class Produto {
     public LocalDateTime getDataCadastro() { return dataCadastro; }
 
     public void setDataCadastro(LocalDateTime dataCadastro) { this.dataCadastro = dataCadastro; }
+
+    public double getQtdeConversao() {
+        return qtdeConversao;
+    }
+
+    public void setQtdeConversao(double qtdeConversao) {
+        this.qtdeConversao = qtdeConversao;
+    }
+
+    public ETipoProduto getTipoProduto() {
+        return tipoProduto;
+    }
+
+    public void setTipoProduto(ETipoProduto tipoProduto) {
+        this.tipoProduto = tipoProduto;
+    }
 }
