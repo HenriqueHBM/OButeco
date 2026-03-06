@@ -8,10 +8,12 @@ import buteco.service.entradas.ErroEntrada;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in); //passar isso para as classesControllers para nao ficar instanciando o tempo todo
         System.out.println("--O BUTECO--");
 

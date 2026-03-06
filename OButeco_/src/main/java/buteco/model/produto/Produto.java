@@ -1,8 +1,11 @@
 package buteco.model.produto;
 
+import buteco.enums.ETipoProduto;
 import buteco.model.conversao.Conversao;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Produto {
     private String nome;
@@ -10,13 +13,17 @@ public class Produto {
     private double precoVenda;
     private LocalDateTime dataCadastro;
     private double qtdeConversao;
+    private ETipoProduto tipoProduto;
+    private double valorUnitario;
+    private List<IngredientesProduto> ingredientesProdutos = new ArrayList<>();
 
-    public Produto(String nome, int codigo, double precoVenda, double qtdeConversao) {
+    public Produto(String nome, int codigo, double valorUnitario, double qtdeConversao, ETipoProduto tipoProduto) {
         this.nome = nome;
         this.codigo = codigo;
-        this.precoVenda = precoVenda;
         this.dataCadastro = LocalDateTime.now();
         this.qtdeConversao = qtdeConversao;
+        this.tipoProduto = tipoProduto;
+        this.valorUnitario = valorUnitario;
     }
 
     public String getNome() { return nome; }
@@ -34,4 +41,36 @@ public class Produto {
     public LocalDateTime getDataCadastro() { return dataCadastro; }
 
     public void setDataCadastro(LocalDateTime dataCadastro) { this.dataCadastro = dataCadastro; }
+
+    public double getQtdeConversao() {
+        return qtdeConversao;
+    }
+
+    public void setQtdeConversao(double qtdeConversao) {
+        this.qtdeConversao = qtdeConversao;
+    }
+
+    public ETipoProduto getTipoProduto() {
+        return tipoProduto;
+    }
+
+    public void setTipoProduto(ETipoProduto tipoProduto) {
+        this.tipoProduto = tipoProduto;
+    }
+
+    public List<IngredientesProduto> getIngredientesProdutos() {
+        return ingredientesProdutos;
+    }
+
+    public void setIngredientesProdutos(List<IngredientesProduto> ingredientesProdutos) {
+        this.ingredientesProdutos = ingredientesProdutos;
+    }
+
+    public double getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(double valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
 }
