@@ -2,5 +2,7 @@ package buteco.enums;
 
 public enum ETipoProduto {
     NORMAL,
-    INGREDIENTE
+    PRODUTOCOMCOMPLEMENTO,
+    INGREDIENTE,
+    SERVICO
 }
