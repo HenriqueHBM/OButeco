@@ -22,7 +22,7 @@ public class Main {
 
 //        Declarando os controllers
         ProdutosController produtosController = new ProdutosController(sc, produtos);
-        EstoqueController estoqueController = new EstoqueController(produtos);
+        EstoqueController estoqueController = new EstoqueController();
         UsuariosController usuarioController = new UsuariosController();
         ErroEntrada errorEntrada = new ErroEntrada();
 

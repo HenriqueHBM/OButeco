@@ -1,24 +1,36 @@
 package buteco.controller.estoque;
 
-import buteco.model.produto.Produto;
+import buteco.model.estoque.Estoque;
+import buteco.view.EstoqueView;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 
 public class EstoqueController {
-    Scanner sc = new Scanner(System.in);
-    public EstoqueController(List<Produto> produtos){
+    private EstoqueView view;
+    static List<Estoque> estoques;
+
+    public EstoqueController() {
 
     }
+
+
     public void index(){
 
         int opcao = 0;
 
         do{
-            System.out.println("[1] CADASTRAR ENTRADA; [2] - LISTAR ESTOQUE; [3] - MOVIMENTACOES ENTRADAS; [4] - MOVIMENTACOES SAIDAS;  [0] - SAIR");
-            opcao = sc.nextInt();
+            opcao = view.exibirMenu();
+            switch (opcao){
+                case 1 -> cadastrarEntrada();
+            }
 
         }while(opcao != 0 );
 //        sc.close();
+
+    }
+
+    public void cadastrarEntrada(){
+
     }
 }
