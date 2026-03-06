@@ -1,5 +1,6 @@
 package buteco.view;
 
+import buteco.enums.ETipoProduto;
 import buteco.model.produto.Produto;
 
 import java.util.List;
@@ -21,7 +22,17 @@ public class ProdutosView {
         System.out.println("Produtos Cadastrados");
 
         for (Produto p : produto){
-            System.out.println("Nome: " + p.getNome()+ " aa "+p.getCodigo());
+            System.out.println("Nome: " + p.getNome()+ " aa "+p.getTipoProduto());
+        }
+    }
+
+    public void exibirIngredientes(List<Produto> produto){
+        System.out.println("Produtos Cadastrados");
+
+        for (Produto p : produto){
+            if(p.getTipoProduto() == ETipoProduto.INGREDIENTE){
+                System.out.println("Nome: " + p.getNome()+ " aa "+p.getTipoProduto());
+            }
         }
     }
 
