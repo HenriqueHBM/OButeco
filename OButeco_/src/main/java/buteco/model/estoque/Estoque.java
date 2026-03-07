@@ -1,11 +1,15 @@
 package buteco.model.estoque;
 
 import buteco.model.conversao.Conversao;
+import buteco.model.movimentacoes.Entrada;
+import buteco.model.movimentacoes.Saida;
 import buteco.model.produto.Produto;
 import buteco.model.restaurante.Restaurante;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Estoque {
     private Produto produto;
@@ -14,15 +18,19 @@ public class Estoque {
     private int codEstoque;
     private String local;
     private LocalDateTime dataCadastro;
+    private List<Saida> saidas;
+    private List<Entrada> entradas;
 
     public Estoque(
+            int codEstoque,
             Produto produto,
-            double qtdeEstoque,
-            int codEstoque
+            double qtdeEstoque
     ){
         this.produto = produto;
         this.qtdeEstoque = qtdeEstoque;
         this.codEstoque = codEstoque;
+        this.saidas = new ArrayList<>();
+        this.entradas = new ArrayList<>();
     }
 
     public Produto getProduto() {
@@ -73,4 +81,27 @@ public class Estoque {
         this.dataCadastro = dataCadastro;
     }
 
+    public List<Saida> getSaidas() {
+        return saidas;
+    }
+
+    public void setSaidas(List<Saida> saidas) {
+        this.saidas = saidas;
+    }
+
+    public void addSaida(Saida saida){
+        this.saidas.add(saida);
+    }
+
+    public List<Entrada> getEntradas() {
+        return entradas;
+    }
+
+    public void setEntradas(List<Entrada> entradas) {
+        this.entradas = entradas;
+    }
+
+    public void atualizaValorTotalEstoque(){
+        setValorTotal(getQtdeEstoque() * produto.getValorUnitario());
+    }
 }

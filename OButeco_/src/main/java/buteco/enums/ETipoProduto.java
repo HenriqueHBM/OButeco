@@ -4,5 +4,5 @@ public enum ETipoProduto {
     NORMAL,
     PRODUTOCOMCOMPLEMENTO,
     INGREDIENTE,
-    SERVICO
+    SERVICO_Hr
 }
