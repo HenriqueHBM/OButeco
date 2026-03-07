@@ -1,6 +1,7 @@
 package buteco.view;
 
 import buteco.enums.ETipoProduto;
+import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class ProdutosView {
         for (Produto p : produto){
             System.out.printf("%-6d | %-15s | %-15s | %-15.2f | %-15.2f\n",
                     p.getCodigo(), p.getNome(), p.getTipoProduto().toString(), p.getValorUnitario(), p.getQtdeConversao());
+
+            if(p.getIngredientesProdutos().size() > 0){
+                exibirMensagem("\t===================COMPLEMENTO PRODUTO===================");
+                for (IngredientesProduto ip : p.getIngredientesProdutos()){
+                    System.out.printf("\t |- %-6d | %-15s | %-15s | %-15.2f | %-15.2f\n",
+                            ip.getIngredienteProduto().getCodigo(), ip.getIngredienteProduto().getNome(), ip.getIngredienteProduto().getTipoProduto().toString(), ip.getIngredienteProduto().getValorUnitario(), ip.getIngredienteProduto().getQtdeConversao());
+                }
+            }
         }
     }
 

@@ -20,7 +20,7 @@ public class Main {
         int entradaMenu = 0;
         List<Produto> produtos = new ArrayList<>();
 
-//        Declarando os controllers
+//      Declarando os controllers
         ProdutosController produtosController = new ProdutosController(sc, produtos);
         EstoqueController estoqueController = new EstoqueController();
         UsuariosController usuarioController = new UsuariosController();
