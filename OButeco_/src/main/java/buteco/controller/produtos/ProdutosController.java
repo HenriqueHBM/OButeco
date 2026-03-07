@@ -47,7 +47,6 @@ public class ProdutosController {
         view.exibirMensagem("Insira o valor unitario:");
         double valUnit = sc.nextDouble();
 
-
         view.exibirMensagem("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
         int opcao = sc.nextInt();
 
@@ -72,8 +71,9 @@ public class ProdutosController {
         produto.setIngredientesProdutos(listaIngredientesProdutos);
 
         //caso queira add observacao no produto
+        sc.nextLine();
         view.exibirMensagem("Observacao produto(opcional)");
-        String obs = sc.next();
+        String obs = sc.nextLine();
 
         produto.setObservacao(obs);
         // funcao para setar o estoque no produto;
@@ -91,14 +91,14 @@ public class ProdutosController {
         switch (tipo){
             case 2 -> tipoProduto = ETipoProduto.PRODUTOCOMCOMPLEMENTO;
             case 3 -> tipoProduto = ETipoProduto.INGREDIENTE;
-            case 4 -> tipoProduto = ETipoProduto.SERVICO;
+            case 4 -> tipoProduto = ETipoProduto.SERVICO_Hr;
         }
 
         return tipoProduto;
     }
 
     public void cadastrarIngredienteProduto(Produto produto, List<IngredientesProduto> listaIngredientesProdutos){
-        view.exibirMensagem("SELECIONE UM INGREDIENTE PELO CODIGO ----");
+        view.exibirMensagem("SELECIONE UM COMPLEMENTO PELO CODIGO ----");
         view.exibirProdutos(this.produtos);
         int codigoIngrediente = sc.nextInt();
         view.exibirMensagem("ESCOLHA A QUANTIDADE A SER USADA PARA MONTAGEM:");
@@ -112,10 +112,13 @@ public class ProdutosController {
     }
 
     public void cadastrarEstoque(Produto produto){
+        //pegando o tamanho da lista do estoque para criar um codigo de estoque
         int listEstoque = this.estoques.size();
-        Estoque estoque = new Estoque(produto, 0, listEstoque + 1);
+        //inicializando em "0" o estoque
+        Estoque estoque = new Estoque(listEstoque + 1, produto, 0);
+        //setando no produto a qual estoque deve se referenciar
         produto.setEstoque(estoque);
+        //add na lista de estoques o estoque criado
         this.estoques.add(estoque);
-        System.out.println(estoque.getCodEstoque() + " | "+ estoque.getQtdeEstoque());
     }
 }

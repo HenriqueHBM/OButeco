@@ -22,9 +22,9 @@ public class Estoque {
     private List<Entrada> entradas;
 
     public Estoque(
+            int codEstoque,
             Produto produto,
-            double qtdeEstoque,
-            int codEstoque
+            double qtdeEstoque
     ){
         this.produto = produto;
         this.qtdeEstoque = qtdeEstoque;

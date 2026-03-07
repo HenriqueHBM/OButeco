@@ -23,19 +23,29 @@ public class ProdutosView {
         System.out.println("Produtos Cadastrados");
 
         exibirMensagem("===============PRODUTOS CADASTRADOS===============");
-        System.out.printf("%-6s | %-15s | %-25s | %-15s\n",
-                "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNITARIO");
+        System.out.printf("%-6s | %-25s | %-25s | %-15s | %-25s\n",
+                "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "OBS");
         for (Produto p : produto){
-            System.out.printf("%-6d | %-15s | %-25s | %-15.2f \n",
-                    p.getCodigo(), p.getNome(), p.getTipoProduto().toString(), p.getValorUnitario());
+            System.out.printf("%-6d | %-25s | %-25s | %-15.2f \n",
+                    p.getCodigo(),
+                    p.getNome(),
+                    p.getTipoProduto().toString(),
+                    p.getValorUnitario()
+            );
 
             if(p.getIngredientesProdutos().size() > 0){
                 exibirMensagem("\t===================COMPLEMENTO PRODUTO===================");
-                System.out.printf("%6s %-6s | %-15s | %-25s | %-15s | %-25s\n",
-                        "|-", "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNITARIO", "QTDE. USADA");
+                System.out.printf("%6s %-6s | %-25s | %-25s | %-15s | %-25s \n",
+                        "|-", "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "QTDE. USADA");
                 for (IngredientesProduto ip : p.getIngredientesProdutos()){
-                    System.out.printf("%6s %-6d | %-15s | %-25s | %-15.2f | %-15.2f\n",
-                            "|-", ip.getIngredienteProduto().getCodigo(), ip.getIngredienteProduto().getNome(), ip.getIngredienteProduto().getTipoProduto().toString(), ip.getIngredienteProduto().getValorUnitario(), ip.getQtde());
+                    System.out.printf("%6s %-6d | %-25s | %-25s | %-15.2f | %-15.2f\n",
+                            "|-",
+                            ip.getIngredienteProduto().getCodigo(),
+                            ip.getIngredienteProduto().getNome(),
+                            ip.getIngredienteProduto().getTipoProduto().toString(),
+                            ip.getIngredienteProduto().getValorUnitario(),
+                            ip.getQtde()
+                    );
                 }
             }
         }

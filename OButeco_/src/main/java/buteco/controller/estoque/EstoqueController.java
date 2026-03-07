@@ -65,31 +65,41 @@ public class EstoqueController {
         double qtdeSaida = sc.nextDouble();
 
         Estoque estoque = produto.getEstoque();
-
+        double custoProducaoTotal = 0;
         switch (produto.getTipoProduto()){
-            case PRODUTOCOMCOMPLEMENTO -> saidaComplemento(produto, qtdeSaida);
-            case SERVICO -> System.out.println("NAO E POSSIVEL REALIZAR A SAIDA DO TIPO SERVICO");
-            default -> saidaNormal(produto, estoque, qtdeSaida);
+            case PRODUTOCOMCOMPLEMENTO -> custoProducaoTotal += saidaComplemento(produto, qtdeSaida);
+            case SERVICO_Hr -> System.out.println("NAO E POSSIVEL REALIZAR A SAIDA DO TIPO SERVICO");
+            default -> custoProducaoTotal += saidaNormal(produto, estoque, qtdeSaida);
         }
-
+        System.out.println(custoProducaoTotal);
+        view.exibirMargemLucro(produto, calcularMargem(custoProducaoTotal, produto.getValorUnitario()));
+        System.out.println("Saida Realizada!");
     }
 
-    public void saidaNormal(Produto produto, Estoque estoque, double qtdeSaida){
+    public double saidaNormal(Produto produto, Estoque estoque, double qtdeSaida){
         estoque.setQtdeEstoque(estoque.getQtdeEstoque() - qtdeSaida);
         estoque.atualizaValorTotalEstoque();
-
-        Saida saida = new Saida(produto, estoque, produto.getValorUnitario() * qtdeSaida, qtdeSaida);
+        double custoProducao = produto.getValorUnitario() * qtdeSaida;
+        Saida saida = new Saida(produto, estoque, custoProducao, qtdeSaida);
         estoque.addSaida(saida);
+
+        return custoProducao;
     }
 
-    public void saidaComplemento(Produto produto, double qtdeSaida){
+    public double saidaComplemento(Produto produto, double qtdeSaida){
+        double custoProducao = 0;
+        //passando pelos ingredientes do produto
         for (IngredientesProduto ip : produto.getIngredientesProdutos()){
             Estoque estoque = ip.getIngredienteProduto().getEstoque();
 
-            if (ip.getIngredienteProduto().getTipoProduto() != ETipoProduto.SERVICO){
-                saidaNormal(ip.getIngredienteProduto(), estoque, qtdeSaida * ip.getQtde());
+            //caso o complemento nao seja do tipo servivo, realiza as saidas
+            if (ip.getIngredienteProduto().getTipoProduto() != ETipoProduto.SERVICO_Hr){
+                custoProducao += saidaNormal(ip.getIngredienteProduto(), estoque, qtdeSaida * ip.getQtde());
+            }else{
+                custoProducao += ip.getIngredienteProduto().getValorUnitario() * qtdeSaida;
             }
         }
+        return  custoProducao;
     }
 
     public void converteSaida(Produto produto){
@@ -101,5 +111,9 @@ public class EstoqueController {
             System.out.println("Produto | Qtde Estoque | ");
             System.out.println(e.getProduto().getNome() + " | " + e.getQtdeEstoque());
         }
+    }
+
+    public double calcularMargem(double custo, double precoVenda){
+        return ((precoVenda - custo) / precoVenda) * 100;
     }
 }

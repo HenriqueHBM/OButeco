@@ -3,6 +3,7 @@ package buteco;
 import buteco.controller.estoque.EstoqueController;
 import buteco.controller.produtos.ProdutosController;
 import buteco.controller.usuarios.UsuariosController;
+import buteco.enums.ETipoProduto;
 import buteco.model.estoque.Estoque;
 import buteco.model.movimentacoes.Saida;
 import buteco.model.produto.Produto;
@@ -24,6 +25,8 @@ public class Main {
         List<Estoque> estoques = new ArrayList<>();
         List<Saida> saidas = new ArrayList<>();
 
+        //funcao apenas para nao comecar vazio os dados
+        cadastraProdutoInicial(produtos, estoques);
 //      Declarando os controllers
         ProdutosController produtosController = new ProdutosController(sc, produtos, estoques);
         EstoqueController estoqueController = new EstoqueController(sc, produtos, estoques, saidas);
@@ -42,5 +45,19 @@ public class Main {
 
             }
         }while(entradaMenu != 0 );
+    }
+
+    static void cadastraProdutoInicial(List<Produto> produtos, List<Estoque> estoques){
+        Produto prod = new Produto("Calabresa", 1, 14, ETipoProduto.INGREDIENTE);
+        Estoque est = new Estoque(1, prod, 20);
+        prod.setEstoque(est);
+
+        produtos.add(prod);
+        estoques.add(est);
+
+        prod = new Produto("Hora Funcionario", 2, 15, ETipoProduto.SERVICO_Hr);
+
+        produtos.add(prod);
+
     }
 }
