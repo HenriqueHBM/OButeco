@@ -1,6 +1,7 @@
 package buteco.controller.produtos;
 
 import buteco.enums.ETipoProduto;
+import buteco.model.estoque.Estoque;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
 import buteco.view.ProdutosView;
@@ -12,14 +13,16 @@ import java.util.Scanner;
 public class ProdutosController {
     private ProdutosView view;
     static List<Produto> produtos;
+    static List<Estoque> estoques;
     private Scanner sc;
 
 
     // constructor da classe,
-    public ProdutosController(Scanner sc, List<Produto> produtos){
+    public ProdutosController(Scanner sc, List<Produto> produtos, List<Estoque> estoques){
         this.view = new ProdutosView(sc);
-        this.produtos = produtos;
         this.sc = sc;
+        this.produtos = produtos;
+        this.estoques = estoques;
     }
     public void index(){
 
@@ -69,6 +72,8 @@ public class ProdutosController {
         //setando a lista de ingredientes no produto
         produto.setIngredientesProdutos(listaIngredientesProdutos);
 
+        // funcao para setar o estoque no produto;
+        cadastrarEstoque(produto);
 
         //adicionando na lista de produtos cadastrados
         this.produtos.add(produto);
@@ -103,6 +108,8 @@ public class ProdutosController {
     }
 
     public void cadastrarEstoque(Produto produto){
-
+        int listEstoque = this.estoques.size();
+        Estoque estoque = new Estoque(produto, 0, listEstoque + 1);
+        produto.setEstoque(estoque);
     }
 }

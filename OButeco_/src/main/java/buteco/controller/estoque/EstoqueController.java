@@ -16,9 +16,10 @@ public class EstoqueController {
     static List<Produto> produtos;
     private Scanner sc;
 
-    public EstoqueController(Scanner sc, List<Produto> produtos) {
+    public EstoqueController(Scanner sc, List<Produto> produtos, List<Estoque> estoques) {
         this.sc = sc;
         this.produtos = produtos;
+        this.estoques = estoques;
     }
 
 
@@ -57,6 +58,10 @@ public class EstoqueController {
     }
 
     public void saidaNormal(Produto produto){
+
+    }
+
+    public void saidaComplemento(Produto produto){
 
     }
 }

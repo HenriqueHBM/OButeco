@@ -3,6 +3,7 @@ package buteco;
 import buteco.controller.estoque.EstoqueController;
 import buteco.controller.produtos.ProdutosController;
 import buteco.controller.usuarios.UsuariosController;
+import buteco.model.estoque.Estoque;
 import buteco.model.produto.Produto;
 import buteco.service.entradas.ErroEntrada;
 
@@ -19,10 +20,11 @@ public class Main {
 
         int entradaMenu = 0;
         List<Produto> produtos = new ArrayList<>();
+        List<Estoque> estoques = new ArrayList<>();
 
 //      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, produtos);
-        EstoqueController estoqueController = new EstoqueController(sc, produtos);
+        ProdutosController produtosController = new ProdutosController(sc, produtos, estoques);
+        EstoqueController estoqueController = new EstoqueController(sc, produtos, estoques);
         UsuariosController usuarioController = new UsuariosController();
         ErroEntrada errorEntrada = new ErroEntrada();
 
