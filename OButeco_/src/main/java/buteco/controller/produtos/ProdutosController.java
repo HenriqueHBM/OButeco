@@ -1,6 +1,7 @@
 package buteco.controller.produtos;
 
 import buteco.enums.ETipoProduto;
+import buteco.model.estoque.Estoque;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
 import buteco.view.ProdutosView;
@@ -12,14 +13,16 @@ import java.util.Scanner;
 public class ProdutosController {
     private ProdutosView view;
     static List<Produto> produtos;
+    static List<Estoque> estoques;
     private Scanner sc;
 
 
     // constructor da classe,
-    public ProdutosController(Scanner sc, List<Produto> produtos){
+    public ProdutosController(Scanner sc, List<Produto> produtos, List<Estoque> estoques){
         this.view = new ProdutosView(sc);
-        this.produtos = produtos;
         this.sc = sc;
+        this.produtos = produtos;
+        this.estoques = estoques;
     }
     public void index(){
 
@@ -30,7 +33,6 @@ public class ProdutosController {
             switch (opcao){
                 case 1 -> cadastrarProduto();
                 case 2 -> view.exibirProdutos(this.produtos);
-                case 3 -> cadastrarSaida();
                 case 0 -> view.exibirMensagem("VOLTANDO..");
                 default -> view.exibirMensagem("VALOR INVALIDO!!!");
             }
@@ -50,14 +52,28 @@ public class ProdutosController {
         int opcao = sc.nextInt();
 
         ETipoProduto tipoProduto = escolheTipoProduto(opcao);
+
+        view.exibirMensagem("Observacao produto(opcional)");
+        String obs = sc.next();
         int codigo = produtos.size() + 1;
-        Produto produto = new Produto(nome, codigo, valUnit, qtdeConversao, tipoProduto);
+        //cadastrando um novo produto
+        Produto produto = new Produto(nome, codigo, valUnit, qtdeConversao, tipoProduto, obs);
 
         if(opcao == 2){
-           cadastrarIngredienteProduto(produto, listaIngredientesProdutos);
-        }
+            double maisIngredientes = 0;
+            do {
+                cadastrarIngredienteProduto(produto, listaIngredientesProdutos);
+                view.exibirMensagem("Deseja cadastrar mais Ingredientes para esse produto?");
+                view.exibirMensagem("[1] - SIM; [0] - NAO");
+                maisIngredientes = sc.nextDouble();
 
-        //cadastrando um novo produto
+            }while(maisIngredientes != 0);
+        }
+        //setando a lista de ingredientes no produto
+        produto.setIngredientesProdutos(listaIngredientesProdutos);
+
+        // funcao para setar o estoque no produto;
+        cadastrarEstoque(produto);
 
         //adicionando na lista de produtos cadastrados
         this.produtos.add(produto);
@@ -79,7 +95,7 @@ public class ProdutosController {
 
     public void cadastrarIngredienteProduto(Produto produto, List<IngredientesProduto> listaIngredientesProdutos){
         view.exibirMensagem("SELECIONE UM INGREDIENTE PELO CODIGO ----");
-        view.exibirIngredientes(this.produtos);
+        view.exibirProdutos(this.produtos);
         int codigoIngrediente = sc.nextInt();
         view.exibirMensagem("ESCOLHA A QUANTIDADE A SER USADA PARA MONTAGEM:");
         double qtdeMontagem = sc.nextDouble();
@@ -88,13 +104,12 @@ public class ProdutosController {
 
         IngredientesProduto ingr = new IngredientesProduto(produto, ingrediente, qtdeMontagem);
 
-
         listaIngredientesProdutos.add(ingr);
-
-        produto.setIngredientesProdutos(listaIngredientesProdutos);
-
     }
-    public void cadastrarSaida(){
 
+    public void cadastrarEstoque(Produto produto){
+        int listEstoque = this.estoques.size();
+        Estoque estoque = new Estoque(produto, 0, listEstoque + 1);
+        produto.setEstoque(estoque);
     }
 }
