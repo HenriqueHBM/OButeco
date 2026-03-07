@@ -51,13 +51,22 @@ public class ProdutosController {
 
         ETipoProduto tipoProduto = escolheTipoProduto(opcao);
         int codigo = produtos.size() + 1;
+        //cadastrando um novo produto
         Produto produto = new Produto(nome, codigo, valUnit, qtdeConversao, tipoProduto);
 
         if(opcao == 2){
-           cadastrarIngredienteProduto(produto, listaIngredientesProdutos);
-        }
+            double maisIngredientes = 0;
+            do {
+                cadastrarIngredienteProduto(produto, listaIngredientesProdutos);
+                view.exibirMensagem("Deseja cadastrar mais Ingredientes para esse produto?");
+                view.exibirMensagem("[1] - SIM; [0] - NAO");
+                maisIngredientes = sc.nextDouble();
 
-        //cadastrando um novo produto
+            }while(maisIngredientes != 0);
+        }
+        //setando a lista de ingredientes no produto
+        produto.setIngredientesProdutos(listaIngredientesProdutos);
+
 
         //adicionando na lista de produtos cadastrados
         this.produtos.add(produto);
@@ -79,7 +88,7 @@ public class ProdutosController {
 
     public void cadastrarIngredienteProduto(Produto produto, List<IngredientesProduto> listaIngredientesProdutos){
         view.exibirMensagem("SELECIONE UM INGREDIENTE PELO CODIGO ----");
-        view.exibirIngredientes(this.produtos);
+        view.exibirProdutos(this.produtos);
         int codigoIngrediente = sc.nextInt();
         view.exibirMensagem("ESCOLHA A QUANTIDADE A SER USADA PARA MONTAGEM:");
         double qtdeMontagem = sc.nextDouble();
@@ -88,12 +97,9 @@ public class ProdutosController {
 
         IngredientesProduto ingr = new IngredientesProduto(produto, ingrediente, qtdeMontagem);
 
-
         listaIngredientesProdutos.add(ingr);
-
-        produto.setIngredientesProdutos(listaIngredientesProdutos);
-
     }
+
     public void cadastrarSaida(){
 
     }

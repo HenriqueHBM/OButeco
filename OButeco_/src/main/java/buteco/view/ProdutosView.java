@@ -21,8 +21,12 @@ public class ProdutosView {
     public void exibirProdutos(List<Produto> produto){
         System.out.println("Produtos Cadastrados");
 
+        exibirMensagem("===============PRODUTOS CADASTRADOS===============");
+        System.out.printf("%-6s | %-15s | %-15s | %-15s | %-15s\n",
+                "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNITARIO","QTDE CONVERSAO");
         for (Produto p : produto){
-            System.out.println("Nome: " + p.getNome()+ " aa "+p.getTipoProduto());
+            System.out.printf("%-6d | %-15s | %-15s | %-15.2f | %-15.2f\n",
+                    p.getCodigo(), p.getNome(), p.getTipoProduto().toString(), p.getValorUnitario(), p.getQtdeConversao());
         }
     }
 
