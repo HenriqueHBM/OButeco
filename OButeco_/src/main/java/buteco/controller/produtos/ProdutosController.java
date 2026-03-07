@@ -46,18 +46,16 @@ public class ProdutosController {
         String nome = sc.next();
         view.exibirMensagem("Insira o valor unitario:");
         double valUnit = sc.nextDouble();
-        view.exibirMensagem("Quantidade de conversao:");
-        double qtdeConversao = sc.nextDouble();
+
+
         view.exibirMensagem("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
         int opcao = sc.nextInt();
 
         ETipoProduto tipoProduto = escolheTipoProduto(opcao);
 
-        view.exibirMensagem("Observacao produto(opcional)");
-        String obs = sc.next();
         int codigo = produtos.size() + 1;
         //cadastrando um novo produto
-        Produto produto = new Produto(nome, codigo, valUnit, qtdeConversao, tipoProduto, obs);
+        Produto produto = new Produto(nome, codigo, valUnit, tipoProduto);
 
         if(opcao == 2){
             double maisIngredientes = 0;
@@ -69,9 +67,15 @@ public class ProdutosController {
 
             }while(maisIngredientes != 0);
         }
+
         //setando a lista de ingredientes no produto
         produto.setIngredientesProdutos(listaIngredientesProdutos);
 
+        //caso queira add observacao no produto
+        view.exibirMensagem("Observacao produto(opcional)");
+        String obs = sc.next();
+
+        produto.setObservacao(obs);
         // funcao para setar o estoque no produto;
         cadastrarEstoque(produto);
 
@@ -111,5 +115,7 @@ public class ProdutosController {
         int listEstoque = this.estoques.size();
         Estoque estoque = new Estoque(produto, 0, listEstoque + 1);
         produto.setEstoque(estoque);
+        this.estoques.add(estoque);
+        System.out.println(estoque.getCodEstoque() + " | "+ estoque.getQtdeEstoque());
     }
 }

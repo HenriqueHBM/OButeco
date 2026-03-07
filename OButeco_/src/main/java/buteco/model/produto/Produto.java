@@ -13,21 +13,18 @@ public class Produto {
     private int codigo;
     private double precoVenda;
     private LocalDateTime dataCadastro;
-    private double qtdeConversao;
     private ETipoProduto tipoProduto;
     private double valorUnitario;
     private List<IngredientesProduto> ingredientesProdutos = new ArrayList<>();
     private String observacao;
     private Estoque estoque;
 
-    public Produto(String nome, int codigo, double valorUnitario, double qtdeConversao, ETipoProduto tipoProduto, String observacao) {
+    public Produto(String nome, int codigo, double valorUnitario, ETipoProduto tipoProduto) {
         this.nome = nome;
         this.codigo = codigo;
         this.dataCadastro = LocalDateTime.now();
-        this.qtdeConversao = qtdeConversao;
         this.tipoProduto = tipoProduto;
         this.valorUnitario = valorUnitario;
-        this.observacao = observacao;
     }
 
     public String getNome() { return nome; }
@@ -45,14 +42,6 @@ public class Produto {
     public LocalDateTime getDataCadastro() { return dataCadastro; }
 
     public void setDataCadastro(LocalDateTime dataCadastro) { this.dataCadastro = dataCadastro; }
-
-    public double getQtdeConversao() {
-        return qtdeConversao;
-    }
-
-    public void setQtdeConversao(double qtdeConversao) {
-        this.qtdeConversao = qtdeConversao;
-    }
 
     public ETipoProduto getTipoProduto() {
         return tipoProduto;
