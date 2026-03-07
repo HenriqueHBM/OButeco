@@ -4,6 +4,7 @@ import buteco.enums.ETipoProduto;
 import buteco.model.estoque.Estoque;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
+import buteco.service.entradas.ErroEntrada;
 import buteco.view.ProdutosView;
 
 import java.util.ArrayList;
@@ -15,14 +16,16 @@ public class ProdutosController {
     static List<Produto> produtos;
     static List<Estoque> estoques;
     private Scanner sc;
+    private ErroEntrada errorEntrada;
 
 
     // constructor da classe,
-    public ProdutosController(Scanner sc, List<Produto> produtos, List<Estoque> estoques){
-        this.view = new ProdutosView(sc);
+    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques){
+        this.view = new ProdutosView(sc, errorEntrada);
         this.sc = sc;
         this.produtos = produtos;
         this.estoques = estoques;
+        this.errorEntrada = errorEntrada;
     }
     public void index(){
 
@@ -42,13 +45,9 @@ public class ProdutosController {
 
     public void cadastrarProduto(){
         List<IngredientesProduto> listaIngredientesProdutos = new ArrayList<>();
-        view.exibirMensagem("Insira o nome do Produto:");
-        String nome = sc.next();
-        view.exibirMensagem("Insira o valor unitario:");
-        double valUnit = sc.nextDouble();
-
-        view.exibirMensagem("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
-        int opcao = sc.nextInt();
+        String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
+        double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
+        int opcao = errorEntrada.trataEntradaInt("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
 
         ETipoProduto tipoProduto = escolheTipoProduto(opcao);
 
@@ -59,10 +58,14 @@ public class ProdutosController {
         if(opcao == 2){
             double maisIngredientes = 0;
             do {
-                cadastrarIngredienteProduto(produto, listaIngredientesProdutos);
+                if(maisIngredientes == 0 || maisIngredientes == 1){
+                    cadastrarIngredienteProduto(produto, listaIngredientesProdutos);
+                }else{
+                    view.exibirMensagem("VALOR INVALIDO");
+                }
+
                 view.exibirMensagem("Deseja cadastrar mais Ingredientes para esse produto?");
-                view.exibirMensagem("[1] - SIM; [0] - NAO");
-                maisIngredientes = sc.nextDouble();
+                maisIngredientes = errorEntrada.trataEntradaInt("[1] - SIM; [0] - NAO");
 
             }while(maisIngredientes != 0);
         }
@@ -82,7 +85,7 @@ public class ProdutosController {
         //adicionando na lista de produtos cadastrados
         this.produtos.add(produto);
 
-        System.out.println("Produto Cadastrado!!");
+        view.exibirMensagem("Produto Cadastrado!!");
     }
 
     public ETipoProduto escolheTipoProduto(int tipo){
@@ -98,11 +101,12 @@ public class ProdutosController {
     }
 
     public void cadastrarIngredienteProduto(Produto produto, List<IngredientesProduto> listaIngredientesProdutos){
-        view.exibirMensagem("SELECIONE UM COMPLEMENTO PELO CODIGO ----");
+        view.exibirMensagem("---PRODUTOS---");
         view.exibirProdutos(this.produtos);
-        int codigoIngrediente = sc.nextInt();
-        view.exibirMensagem("ESCOLHA A QUANTIDADE A SER USADA PARA MONTAGEM:");
-        double qtdeMontagem = sc.nextDouble();
+        int codigoIngrediente = errorEntrada.trataEntradaInt("SELECIONE UM COMPLEMENTO PELO CODIGO");
+        //int codigoIngrediente = sc.nextInt();
+        //view.exibirMensagem("ESCOLHA A QUANTIDADE A SER USADA PARA MONTAGEM:");
+        double qtdeMontagem = errorEntrada.trataEntradaDouble("ESCOLHA A QUANTIDADE A SER USADA PARA MONTAGEM:");
 
         Produto ingrediente = this.produtos.get(codigoIngrediente - 1);
 

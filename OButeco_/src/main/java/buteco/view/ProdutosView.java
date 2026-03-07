@@ -3,20 +3,22 @@ package buteco.view;
 import buteco.enums.ETipoProduto;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
+import buteco.service.entradas.ErroEntrada;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class ProdutosView {
     private Scanner sc;
+    private ErroEntrada errorEntrada;
 
-    public ProdutosView(Scanner sc){
+    public ProdutosView(Scanner sc, ErroEntrada errorEntrada){
         this.sc = sc;
+        this.errorEntrada = errorEntrada;
     }
 
     public int exibirMenu(){
-        System.out.println("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [0] - SAIR");
-        return sc.nextInt();
+        return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [0] - SAIR");
     }
 
     public void exibirProdutos(List<Produto> produto){

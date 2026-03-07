@@ -24,14 +24,15 @@ public class Main {
         List<Produto> produtos = new ArrayList<>();
         List<Estoque> estoques = new ArrayList<>();
         List<Saida> saidas = new ArrayList<>();
+        ErroEntrada errorEntrada = new ErroEntrada(sc);
 
         //funcao apenas para nao comecar vazio os dados
         cadastraProdutoInicial(produtos, estoques);
 //      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, produtos, estoques);
-        EstoqueController estoqueController = new EstoqueController(sc, produtos, estoques, saidas);
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtos, estoques);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, produtos, estoques, saidas);
         UsuariosController usuarioController = new UsuariosController();
-        ErroEntrada errorEntrada = new ErroEntrada();
+
 
         do{
             // Funcao para tentar tratar caso usuario passe um caracter
