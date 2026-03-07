@@ -2,6 +2,7 @@ package buteco.model.produto;
 
 import buteco.enums.ETipoProduto;
 import buteco.model.conversao.Conversao;
+import buteco.model.estoque.Estoque;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,14 +17,17 @@ public class Produto {
     private ETipoProduto tipoProduto;
     private double valorUnitario;
     private List<IngredientesProduto> ingredientesProdutos = new ArrayList<>();
+    private String observacao;
+    private Estoque estoque;
 
-    public Produto(String nome, int codigo, double valorUnitario, double qtdeConversao, ETipoProduto tipoProduto) {
+    public Produto(String nome, int codigo, double valorUnitario, double qtdeConversao, ETipoProduto tipoProduto, String observacao) {
         this.nome = nome;
         this.codigo = codigo;
         this.dataCadastro = LocalDateTime.now();
         this.qtdeConversao = qtdeConversao;
         this.tipoProduto = tipoProduto;
         this.valorUnitario = valorUnitario;
+        this.observacao = observacao;
     }
 
     public String getNome() { return nome; }
@@ -72,5 +76,21 @@ public class Produto {
 
     public void setValorUnitario(double valorUnitario) {
         this.valorUnitario = valorUnitario;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
     }
 }

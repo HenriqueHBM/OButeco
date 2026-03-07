@@ -30,7 +30,6 @@ public class ProdutosController {
             switch (opcao){
                 case 1 -> cadastrarProduto();
                 case 2 -> view.exibirProdutos(this.produtos);
-                case 3 -> cadastrarSaida();
                 case 0 -> view.exibirMensagem("VOLTANDO..");
                 default -> view.exibirMensagem("VALOR INVALIDO!!!");
             }
@@ -50,9 +49,12 @@ public class ProdutosController {
         int opcao = sc.nextInt();
 
         ETipoProduto tipoProduto = escolheTipoProduto(opcao);
+
+        view.exibirMensagem("Observacao produto(opcional)");
+        String obs = sc.next();
         int codigo = produtos.size() + 1;
         //cadastrando um novo produto
-        Produto produto = new Produto(nome, codigo, valUnit, qtdeConversao, tipoProduto);
+        Produto produto = new Produto(nome, codigo, valUnit, qtdeConversao, tipoProduto, obs);
 
         if(opcao == 2){
             double maisIngredientes = 0;
@@ -100,7 +102,7 @@ public class ProdutosController {
         listaIngredientesProdutos.add(ingr);
     }
 
-    public void cadastrarSaida(){
+    public void cadastrarEstoque(Produto produto){
 
     }
 }

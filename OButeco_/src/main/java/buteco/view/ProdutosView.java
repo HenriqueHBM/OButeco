@@ -15,7 +15,7 @@ public class ProdutosView {
     }
 
     public int exibirMenu(){
-        System.out.println("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [3] - CADASTRAR SAIDA; [0] - SAIR");
+        System.out.println("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [0] - SAIR");
         return sc.nextInt();
     }
 
