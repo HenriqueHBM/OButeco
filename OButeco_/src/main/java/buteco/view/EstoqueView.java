@@ -1,7 +1,12 @@
 package buteco.view;
 
+import buteco.controller.estoque.EstoqueController;
+import buteco.model.estoque.Estoque;
 import buteco.model.produto.Produto;
+import buteco.model.movimentacoes.Entrada;
+import buteco.model.movimentacoes.Saida;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class EstoqueView {
@@ -22,5 +27,24 @@ public class EstoqueView {
         System.out.printf("Preco venda: %.2f", produto.getValorUnitario());
         System.out.printf("Margem: %.2f", margem);
     }
+
+    public void exibirEstoque(List<Estoque> estoques){
+
+        System.out.println("============== ESTOQUE ==============");
+
+        System.out.printf("%-6s | %-25s | %-15s | %-15s\n",
+                "COD", "PRODUTO", "QTDE", "VALOR TOTAL");
+
+        for (Estoque e : estoques){
+
+            System.out.printf("%-6d | %-25s | %-15.2f | %-15.2f\n",
+                    e.getCodEstoque(),
+                    e.getProduto().getNome(),
+                    e.getQtdeEstoque(),
+                    e.getValorTotal()
+            );
+        }
+    }
+
 
 }

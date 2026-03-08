@@ -2,6 +2,7 @@ package buteco.controller.estoque;
 
 import buteco.enums.ETipoProduto;
 import buteco.model.estoque.Estoque;
+import buteco.model.movimentacoes.Entrada;
 import buteco.model.movimentacoes.Saida;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
@@ -10,6 +11,7 @@ import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,6 +23,7 @@ public class EstoqueController {
     List<Saida> saidas;
     private Scanner sc;
     private ErroEntrada errorEntrada;
+    private ProdutosView viewProd;
 
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
         this.sc = sc;
@@ -29,6 +32,7 @@ public class EstoqueController {
         this.saidas = saidas;
         this.view = new EstoqueView(sc);
         this.errorEntrada = errorEntrada;
+        this.viewProd = new ProdutosView(sc, errorEntrada);
     }
 
 
@@ -41,6 +45,7 @@ public class EstoqueController {
             switch (opcao){
                 case 1 -> cadastrarEntrada();
                 case 2 -> cadastrarSaida();
+                case 3 -> view.exibirEstoque(this.estoques);
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("asdfasdf");
             }
@@ -51,18 +56,62 @@ public class EstoqueController {
     }
 
     public void cadastrarEntrada(){
-        System.out.println("asdf");
+
+        System.out.println("Produtos para realizar a entrada");
+
+        viewProd.exibirProdutos(this.produtos);
+
+        Produto produto = this.produtos.get(verificaEntradaCodProduto());
+
+        double qtdeEntrada = errorEntrada.trataEntradaDouble("Insira a quantidade de entrada");
+
+        Estoque estoque = produto.getEstoque();
+
+
+        if(estoque == null){
+
+            estoque = new Estoque(
+                    estoques.size() + 1,
+                    produto,
+                    qtdeEntrada
+            );
+
+            produto.setEstoque(estoque);
+            estoques.add(estoque);
+
+        }else{
+
+
+            estoque.setQtdeEstoque(
+                    estoque.getQtdeEstoque() + qtdeEntrada
+            );
+        }
+
+        estoque.atualizaValorTotalEstoque();
+
+        double custo = produto.getValorUnitario() * qtdeEntrada;
+
+        Entrada entrada = new Entrada(
+                produto,
+                estoque,
+                custo,
+                (int) qtdeEntrada,
+                LocalDateTime.now()
+        );
+
+        estoque.getEntradas().add(entrada);
+
+        System.out.println("Entrada realizada!");
     }
 
     public void cadastrarSaida(){
-        System.out.println("Selecione um produto(pelo codigo) para realizar a Saida");
-        System.out.println(this.produtos);
-        int opcao = sc.nextInt();
+        System.out.println("produtos para realizar a Saida");
+        viewProd.exibirProdutos(this.produtos);
+        //int opcao = errorEntrada.trataEntradaInt("Insira o codigo");
         //- 1 pois a lista comeca em "0"
-        Produto produto = this.produtos.get(opcao - 1);
+        Produto produto = this.produtos.get(verificaEntradaCodProduto());
 
-        System.out.println("Insira a quantidade de saida");
-        double qtdeSaida = sc.nextDouble();
+        double qtdeSaida = errorEntrada.trataEntradaDouble("Insira a quantidade de saida");
 
         Estoque estoque = produto.getEstoque();
         double custoProducaoTotal = 0;
@@ -114,7 +163,17 @@ public class EstoqueController {
         return ((precoVenda - custo) / precoVenda) * 100;
     }
 
-    public void exibirEstoque(){
-
+    public int verificaEntradaCodProduto(){
+        int opcao;
+        while (true){
+            opcao = errorEntrada.trataEntradaInt("Insira o codigo");
+            if (opcao > 0 && opcao <= this.produtos.size()){
+                return opcao - 1;
+            }
+            System.out.println("CODIGO INVALIDO!!");
+        }
     }
+
+
+
 }
