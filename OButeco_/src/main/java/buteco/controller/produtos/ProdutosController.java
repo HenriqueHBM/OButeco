@@ -74,7 +74,7 @@ public class ProdutosController {
         produto.setIngredientesProdutos(listaIngredientesProdutos);
 
         //caso queira add observacao no produto
-        sc.nextLine();
+        //sc.nextLine(); //esse sc server pois as vezes vem um "enter" a mais
         view.exibirMensagem("Observacao produto(opcional)");
         String obs = sc.nextLine();
 
