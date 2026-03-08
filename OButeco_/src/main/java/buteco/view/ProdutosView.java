@@ -18,7 +18,7 @@ public class ProdutosView {
     }
 
     public int exibirMenu(){
-        return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [0] - SAIR");
+        return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [3] - EDITAR PRODUTO; [4] - EXCLUIR PRODUTO; [0] - SAIR");
     }
 
     public void exibirProdutos(List<Produto> produto){
@@ -37,19 +37,7 @@ public class ProdutosView {
             );
 
             if(p.getIngredientesProdutos().size() > 0){
-                exibirMensagem("\t===================COMPLEMENTO PRODUTO===================");
-                System.out.printf("%6s %-6s | %-25s | %-25s | %-15s | %-25s \n",
-                        "|-", "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "QTDE. USADA");
-                for (IngredientesProduto ip : p.getIngredientesProdutos()){
-                    System.out.printf("%6s %-6d | %-25s | %-25s | %-15.2f | %-15.2f\n",
-                            "|-",
-                            ip.getIngredienteProduto().getCodigo(),
-                            ip.getIngredienteProduto().getNome(),
-                            ip.getIngredienteProduto().getTipoProduto().toString(),
-                            ip.getIngredienteProduto().getValorUnitario(),
-                            ip.getQtde()
-                    );
-                }
+                exibirIngredienteProduto(p);
             }
         }
     }
@@ -66,5 +54,21 @@ public class ProdutosView {
 
     public void exibirMensagem(String mensagem){
         System.out.println(mensagem);
+    }
+
+    public void exibirIngredienteProduto(Produto produto){
+        exibirMensagem("\t===================COMPLEMENTO PRODUTO===================");
+            System.out.printf("%6s %-6s | %-25s | %-25s | %-15s | %-25s \n",
+                    "|-", "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "QTDE. USADA");
+            for (IngredientesProduto ip : produto.getIngredientesProdutos()){
+                System.out.printf("%6s %-6d | %-25s | %-25s | %-15.2f | %-15.2f\n",
+                        "|-",
+                        ip.getIngredienteProduto().getCodigo(),
+                        ip.getIngredienteProduto().getNome(),
+                        ip.getIngredienteProduto().getTipoProduto().toString(),
+                        ip.getIngredienteProduto().getValorUnitario(),
+                        ip.getQtde()
+                );
+            }
     }
 }
