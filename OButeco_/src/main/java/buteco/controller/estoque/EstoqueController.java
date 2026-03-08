@@ -2,6 +2,7 @@ package buteco.controller.estoque;
 
 import buteco.enums.ETipoProduto;
 import buteco.model.estoque.Estoque;
+import buteco.model.movimentacoes.Entrada;
 import buteco.model.movimentacoes.Saida;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
@@ -10,6 +11,7 @@ import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -43,6 +45,7 @@ public class EstoqueController {
             switch (opcao){
                 case 1 -> cadastrarEntrada();
                 case 2 -> cadastrarSaida();
+                case 3 -> view.exibirEstoque(this.estoques);
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("asdfasdf");
             }
@@ -53,7 +56,52 @@ public class EstoqueController {
     }
 
     public void cadastrarEntrada(){
-        System.out.println("asdf");
+
+        System.out.println("Produtos para realizar a entrada");
+
+        viewProd.exibirProdutos(this.produtos);
+
+        Produto produto = this.produtos.get(verificaEntradaCodProduto());
+
+        double qtdeEntrada = errorEntrada.trataEntradaDouble("Insira a quantidade de entrada");
+
+        Estoque estoque = produto.getEstoque();
+
+
+        if(estoque == null){
+
+            estoque = new Estoque(
+                    estoques.size() + 1,
+                    produto,
+                    qtdeEntrada
+            );
+
+            produto.setEstoque(estoque);
+            estoques.add(estoque);
+
+        }else{
+
+
+            estoque.setQtdeEstoque(
+                    estoque.getQtdeEstoque() + qtdeEntrada
+            );
+        }
+
+        estoque.atualizaValorTotalEstoque();
+
+        double custo = produto.getValorUnitario() * qtdeEntrada;
+
+        Entrada entrada = new Entrada(
+                produto,
+                estoque,
+                custo,
+                (int) qtdeEntrada,
+                LocalDateTime.now()
+        );
+
+        estoque.getEntradas().add(entrada);
+
+        System.out.println("Entrada realizada!");
     }
 
     public void cadastrarSaida(){
@@ -125,5 +173,7 @@ public class EstoqueController {
             System.out.println("CODIGO INVALIDO!!");
         }
     }
+
+
 
 }
