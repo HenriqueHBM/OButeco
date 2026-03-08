@@ -12,7 +12,7 @@ public class EstoqueView {
     }
 
     public int exibirMenu(){
-        System.out.println("[1] CADASTRAR ENTRADA; [2] - LISTAR ESTOQUE; [3] - MOVIMENTACOES ENTRADAS; [4] - MOVIMENTACOES SAIDAS;  [0] - SAIR");
+        System.out.println("[1] CADASTRAR ENTRADA; [2] - CADASTRAR SAÍDA;  [3] - LISTAR ESTOQUE; [4] - MOVIMENTACOES ENTRADAS; [5] - MOVIMENTACOES SAIDAS;  [0] - SAIR");
         return sc.nextInt();
     }
 

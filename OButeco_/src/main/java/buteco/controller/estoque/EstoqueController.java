@@ -113,4 +113,8 @@ public class EstoqueController {
     public double calcularMargem(double custo, double precoVenda){
         return ((precoVenda - custo) / precoVenda) * 100;
     }
+
+    public void exibirEstoque(){
+
+    }
 }
