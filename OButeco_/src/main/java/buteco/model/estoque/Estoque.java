@@ -1,46 +1,36 @@
 package buteco.model.estoque;
 
 import buteco.model.conversao.Conversao;
+import buteco.model.movimentacoes.Entrada;
+import buteco.model.movimentacoes.Saida;
 import buteco.model.produto.Produto;
 import buteco.model.restaurante.Restaurante;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Estoque {
     private Produto produto;
-    private Restaurante restaurante;
     private double qtdeEstoque;
-    private double valorUnitario;
     private double valorTotal;
     private int codEstoque;
-    private LocalDate dataValidade;
     private String local;
     private LocalDateTime dataCadastro;
-    private Conversao conversao;
+    private List<Saida> saidas;
+    private List<Entrada> entradas;
 
     public Estoque(
-            Produto produto,
-            Restaurante restaurante,
-            double valorUnitario,
             int codEstoque,
-            LocalDate dataValidade,
-            Conversao conversao
+            Produto produto,
+            double qtdeEstoque
     ){
         this.produto = produto;
-        this.restaurante = restaurante;
-        this.valorUnitario = valorUnitario;
+        this.qtdeEstoque = qtdeEstoque;
         this.codEstoque = codEstoque;
-        this.dataValidade = dataValidade;
-        this.conversao = conversao;
-    }
-
-    public double getValorUnitario() {
-        return valorUnitario;
-    }
-
-    public void setValorUnitario(double valorUnitario) {
-        this.valorUnitario = valorUnitario;
+        this.saidas = new ArrayList<>();
+        this.entradas = new ArrayList<>();
     }
 
     public Produto getProduto() {
@@ -49,14 +39,6 @@ public class Estoque {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
-    }
-
-    public Restaurante getRestaurante() {
-        return restaurante;
-    }
-
-    public void setRestaurante(Restaurante restaurante) {
-        this.restaurante = restaurante;
     }
 
     public double getQtdeEstoque() {
@@ -83,14 +65,6 @@ public class Estoque {
         this.codEstoque = codEstoque;
     }
 
-    public LocalDate getDataValidade() {
-        return dataValidade;
-    }
-
-    public void setDataValidade(LocalDate dataValidade) {
-        this.dataValidade = dataValidade;
-    }
-
     public String getLocal() {
         return local;
     }
@@ -107,4 +81,27 @@ public class Estoque {
         this.dataCadastro = dataCadastro;
     }
 
+    public List<Saida> getSaidas() {
+        return saidas;
+    }
+
+    public void setSaidas(List<Saida> saidas) {
+        this.saidas = saidas;
+    }
+
+    public void addSaida(Saida saida){
+        this.saidas.add(saida);
+    }
+
+    public List<Entrada> getEntradas() {
+        return entradas;
+    }
+
+    public void setEntradas(List<Entrada> entradas) {
+        this.entradas = entradas;
+    }
+
+    public void atualizaValorTotalEstoque(){
+        setValorTotal(getQtdeEstoque() * produto.getValorUnitario());
+    }
 }
