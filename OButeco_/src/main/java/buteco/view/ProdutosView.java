@@ -32,7 +32,8 @@ public class ProdutosView {
                     p.getCodigo(),
                     p.getNome(),
                     p.getTipoProduto().toString(),
-                    p.getValorUnitario()
+                    p.getValorUnitario(),
+                    p.getObservacao()
             );
 
             if(p.getIngredientesProdutos().size() > 0){

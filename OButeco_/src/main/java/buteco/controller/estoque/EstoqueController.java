@@ -21,6 +21,7 @@ public class EstoqueController {
     List<Saida> saidas;
     private Scanner sc;
     private ErroEntrada errorEntrada;
+    private ProdutosView viewProd;
 
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
         this.sc = sc;
@@ -29,6 +30,7 @@ public class EstoqueController {
         this.saidas = saidas;
         this.view = new EstoqueView(sc);
         this.errorEntrada = errorEntrada;
+        this.viewProd = new ProdutosView(sc, errorEntrada);
     }
 
 
@@ -55,14 +57,13 @@ public class EstoqueController {
     }
 
     public void cadastrarSaida(){
-        System.out.println("Selecione um produto(pelo codigo) para realizar a Saida");
-        System.out.println(this.produtos);
-        int opcao = sc.nextInt();
+        System.out.println("produtos para realizar a Saida");
+        viewProd.exibirProdutos(this.produtos);
+        //int opcao = errorEntrada.trataEntradaInt("Insira o codigo");
         //- 1 pois a lista comeca em "0"
-        Produto produto = this.produtos.get(opcao - 1);
+        Produto produto = this.produtos.get(verificaEntradaCodProduto());
 
-        System.out.println("Insira a quantidade de saida");
-        double qtdeSaida = sc.nextDouble();
+        double qtdeSaida = errorEntrada.trataEntradaDouble("Insira a quantidade de saida");
 
         Estoque estoque = produto.getEstoque();
         double custoProducaoTotal = 0;
@@ -113,4 +114,16 @@ public class EstoqueController {
     public double calcularMargem(double custo, double precoVenda){
         return ((precoVenda - custo) / precoVenda) * 100;
     }
+
+    public int verificaEntradaCodProduto(){
+        int opcao;
+        while (true){
+            opcao = errorEntrada.trataEntradaInt("Insira o codigo");
+            if (opcao > 0 && opcao <= this.produtos.size()){
+                return opcao - 1;
+            }
+            System.out.println("CODIGO INVALIDO!!");
+        }
+    }
+
 }
