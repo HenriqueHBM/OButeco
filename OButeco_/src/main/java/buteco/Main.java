@@ -40,7 +40,7 @@ public class Main {
             switch (entradaMenu){
                 case 1 -> produtosController.index();
                 case 2 -> estoqueController.index();
-                case 3 -> usuarioController.index();
+                case 3 -> System.out.println("EM DESENVOLVIMENTO");
                 case 0 -> System.out.println("ATE MAIS!!!");
                 default -> System.out.println("VALOR INVALIDO!!!");
 

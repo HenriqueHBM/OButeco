@@ -7,6 +7,7 @@ import buteco.model.movimentacoes.Saida;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
 import buteco.service.entradas.ErroEntrada;
+import buteco.service.entradas.VerificaEntradaProduto;
 import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
 
@@ -25,6 +26,7 @@ public class EstoqueController {
     private Scanner sc;
     private ErroEntrada errorEntrada;
     private ProdutosView viewProd;
+    VerificaEntradaProduto verificaEntradaProduto;
 
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
         this.sc = sc;
@@ -34,13 +36,14 @@ public class EstoqueController {
         this.view = new EstoqueView(sc);
         this.errorEntrada = errorEntrada;
         this.viewProd = new ProdutosView(sc, errorEntrada);
+        this.verificaEntradaProduto = new VerificaEntradaProduto(errorEntrada, this.produtos);
     }
 
 
     public void index(){
-
         int opcao = 0;
 
+        if(this.produtos.size() > 0){
         do{
             opcao = view.exibirMenu();
             switch (opcao){
@@ -53,26 +56,24 @@ public class EstoqueController {
                 default -> System.out.println("asdfasdf");
             }
 
-        }while(opcao != 0 );
+            }while(opcao != 0 );
+        }else{
+            System.out.println("SEM PRODUTO CADASTRADO!!");
+        }
+
 //        sc.close();
 
     }
 
     public void cadastrarEntrada(){
-
         System.out.println("Produtos para realizar a entrada");
-
         viewProd.exibirProdutos(this.produtos);
 
-        Produto produto = this.produtos.get(verificaEntradaCodProduto());
-
+        Produto produto = this.produtos.get(this.verificaEntradaProduto.verificaEntradaCodProduto());
         double qtdeEntrada = errorEntrada.trataEntradaDouble("Insira a quantidade de entrada");
-
         Estoque estoque = produto.getEstoque();
 
-
         if(estoque == null){
-
             estoque = new Estoque(
                     estoques.size() + 1,
                     produto,
@@ -87,7 +88,6 @@ public class EstoqueController {
         }
 
         estoque.atualizaValorTotalEstoque();
-
         double custo = produto.getValorUnitario() * qtdeEntrada;
 
         Entrada entrada = new Entrada(
@@ -99,7 +99,6 @@ public class EstoqueController {
         );
 
         estoque.getEntradas().add(entrada);
-
         System.out.println("Entrada realizada!");
     }
 
@@ -108,7 +107,7 @@ public class EstoqueController {
         viewProd.exibirProdutos(this.produtos);
         //int opcao = errorEntrada.trataEntradaInt("Insira o codigo");
         //- 1 pois a lista comeca em "0"
-        Produto produto = this.produtos.get(verificaEntradaCodProduto());
+        Produto produto = this.produtos.get(this.verificaEntradaProduto.verificaEntradaCodProduto());
 
         double qtdeSaida = errorEntrada.trataEntradaDouble("Insira a quantidade de saida");
 
@@ -160,17 +159,6 @@ public class EstoqueController {
 
     public double calcularMargem(double custo, double precoVenda){
         return ((precoVenda - custo) / precoVenda) * 100;
-    }
-
-    public int verificaEntradaCodProduto(){
-        int opcao;
-        while (true){
-            opcao = errorEntrada.trataEntradaInt("Insira o codigo");
-            if (opcao > 0 && opcao <= this.produtos.size()){
-                return opcao - 1;
-            }
-            System.out.println("CODIGO INVALIDO!!");
-        }
     }
 
     public void exibirEntradas() {
