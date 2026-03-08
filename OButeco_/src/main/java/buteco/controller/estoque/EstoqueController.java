@@ -12,6 +12,7 @@ import buteco.view.ProdutosView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -46,6 +47,8 @@ public class EstoqueController {
                 case 1 -> cadastrarEntrada();
                 case 2 -> cadastrarSaida();
                 case 3 -> view.exibirEstoque(this.estoques);
+                case 4 -> exibirEntradas();
+                case 5 -> exibirSaidas();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("asdfasdf");
             }
@@ -75,13 +78,9 @@ public class EstoqueController {
                     produto,
                     qtdeEntrada
             );
-
             produto.setEstoque(estoque);
             estoques.add(estoque);
-
         }else{
-
-
             estoque.setQtdeEstoque(
                     estoque.getQtdeEstoque() + qtdeEntrada
             );
@@ -174,6 +173,43 @@ public class EstoqueController {
         }
     }
 
+    public void exibirEntradas() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        for (Produto produto : produtos) {
+            Estoque estoque = produto.getEstoque();
+            if (estoque == null) {
+                continue;
+            }
+            for (Entrada entrada : estoque.getEntradas()) {
+                System.out.println(
+                        "Produto: " + produto.getNome()
+                                + " | Qtde: " + entrada.getQtde()
+                                + " | Preço: " + entrada.getPreco()
+                                + " | Data: " + entrada.getDataMovimentacao()
+                );
+            }
+        }
+    }
+
+    public void exibirSaidas() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        for (Produto produto : produtos) {
+            Estoque estoque = produto.getEstoque();
+            if (estoque == null) {
+                continue;
+            }
+            for (Saida saida : estoque.getSaidas()) {
+                System.out.println(
+                        "Produto: " + produto.getNome()
+                                + " | Qtde: " + saida.getQtde()
+                                + " | Preço: " + saida.getPreco()
+                                + " | Data: " + saida.getDataMovimentacao()
+                );
+            }
+        }
+    }
 
 
 }
