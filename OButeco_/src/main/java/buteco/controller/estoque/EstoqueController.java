@@ -50,7 +50,7 @@ public class EstoqueController {
                     case 2 -> cadastrarSaida();
                     case 3 -> view.exibirEstoque(this.estoques);
                     case 0 -> System.out.println("Saindo...");
-                    default -> System.out.println("asdfasdf");
+                    default -> System.out.println("VALOR INVALIDO");
                 }
 
             }while(opcao != 0 );
@@ -116,7 +116,7 @@ public class EstoqueController {
             case SERVICO_Hr -> System.out.println("NAO E POSSIVEL REALIZAR A SAIDA DO TIPO SERVICO");
             default -> custoProducaoTotal += saidaNormal(produto, estoque, qtdeSaida);
         }
-        System.out.println(custoProducaoTotal);
+
         view.exibirMargemLucro(produto, calcularMargem(custoProducaoTotal, produto.getValorUnitario()));
         System.out.println("Saida Realizada!");
     }

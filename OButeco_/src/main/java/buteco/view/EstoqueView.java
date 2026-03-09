@@ -23,9 +23,8 @@ public class EstoqueView {
 
     public void exibirMargemLucro(Produto produto, double margem){
         System.out.println(produto.getNome());
-        System.out.println("Preco compra: ");
-        System.out.printf("Preco venda: %.2f", produto.getValorUnitario());
-        System.out.printf("Margem: %.2f", margem);
+        System.out.printf("Preco venda: %.2f \n", produto.getValorUnitario());
+        System.out.printf("Margem: %.2f \n", margem);
     }
 
     public void exibirEstoque(List<Estoque> estoques){
