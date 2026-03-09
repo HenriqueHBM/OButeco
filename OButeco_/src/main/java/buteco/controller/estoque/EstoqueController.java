@@ -104,7 +104,7 @@ public class EstoqueController {
 
     public void cadastrarSaida(){
         System.out.println("produtos para realizar a Saida");
-        viewProd.exibirProdutos(this.produtos);
+        view.exibirEstoque(this.estoques);
         //int opcao = errorEntrada.trataEntradaInt("Insira o codigo");
         //- 1 pois a lista comeca em "0"
         Produto produto = this.produtos.get(this.verificaEntradaProduto.verificaEntradaCodProduto());
@@ -118,7 +118,7 @@ public class EstoqueController {
             case SERVICO_Hr -> System.out.println("NAO E POSSIVEL REALIZAR A SAIDA DO TIPO SERVICO");
             default -> custoProducaoTotal += saidaNormal(produto, estoque, qtdeSaida);
         }
-        System.out.println(custoProducaoTotal);
+
         view.exibirMargemLucro(produto, calcularMargem(custoProducaoTotal, produto.getValorUnitario()));
         System.out.println("Saida Realizada!");
     }
