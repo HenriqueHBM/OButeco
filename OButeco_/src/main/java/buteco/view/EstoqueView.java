@@ -37,7 +37,7 @@ public class EstoqueView {
         for (Estoque e : estoques){
 
             System.out.printf("%-6d | %-25s | %-15.2f | %-15.2f\n",
-                    e.getCodEstoque(),
+                    e.getProduto().getCodigo(),
                     e.getProduto().getNome(),
                     e.getQtdeEstoque(),
                     e.getValorTotal()
