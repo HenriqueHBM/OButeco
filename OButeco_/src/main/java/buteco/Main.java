@@ -1,14 +1,11 @@
 package buteco;
 
-import buteco.model.produto.Categoria;
-import buteco.model.produto.Conversoes;
-import buteco.model.produto.Produto;
-import buteco.repositories.CategoriaRepository;
-import buteco.repositories.ConversoesRepository;
-import buteco.repositories.CustomizerFactory;
-import buteco.repositories.ProdutoRepository;
+import buteco.model.produto.*;
+import buteco.repositories.*;
 import jakarta.persistence.EntityManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -21,30 +18,49 @@ public class Main {
         EntityManager em = CustomizerFactory.getEntityManager();
         ProdutoRepository produtoRepository = new ProdutoRepository(em);
         CategoriaRepository categoriaRepository = new CategoriaRepository(em);
-        ConversoesRepository conversoesRepository = new ConversoesRepository(em);
+        GrupoRepository grupoRepository = new GrupoRepository(em);
+        InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
 
         //criando a tabela e um valor nela já
-        Conversoes con = new Conversoes();
-        con.setNome("Unidade");
-        con.setNomenclatura("Un");
-        conversoesRepository.create(con);
+        Grupo grupo = new Grupo();
+        grupo.setGrupo("Comida");
+        grupoRepository.create(grupo);
 
         //criando uma categoria nova
         Categoria new_cat = new Categoria();
-        new_cat.setCategoria("NORMAL");
+        new_cat.setCategoria("COM_INSUMO");
         categoriaRepository.create(new_cat);
 
         //buscando as info no banco
         var cat = categoriaRepository.findById(1L);
-        var conversao = conversoesRepository.findById(1L);
+        var grupo_tb = grupoRepository.findById(1L);
+
+        //setando um ingrediente
+        Produto p2 = new Produto();
+        p2.setNome("Queijo");
+        p2.setPrecoVenda(0.50);
+        p2.setCategoria(cat);
+        p2.setGrupo(grupo_tb);
+        produtoRepository.create(p2);
 
         //setando um novo produto
         Produto p1 = new Produto();
-        p1.setNome("Coca");
-        p1.setPrecoVenda(15.00);
+        p1.setNome("Pizza");
+        p1.setPrecoVenda(45.00);
         p1.setCategoria(cat);
-        p1.setConversao(conversao);
+        p1.setGrupo(grupo_tb);
         produtoRepository.create(p1);
+
+        //relacao de produto e insumos
+        InsumosProduto rel = new InsumosProduto();
+        rel.setProduto(p1);
+        rel.setInsumo(p2);
+        rel.setQtde(200);
+
+        insumosProdutoRepository.create(rel);
+
+        //pegando a relacao do produto(pizza) e add um ingrediente na lista
+        p1.getInsumos().add(rel);
 
         //p
         System.out.println(p1);;
