@@ -42,9 +42,14 @@
         <!-- Mapeamento das entidades -->
         <!-- Exemplo -->
         <!-- <mapping class="com.exemplo.model.Produto"/> -->
-        <mapping class="buteco.model.produto.Produto" />
-        <mapping class="buteco.model.produto.Categoria" />
-        <mapping class="buteco.model.produto.Conversoes" />
+
+        <!-- Produto -->
+            <mapping class="buteco.model.produto.Produto" />
+            <mapping class="buteco.model.produto.Categoria" />
+            <mapping class="buteco.model.produto.Conversoes" />
+            <mapping class="buteco.model.produto.InsumosProduto" />
+            <mapping class="buteco.model.produto.Grupo" />
+        <!-- Fim Produto -->
 
     </session-factory>
 </hibernate-configuration>
