@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "produtos") //  entidade com nome padrão, tabela mapeada separadamente
@@ -24,12 +26,17 @@ public class Produto {
     private EStatus status = EStatus.ATIVO; //setando ja o valor
 
     @ManyToOne
-    @JoinColumn(name = "id_categoria")
+    @JoinColumn(name = "fk_id_categoria")
     private Categoria categoria;
 
     @ManyToOne
-    @JoinColumn(name = "id_conversao")
-    private Conversoes conversao;
+    @JoinColumn(name = "fk_id_grupos")
+    private Grupo grupo;
+
+    //um prod tem varios insumos | mapped by essa relacao nao e a dona, quem manda é o produto | cascade tudo que fizer com o produto, faco com os insumos
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    private List<InsumosProduto> insumos = new ArrayList<>();
+
 
     @CreationTimestamp //data de criacao do produto
     @Column(name = "created_at", nullable = true)
@@ -49,12 +56,12 @@ public class Produto {
 
     }
 
-    public Produto(Long id, String nome, Categoria categoria, double precoVenda, Conversoes conversao) {
+    public Produto(Long id, String nome, Categoria categoria, double precoVenda, Grupo grupo) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
         this.precoVenda = precoVenda;
-        this.conversao = conversao;
+        this.grupo = grupo;
     }
 
     public Long getId() {
@@ -89,14 +96,6 @@ public class Produto {
         this.categoria = categoria;
     }
 
-    public Conversoes getConversao() {
-        return conversao;
-    }
-
-    public void setConversao(Conversoes conversao) {
-        this.conversao = conversao;
-    }
-
     public Instant getDataCriacao() {
         return dataCriacao;
     }
@@ -128,6 +127,16 @@ public class Produto {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    public List<InsumosProduto> getInsumos(){return insumos;}
+
+    public void setInsumos(List<InsumosProduto> insumos) {
+        this.insumos = insumos;
+    }
+
+    public Grupo getGrupo() { return grupo; }
+
+    public void setGrupo(Grupo grupo) { this.grupo = grupo; }
 
     @Override
     public String toString(){
