@@ -102,6 +102,6 @@ public class Estoque {
     }
 
     public void atualizaValorTotalEstoque(){
-        setValorTotal(getQtdeEstoque() * produto.getValorUnitario());
+//        setValorTotal(getQtdeEstoque() * produto.getValorUnitario());
     }
 }

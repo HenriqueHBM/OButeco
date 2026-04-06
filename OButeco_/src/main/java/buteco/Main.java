@@ -1,13 +1,8 @@
 package buteco;
 
-import buteco.controller.estoque.EstoqueController;
-import buteco.controller.produtos.ProdutosController;
-import buteco.controller.usuarios.UsuariosController;
-import buteco.enums.ETipoProduto;
-import buteco.model.estoque.Estoque;
-import buteco.model.movimentacoes.Saida;
-import buteco.model.produto.Produto;
-import buteco.service.entradas.ErroEntrada;
+import buteco.model.produto.*;
+import buteco.repositories.*;
+import jakarta.persistence.EntityManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,45 +15,82 @@ public class Main {
         Scanner sc = new Scanner(System.in); //passar isso para as classesControllers para nao ficar instanciando o tempo todo
         System.out.println("--O BUTECO--");
 
-        int entradaMenu = 0;
-        List<Produto> produtos = new ArrayList<>();
-        List<Estoque> estoques = new ArrayList<>();
-        List<Saida> saidas = new ArrayList<>();
-        ErroEntrada errorEntrada = new ErroEntrada(sc);
+        EntityManager em = CustomizerFactory.getEntityManager();
+        ProdutoRepository produtoRepository = new ProdutoRepository(em);
+        CategoriaRepository categoriaRepository = new CategoriaRepository(em);
+        GrupoRepository grupoRepository = new GrupoRepository(em);
+        InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
 
-        //funcao apenas para nao comecar vazio os dados
-        cadastraProdutoInicial(produtos, estoques);
-//      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtos, estoques);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, produtos, estoques, saidas);
-        UsuariosController usuarioController = new UsuariosController();
+        //criando a tabela e um valor nela já
+        Grupo grupo = new Grupo();
+        grupo.setGrupo("Comida");
+        grupoRepository.create(grupo);
 
+        //criando uma categoria nova
+        Categoria new_cat = new Categoria();
+        new_cat.setCategoria("COM_INSUMO");
+        categoriaRepository.create(new_cat);
 
-        do{
-            // Funcao para tentar tratar caso usuario passe um caracter
-            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
-            switch (entradaMenu){
-                case 1 -> produtosController.index();
-                case 2 -> estoqueController.index();
-                case 3 -> System.out.println("EM DESENVOLVIMENTO");
-                case 0 -> System.out.println("ATE MAIS!!!");
-                default -> System.out.println("VALOR INVALIDO!!!");
+        //buscando as info no banco
+        var cat = categoriaRepository.findById(1L);
+        var grupo_tb = grupoRepository.findById(1L);
 
-            }
-        }while(entradaMenu != 0 );
-    }
+        //setando um ingrediente
+        Produto p2 = new Produto();
+        p2.setNome("Queijo");
+        p2.setPrecoVenda(0.50);
+        p2.setCategoria(cat);
+        p2.setGrupo(grupo_tb);
+        produtoRepository.create(p2);
 
-    static void cadastraProdutoInicial(List<Produto> produtos, List<Estoque> estoques){
-        Produto prod = new Produto("Calabresa", 1, 14, ETipoProduto.INGREDIENTE);
-        Estoque est = new Estoque(1, prod, 20);
-        prod.setEstoque(est);
+        //setando um novo produto
+        Produto p1 = new Produto();
+        p1.setNome("Pizza");
+        p1.setPrecoVenda(45.00);
+        p1.setCategoria(cat);
+        p1.setGrupo(grupo_tb);
+        produtoRepository.create(p1);
 
-        produtos.add(prod);
-        estoques.add(est);
+        //relacao de produto e insumos
+        InsumosProduto rel = new InsumosProduto();
+        rel.setProduto(p1);
+        rel.setInsumo(p2);
+        rel.setQtde(200);
 
-        prod = new Produto("Hora Funcionario", 2, 15, ETipoProduto.SERVICO_Hr);
+        insumosProdutoRepository.create(rel);
 
-        produtos.add(prod);
+        //pegando a relacao do produto(pizza) e add um ingrediente na lista
+        p1.getInsumos().add(rel);
 
+        //p
+        System.out.println(p1);;
+
+        em.close();
+        CustomizerFactory.fechar();
+
+//        int entradaMenu = 0;
+//        List<Produto> produtos = new ArrayList<>();
+//        List<Estoque> estoques = new ArrayList<>();
+//        List<Saida> saidas = new ArrayList<>();
+//        ErroEntrada errorEntrada = new ErroEntrada(sc);
+//
+////      Declarando os controllers
+//        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtos, estoques);
+//        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, produtos, estoques, saidas);
+//        UsuariosController usuarioController = new UsuariosController();
+//
+//
+//        do{
+//            // Funcao para tentar tratar caso usuario passe um caracter
+//            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
+//            switch (entradaMenu){
+//                case 1 -> produtosController.index();
+//                case 2 -> estoqueController.index();
+//                case 3 -> System.out.println("EM DESENVOLVIMENTO");
+//                case 0 -> System.out.println("ATE MAIS!!!");
+//                default -> System.out.println("VALOR INVALIDO!!!");
+//
+//            }
+//        }while(entradaMenu != 0 );
     }
 }
