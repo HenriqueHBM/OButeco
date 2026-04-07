@@ -27,7 +27,7 @@ public class MovimentacoesEstoqueRepository {
     }
 
     public void delete(MovimentacoesEstoque movimentacoesEstoque){
-        em.remove(em.contains(movimentacoesEstoque) ? movimentacoesEstoque : em.merge(movimentacoesEstoque);
+        em.remove(em.contains(movimentacoesEstoque) ? movimentacoesEstoque : em.merge(movimentacoesEstoque));
     }
 
 }
