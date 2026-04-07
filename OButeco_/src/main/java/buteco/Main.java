@@ -1,8 +1,11 @@
 package buteco;
 
 import buteco.config.FlyWayconfig;
+import buteco.controller.estoque.EstoqueController;
+import buteco.controller.produtos.ProdutosController;
 import buteco.model.produto.*;
 import buteco.repositories.*;
+import buteco.service.entradas.ErroEntrada;
 import jakarta.persistence.EntityManager;
 
 import java.util.ArrayList;
@@ -23,16 +26,36 @@ public class Main {
         CategoriaRepository categoriaRepository = new CategoriaRepository(em);
         GrupoRepository grupoRepository = new GrupoRepository(em);
         InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
-//
-        //criando a tabela e um valor nela já
-        Grupo grupo = new Grupo();
-        grupo.setGrupo("Comida");
-        grupoRepository.create(grupo);
 
-        //criando uma categoria nova
-        Categoria new_cat = new Categoria();
-        new_cat.setCategoria("COM_INSUMO");
-        categoriaRepository.create(new_cat);
+        int entradaMenu = 0;
+        ErroEntrada errorEntrada = new ErroEntrada(sc);
+////      Declarando os controllers
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada);
+
+        do{
+            // Funcao para tentar tratar caso usuario passe um caracter
+            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
+            switch (entradaMenu){
+                case 1 -> produtosController.index();
+                case 2 -> estoqueController.index();
+                case 3 -> System.out.println("EM DESENVOLVIMENTO");
+                case 0 -> System.out.println("ATE MAIS!!!");
+                default -> System.out.println("VALOR INVALIDO!!!");
+
+            }
+        }while(entradaMenu != 0 );
+
+
+        //criando a tabela e um valor nela já
+//        Grupo grupo = new Grupo();
+//        grupo.setGrupo("Comida");
+//        grupoRepository.create(grupo);
+//
+//        //criando uma categoria nova
+//        Categoria new_cat = new Categoria();
+//        new_cat.setCategoria("COM_INSUMO");
+//        categoriaRepository.create(new_cat);
 
         //buscando as info no banco
 //        var cat = categoriaRepository.findById(1L);
@@ -70,30 +93,5 @@ public class Main {
 //
         em.close();
         CustomizerFactory.fechar();
-
-//        int entradaMenu = 0;
-//        List<Produto> produtos = new ArrayList<>();
-//        List<Estoque> estoques = new ArrayList<>();
-//        List<Saida> saidas = new ArrayList<>();
-//        ErroEntrada errorEntrada = new ErroEntrada(sc);
-//
-////      Declarando os controllers
-//        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtos, estoques);
-//        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, produtos, estoques, saidas);
-//        UsuariosController usuarioController = new UsuariosController();
-//
-//
-//        do{
-//            // Funcao para tentar tratar caso usuario passe um caracter
-//            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
-//            switch (entradaMenu){
-//                case 1 -> produtosController.index();
-//                case 2 -> estoqueController.index();
-//                case 3 -> System.out.println("EM DESENVOLVIMENTO");
-//                case 0 -> System.out.println("ATE MAIS!!!");
-//                default -> System.out.println("VALOR INVALIDO!!!");
-//
-//            }
-//        }while(entradaMenu != 0 );
     }
 }
