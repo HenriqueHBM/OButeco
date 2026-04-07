@@ -17,12 +17,12 @@
 
         <!-- Usuário -->
         <property name="hibernate.connection.username">
-            root
+            postgres
         </property>
 
         <!-- Senha -->
         <property name="hibernate.connection.password">
-            password;
+            admin
         </property>
 
         <!-- Dialeto (Hibernate 6) -->
@@ -45,6 +45,8 @@
             <mapping class="buteco.model.produto.Conversoes" />
             <mapping class="buteco.model.produto.InsumosProduto" />
             <mapping class="buteco.model.produto.Grupo" />
+            <mapping class="buteco.model.estoque.Estoque"/>
+            <mapping class="buteco.model.movimentacoes.MovimentacoesEstoque"/>
         <!-- Fim Produto -->
 
     </session-factory>

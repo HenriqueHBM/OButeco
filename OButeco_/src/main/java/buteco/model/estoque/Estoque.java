@@ -1,36 +1,62 @@
 package buteco.model.estoque;
 
-import buteco.model.conversao.Conversao;
-import buteco.model.movimentacoes.Entrada;
-import buteco.model.movimentacoes.Saida;
+import buteco.model.produto.Conversoes;
 import buteco.model.produto.Produto;
-import buteco.model.restaurante.Restaurante;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
+@Entity
+@Table(name = "estoques")
 public class Estoque {
-    private Produto produto;
-    private double qtdeEstoque;
-    private double valorTotal;
-    private int codEstoque;
-    private String local;
-    private LocalDateTime dataCadastro;
-    private List<Saida> saidas;
-    private List<Entrada> entradas;
 
-    public Estoque(
-            int codEstoque,
-            Produto produto,
-            double qtdeEstoque
-    ){
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "id_produto") //colocar como fk_id_produto?
+    private Produto produto;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_id_conversao")
+    private Conversoes conversoes;
+
+    @Column(name = "qtde_estoque")
+    private double qntdEstoque;
+
+    @Column(name= "local")
+    private String local;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Instant dataCriacao;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Instant dataAtualizado;
+
+    public Estoque() {
+    }
+
+    public Estoque(Long id, Produto produto, Conversoes conversoes, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
+        this.id = id;
         this.produto = produto;
-        this.qtdeEstoque = qtdeEstoque;
-        this.codEstoque = codEstoque;
-        this.saidas = new ArrayList<>();
-        this.entradas = new ArrayList<>();
+        this.conversoes = conversoes;
+        this.qntdEstoque = qntdEstoque;
+        this.local = local;
+        this.dataCriacao = dataCriacao;
+        this.dataAtualizado = dataAtualizado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Produto getProduto() {
@@ -41,28 +67,20 @@ public class Estoque {
         this.produto = produto;
     }
 
-    public double getQtdeEstoque() {
-        return qtdeEstoque;
+    public Conversoes getConversoes() {
+        return conversoes;
     }
 
-    public void setQtdeEstoque(double qtdeEstoque) {
-        this.qtdeEstoque = qtdeEstoque;
+    public void setConversoes(Conversoes conversoes) {
+        this.conversoes = conversoes;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
+    public double getQntdEstoque() {
+        return qntdEstoque;
     }
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public int getCodEstoque() {
-        return codEstoque;
-    }
-
-    public void setCodEstoque(int codEstoque) {
-        this.codEstoque = codEstoque;
+    public void setQntdEstoque(double qntdEstoque) {
+        this.qntdEstoque = qntdEstoque;
     }
 
     public String getLocal() {
@@ -73,35 +91,31 @@ public class Estoque {
         this.local = local;
     }
 
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
+    public Instant getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setDataCriacao(Instant dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
-    public List<Saida> getSaidas() {
-        return saidas;
+    public Instant getDataAtualizado() {
+        return dataAtualizado;
     }
 
-    public void setSaidas(List<Saida> saidas) {
-        this.saidas = saidas;
+    public void setDataAtualizado(Instant dataAtualizado) {
+        this.dataAtualizado = dataAtualizado;
     }
 
-    public void addSaida(Saida saida){
-        this.saidas.add(saida);
-    }
-
-    public List<Entrada> getEntradas() {
-        return entradas;
-    }
-
-    public void setEntradas(List<Entrada> entradas) {
-        this.entradas = entradas;
-    }
-
-    public void atualizaValorTotalEstoque(){
-//        setValorTotal(getQtdeEstoque() * produto.getValorUnitario());
+    @Override
+    public String toString() {
+        return "Estoque{" +
+                "id=" + id +
+                ", produto=" + produto +
+                ", qntdEstoque=" + qntdEstoque +
+                ", local='" + local + '\'' +
+                ", dataCriacao=" + dataCriacao +
+                ", dataAtualizado=" + dataAtualizado +
+                '}';
     }
 }

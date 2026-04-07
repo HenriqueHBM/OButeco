@@ -17,12 +17,12 @@
 
         <!-- Usuário -->
         <property name="hibernate.connection.username">
-            root
+            postgres
         </property>
 
         <!-- Senha -->
         <property name="hibernate.connection.password">
-            password;
+            admin
         </property>
 
         <!-- Dialeto (Hibernate 6) -->
