@@ -4,44 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbec47bd-0b24-4e4d-979b-a943c0cc4ae7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/entradas/PessoaService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/entradas/ProdutoService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/config/FlyWayconfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/config/FlyWayconfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/estoque/EstoqueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/estoque/EstoqueController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/produtos/ProdutosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/produtos/ProdutosController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/conversao/Conversao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Conversoes.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/conversao/Conversoes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/IngredientesProduto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Produto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/ConversoesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/ConversoesRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/CustomizerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/CustomizerFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/ProdutosView.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/ProdutosView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V2__create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V2__create_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/FlyWayconfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/FlyWayconfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/estoque/EstoqueController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/estoque/EstoqueController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/conversao/Conversao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Conversoes.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/conversao/Conversoes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/IngredientesProduto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/InsumosProduto.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/InsumosProduto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Produto.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Produto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ConversoesRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ConversoesRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/CustomizerFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/CustomizerFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ProdutoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ProdutoRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V2__create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V2__create_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/hibernate.cfg.xml" afterDir="false" />
+    <list default="true" id="cbec47bd-0b24-4e4d-979b-a943c0cc4ae7" name="Changes" comment="Conexao .env">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,9 +80,22 @@
       <workItem from="1772488560506" duration="3036000" />
       <workItem from="1772534364638" duration="2282000" />
     </task>
+    <task id="LOCAL-00001" summary="Conexao .env">
+      <option name="closed" value="true" />
+      <created>1775598475836</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1775598475836</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Conexao .env" />
+    <option name="LAST_COMMIT_MESSAGE" value="Conexao .env" />
   </component>
 </project>
