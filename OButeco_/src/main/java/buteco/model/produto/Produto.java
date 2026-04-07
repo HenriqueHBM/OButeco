@@ -52,6 +52,16 @@ public class Produto {
     @Column(name = "observacao", nullable = true)
     private String observacao;
 
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "insumos_produtos",
+//            joinColumns = @JoinColumn(name = "fk_id_pessoa"),
+//            inverseJoinColumns = @JoinColumn(name = "fk_insumos_produto")
+//    )
+//    private List<Produto> ingredientesProdutos;
+
+
     public Produto(){
 
     }
