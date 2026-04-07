@@ -16,18 +16,17 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_produto") //colocar como fk_id_produto?
+    @Column(name = "id_produto", nullable = false)
     private Produto produto;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_conversao")
-    private Conversoes conversoes;
-
-    @Column(name = "qtde_estoque")
+    @Column(name = "qtde_estoque", nullable = true)
     private double qntdEstoque;
 
-    @Column(name= "local")
+    @ManyToOne
+    @JoinColumn(name = "fk_id_conversao", nullable = false)
+    private Conversoes conversoes;
+
+    @Column(name = "local", nullable = true)
     private String local;
 
     @CreationTimestamp
@@ -44,8 +43,8 @@ public class Estoque {
     public Estoque(Long id, Produto produto, Conversoes conversoes, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
         this.id = id;
         this.produto = produto;
-        this.conversoes = conversoes;
         this.qntdEstoque = qntdEstoque;
+        this.conversoes = conversoes;
         this.local = local;
         this.dataCriacao = dataCriacao;
         this.dataAtualizado = dataAtualizado;
@@ -67,20 +66,20 @@ public class Estoque {
         this.produto = produto;
     }
 
-    public Conversoes getConversoes() {
-        return conversoes;
-    }
-
-    public void setConversoes(Conversoes conversoes) {
-        this.conversoes = conversoes;
-    }
-
     public double getQntdEstoque() {
         return qntdEstoque;
     }
 
     public void setQntdEstoque(double qntdEstoque) {
         this.qntdEstoque = qntdEstoque;
+    }
+
+    public Conversoes getConversoes() {
+        return conversoes;
+    }
+
+    public void setConversoes(Conversoes conversoes) {
+        this.conversoes = conversoes;
     }
 
     public String getLocal() {
@@ -113,6 +112,7 @@ public class Estoque {
                 "id=" + id +
                 ", produto=" + produto +
                 ", qntdEstoque=" + qntdEstoque +
+                ", conversoes=" + conversoes +
                 ", local='" + local + '\'' +
                 ", dataCriacao=" + dataCriacao +
                 ", dataAtualizado=" + dataAtualizado +

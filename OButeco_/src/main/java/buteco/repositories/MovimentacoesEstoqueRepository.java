@@ -18,12 +18,14 @@ public class MovimentacoesEstoqueRepository {
         em.getTransaction().begin();
         em.persist(movimentacoesEstoque);
         em.getTransaction().commit();
+        em.close();
     }
 
     public void update(MovimentacoesEstoque movimentacoesEstoque){
         em.getTransaction().begin();
         em.persist(movimentacoesEstoque);
         em.getTransaction().commit();
+        em.close();
     }
 
     public void delete(MovimentacoesEstoque movimentacoesEstoque){

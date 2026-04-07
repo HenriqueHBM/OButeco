@@ -18,12 +18,14 @@ public class EstoqueRepository {
         em.getTransaction().begin();
         em.persist(estoque);
         em.getTransaction().commit();
+        em.close();
     }
 
     public void update(Estoque estoque){
         em.getTransaction().begin();
         em.persist(estoque);
         em.getTransaction().commit();
+        em.close();
     }
 
     public void delete(Estoque estoque){

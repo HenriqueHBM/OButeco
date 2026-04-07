@@ -22,7 +22,7 @@
 
         <!-- Senha -->
         <property name="hibernate.connection.password">
-            admin
+            password;
         </property>
 
         <!-- Dialeto (Hibernate 6) -->
