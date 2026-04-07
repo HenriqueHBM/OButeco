@@ -1,22 +1,5 @@
 package buteco.controller.estoque;
 
-import buteco.enums.ETipoProduto;
-import buteco.model.estoque.Estoque;
-import buteco.model.movimentacoes.Entrada;
-import buteco.model.movimentacoes.Saida;
-import buteco.model.produto.IngredientesProduto;
-import buteco.model.produto.Produto;
-import buteco.service.entradas.ErroEntrada;
-import buteco.service.entradas.VerificaEntradaProduto;
-import buteco.view.EstoqueView;
-import buteco.view.ProdutosView;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 public class EstoqueController {
 //    private EstoqueView view;
 //    static List<Estoque> estoques;

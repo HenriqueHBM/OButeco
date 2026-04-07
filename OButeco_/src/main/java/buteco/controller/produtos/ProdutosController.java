@@ -1,17 +1,5 @@
 package buteco.controller.produtos;
 
-import buteco.enums.ETipoProduto;
-import buteco.model.estoque.Estoque;
-import buteco.model.produto.IngredientesProduto;
-import buteco.model.produto.Produto;
-import buteco.service.entradas.ErroEntrada;
-import buteco.service.entradas.VerificaEntradaProduto;
-import buteco.view.ProdutosView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 public class ProdutosController {
 //    private ProdutosView view;
 //    static List<Produto> produtos;
@@ -50,6 +38,7 @@ public class ProdutosController {
 //
 //    public void cadastrarProduto(){
 //        List<IngredientesProduto> listaIngredientesProdutos = new ArrayList<>();
+//
 //        String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
 //        double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
 //        int opcao = errorEntrada.trataEntradaInt("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");

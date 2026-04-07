@@ -1,4 +1,4 @@
-package buteco.model.produto;
+package buteco.model.conversao;
 import jakarta.persistence.*;
 @Entity
 @Table(name="conversoes")
