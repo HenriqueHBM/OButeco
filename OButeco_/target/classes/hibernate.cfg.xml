@@ -17,9 +17,16 @@
 <!--            root-->
 <!--        </property>-->
         <!-- Senha -->
+<<<<<<< HEAD
+        <property name="hibernate.connection.password">
+            password;
+        </property>
+
+=======
 <!--        <property name="hibernate.connection.password">-->
 <!--            password;-->
 <!--        </property>-->
+>>>>>>> c8b9745b8627b21c367a5a39845e0130a61504f1
         <!-- Dialeto (Hibernate 6) -->
 <!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>-->
         <!-- Atualização automática do schema -->

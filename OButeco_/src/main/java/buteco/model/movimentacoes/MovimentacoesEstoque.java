@@ -16,7 +16,8 @@ public class MovimentacoesEstoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id_estoque", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "fk_id_estoque", nullable = false)
     private Estoque estoque; //colocar nome da var como idEstoque?
 
     @Column(name = "tipo", nullable = false)

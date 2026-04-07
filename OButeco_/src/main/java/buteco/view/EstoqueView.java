@@ -1,14 +1,5 @@
 package buteco.view;
 
-import buteco.controller.estoque.EstoqueController;
-import buteco.model.estoque.Estoque;
-import buteco.model.produto.Produto;
-import buteco.model.movimentacoes.Entrada;
-import buteco.model.movimentacoes.Saida;
-
-import java.util.List;
-import java.util.Scanner;
-
 public class EstoqueView {
 //    private Scanner sc;
 //

@@ -6,9 +6,10 @@ import buteco.repositories.MovimentacoesEstoqueRepository;
 public class MovimentacoesEstoqueService {
     MovimentacoesEstoqueRepository movimentacoesEstoqueRepository;
 
-    public void salvarMovimentacao(MovimentacoesEstoque movimentacoesEstoque){
+    public void salvarMovimentacao(MovimentacoesEstoque movimentacoesEstoque) {
         movimentacoesEstoqueRepository.create(movimentacoesEstoque);
     }
 
-    public void apagarMovimentacao
+    public void apagarMovimentacao() {
+    }
 }
