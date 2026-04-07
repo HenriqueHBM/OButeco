@@ -30,7 +30,7 @@ public class Produto {
     private Categoria categoria;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_grupos")
+    @JoinColumn(name = "fk_id_grupo")
     private Grupo grupo;
 
     //um prod tem varios insumos | mapped by essa relacao nao e a dona, quem manda é o produto | cascade tudo que fizer com o produto, faco com os insumos

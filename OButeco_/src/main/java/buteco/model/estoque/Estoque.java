@@ -1,12 +1,9 @@
 package buteco.model.estoque;
 
-import buteco.model.conversao.Conversao;
 import buteco.model.movimentacoes.Entrada;
 import buteco.model.movimentacoes.Saida;
 import buteco.model.produto.Produto;
-import buteco.model.restaurante.Restaurante;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

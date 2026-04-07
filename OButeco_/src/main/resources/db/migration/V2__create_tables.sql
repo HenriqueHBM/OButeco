@@ -12,7 +12,7 @@ create table categorias(
 create table produtos (
           id serial primary key not null,
           nome varchar(255) not null,
-          preco_venda double(10,2),
+          preco_venda decimal(10,2),
           status varchar(20) default 'ATIVO' not null,
           fk_id_categoria int not null,
           fk_id_grupo int not null,

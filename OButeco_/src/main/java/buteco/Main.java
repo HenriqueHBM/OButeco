@@ -23,7 +23,7 @@ public class Main {
         CategoriaRepository categoriaRepository = new CategoriaRepository(em);
         GrupoRepository grupoRepository = new GrupoRepository(em);
         InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
-
+//
         //criando a tabela e um valor nela já
         Grupo grupo = new Grupo();
         grupo.setGrupo("Comida");
@@ -35,39 +35,39 @@ public class Main {
         categoriaRepository.create(new_cat);
 
         //buscando as info no banco
-        var cat = categoriaRepository.findById(1L);
-        var grupo_tb = grupoRepository.findById(1L);
-
-        //setando um ingrediente
-        Produto p2 = new Produto();
-        p2.setNome("Queijo");
-        p2.setPrecoVenda(0.50);
-        p2.setCategoria(cat);
-        p2.setGrupo(grupo_tb);
-        produtoRepository.create(p2);
-
-        //setando um novo produto
-        Produto p1 = new Produto();
-        p1.setNome("Pizza");
-        p1.setPrecoVenda(45.00);
-        p1.setCategoria(cat);
-        p1.setGrupo(grupo_tb);
-        produtoRepository.create(p1);
-
-        //relacao de produto e insumos
-        InsumosProduto rel = new InsumosProduto();
-        rel.setProduto(p1);
-        rel.setInsumo(p2);
-        rel.setQtde(200);
-
-        insumosProdutoRepository.create(rel);
-
-        //pegando a relacao do produto(pizza) e add um ingrediente na lista
-        p1.getInsumos().add(rel);
-
-        //p
-        System.out.println(p1);;
-
+//        var cat = categoriaRepository.findById(1L);
+//        var grupo_tb = grupoRepository.findById(1L);
+//
+//        //setando um ingrediente
+//        Produto p2 = new Produto();
+//        p2.setNome("Queijo");
+//        p2.setPrecoVenda(0.50);
+//        p2.setCategoria(cat);
+//        p2.setGrupo(grupo_tb);
+//        produtoRepository.create(p2);
+//
+//        //setando um novo produto
+//        Produto p1 = new Produto();
+//        p1.setNome("Pizza");
+//        p1.setPrecoVenda(45.00);
+//        p1.setCategoria(cat);
+//        p1.setGrupo(grupo_tb);
+//        produtoRepository.create(p1);
+//
+//        //relacao de produto e insumos
+//        InsumosProduto rel = new InsumosProduto();
+//        rel.setProduto(p1);
+//        rel.setInsumo(p2);
+//        rel.setQtde(200);
+//
+//        insumosProdutoRepository.create(rel);
+//
+//        //pegando a relacao do produto(pizza) e add um ingrediente na lista
+//        p1.getInsumos().add(rel);
+////
+//        //p
+//        System.out.println(p1);;
+//
         em.close();
         CustomizerFactory.fechar();
 
