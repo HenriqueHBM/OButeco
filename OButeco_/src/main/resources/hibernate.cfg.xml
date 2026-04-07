@@ -1,53 +1,47 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
     <session-factory>
-
         <!-- Driver -->
-        <property name="hibernate.connection.driver_class">
-            org.postgresql.Driver
-        </property>
-
+<!--        <property name="hibernate.connection.driver_class">-->
+<!--            org.postgresql.Driver-->
+<!--        </property>-->
         <!-- URL do banco -->
-        <property name="hibernate.connection.url">
-            jdbc:postgresql://localhost:5432/bd_obuteco
-        </property>
-
+<!--        <property name="hibernate.connection.url">-->
+<!--            jdbc:postgresql://localhost:5432/bd_obuteco-->
+<!--        </property>-->
         <!-- Usuário -->
-        <property name="hibernate.connection.username">
-            postgres
-        </property>
-
+<!--        <property name="hibernate.connection.username">-->
+<!--            root-->
+<!--        </property>-->
         <!-- Senha -->
+<<<<<<< HEAD
         <property name="hibernate.connection.password">
             password;
         </property>
 
+=======
+<!--        <property name="hibernate.connection.password">-->
+<!--            password;-->
+<!--        </property>-->
+>>>>>>> c8b9745b8627b21c367a5a39845e0130a61504f1
         <!-- Dialeto (Hibernate 6) -->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>-->
         <!-- Atualização automática do schema -->
         <property name="hibernate.hbm2ddl.auto">none</property>
-
         <!-- Logs SQL -->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-
         <!-- Mapeamento das entidades -->
-        <!-- Exemplo -->
-        <!-- <mapping class="com.exemplo.model.Produto"/> -->
 
         <!-- Produto -->
             <mapping class="buteco.model.produto.Produto" />
             <mapping class="buteco.model.produto.Categoria" />
-            <mapping class="buteco.model.produto.Conversoes" />
+            <mapping class="buteco.model.conversao.Conversoes" />
             <mapping class="buteco.model.produto.InsumosProduto" />
             <mapping class="buteco.model.produto.Grupo" />
-            <mapping class="buteco.model.estoque.Estoque"/>
-            <mapping class="buteco.model.movimentacoes.MovimentacoesEstoque"/>
         <!-- Fim Produto -->
-
     </session-factory>
 </hibernate-configuration>

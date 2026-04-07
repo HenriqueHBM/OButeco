@@ -1,13 +1,5 @@
 package buteco.view;
 
-import buteco.enums.ETipoProduto;
-import buteco.model.produto.IngredientesProduto;
-import buteco.model.produto.Produto;
-import buteco.service.entradas.ErroEntrada;
-
-import java.util.List;
-import java.util.Scanner;
-
 public class ProdutosView {
 //    private Scanner sc;
 //    private ErroEntrada errorEntrada;

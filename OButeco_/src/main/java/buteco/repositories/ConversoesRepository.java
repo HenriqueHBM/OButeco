@@ -1,6 +1,6 @@
 package buteco.repositories;
 
-import buteco.model.produto.Conversoes;
+import buteco.model.conversao.Conversoes;
 import jakarta.persistence.EntityManager;
 
 public class ConversoesRepository {
