@@ -26,14 +26,10 @@
         </property>
 
         <!-- Dialeto (Hibernate 6) -->
-        <property name="hibernate.dialect">
-            org.hibernate.dialect.PostgreSQLDialect
-        </property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
         <!-- Atualização automática do schema -->
-        <property name="hibernate.hbm2ddl.auto">
-            update
-        </property>
+        <property name="hibernate.hbm2ddl.auto">none</property>
 
         <!-- Logs SQL -->
         <property name="hibernate.show_sql">true</property>

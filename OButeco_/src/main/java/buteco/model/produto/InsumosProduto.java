@@ -9,9 +9,9 @@ public class InsumosProduto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_id_produto")
-    private Produto produto;
+    private Produto produto; //referencia do mappedBy na class Produto
 
     @ManyToOne
     @JoinColumn(name = "fk_insumo_produto")
