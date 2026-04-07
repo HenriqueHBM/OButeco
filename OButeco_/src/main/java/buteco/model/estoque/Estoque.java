@@ -1,6 +1,6 @@
 package buteco.model.estoque;
 
-import buteco.model.produto.Conversoes;
+import buteco.model.conversao.Conversoes;
 import buteco.model.produto.Produto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

@@ -2,7 +2,7 @@ package buteco.model.movimentacoes;
 
 import buteco.model.estoque.Estoque;
 import buteco.model.pessoa.Usuario;
-import buteco.model.produto.Conversoes;
+import buteco.model.conversao.Conversoes;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
