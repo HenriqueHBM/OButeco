@@ -5,11 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbec47bd-0b24-4e4d-979b-a943c0cc4ae7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/Entrada.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/Produto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/Saida.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/pessoa/Pessoa.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/pessoa/Usuario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/entradas/PessoaService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/entradas/ProdutoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/config/FlyWayconfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/config/FlyWayconfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/estoque/EstoqueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/estoque/EstoqueController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/produtos/ProdutosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/produtos/ProdutosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/conversao/Conversao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Conversoes.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/conversao/Conversoes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/IngredientesProduto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/ConversoesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/ConversoesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/CustomizerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/CustomizerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/ProdutosView.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/ProdutosView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V2__create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V2__create_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/FlyWayconfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/FlyWayconfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/estoque/EstoqueController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/estoque/EstoqueController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/conversao/Conversao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Conversoes.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/conversao/Conversoes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/IngredientesProduto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/InsumosProduto.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/InsumosProduto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Produto.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Produto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ConversoesRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ConversoesRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/CustomizerFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/CustomizerFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ProdutoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ProdutoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V2__create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V2__create_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,12 +59,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/HenriqueHBM/OButeco.git",
-    "accountId": "4c4d5575-c619-4751-9709-29ccf84158be"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;HenriqueHBM&quot;
   }
-}]]></component>
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/HenriqueHBM/OButeco.git&quot;,
+    &quot;accountId&quot;: &quot;c4c455f8-6508-48c0-bb9d-0e6d6504a3c0&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -44,19 +82,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/var/www/html/UniAmerica/Projetos/OButeco",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev__riky&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/var/www/html/UniAmerica/Projetos/OButeco&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
