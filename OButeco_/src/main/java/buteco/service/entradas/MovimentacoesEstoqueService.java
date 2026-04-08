@@ -1,6 +1,6 @@
 package buteco.service.entradas;
 
-import buteco.model.movimentacoes.MovimentacoesEstoque;
+import buteco.model.estoque.MovimentacoesEstoque;
 import buteco.repositories.MovimentacoesEstoqueRepository;
 
 public class MovimentacoesEstoqueService {

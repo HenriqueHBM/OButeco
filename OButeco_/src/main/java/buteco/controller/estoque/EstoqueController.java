@@ -1,12 +1,13 @@
 package buteco.controller.estoque;
 
 import buteco.service.entradas.ErroEntrada;
+import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
 
 import java.util.Scanner;
 
 public class EstoqueController {
-//    private EstoqueView view;
+    private EstoqueView view;
 //    static List<Estoque> estoques;
 //    static List<Produto> produtos;
 //    List<Saida> saidas;
@@ -19,6 +20,7 @@ public class EstoqueController {
         this.sc = sc;
         this.errorEntrada = errorEntrada;
         this.viewProd = new ProdutosView(sc, errorEntrada);
+        this.view = new EstoqueView(sc);
     }
 //    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
 //        this.sc = sc;
@@ -34,7 +36,7 @@ public class EstoqueController {
 //
     public void index(){
         int opcao = 0;
-
+        view.exibirEstoque();
 //        if(this.produtos.size() > 0){
 //            do{
 //                opcao = view.exibirMenu();

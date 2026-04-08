@@ -1,6 +1,6 @@
 package buteco.repositories;
 
-import buteco.model.movimentacoes.MovimentacoesEstoque;
+import buteco.model.estoque.MovimentacoesEstoque;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

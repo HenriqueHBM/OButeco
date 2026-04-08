@@ -1,6 +1,5 @@
-package buteco.model.movimentacoes;
+package buteco.model.estoque;
 
-import buteco.model.estoque.Estoque;
 import buteco.model.pessoa.Usuario;
 import buteco.model.conversao.Conversoes;
 import jakarta.persistence.*;
