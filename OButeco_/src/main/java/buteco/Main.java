@@ -26,12 +26,13 @@ public class Main {
         CategoriaRepository categoriaRepository = new CategoriaRepository(em);
         GrupoRepository grupoRepository = new GrupoRepository(em);
         InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
+        EstoqueRepository estoqueRepository = new EstoqueRepository(em);
 
         int entradaMenu = 0;
         ErroEntrada errorEntrada = new ErroEntrada(sc);
 ////      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada);
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository);
 
         do{
             // Funcao para tentar tratar caso usuario passe um caracter

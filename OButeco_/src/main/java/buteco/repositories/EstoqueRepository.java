@@ -18,7 +18,7 @@ public class EstoqueRepository {
     }
 
     public List<Estoque> findAll() {
-        return em.createQuery("select e from estoque p", Estoque.class).getResultList();
+        return em.createQuery("select e from Estoque e", Estoque.class).getResultList();
     }
 
     public void create(Estoque estoque){

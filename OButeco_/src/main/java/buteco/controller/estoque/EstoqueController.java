@@ -1,5 +1,6 @@
 package buteco.controller.estoque;
 
+import buteco.repositories.EstoqueRepository;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
@@ -16,11 +17,11 @@ public class EstoqueController {
     private ProdutosView viewProd;
 //    VerificaEntradaProduto verificaEntradaProduto;
 //
-    public EstoqueController(Scanner sc, ErroEntrada errorEntrada){
+    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
-        this.viewProd = new ProdutosView(sc, errorEntrada);
-        this.view = new EstoqueView(sc);
+//        this.viewProd = new ProdutosView(sc, errorEntrada);
+        this.view = new EstoqueView(sc, estoqueRepository);
     }
 //    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
 //        this.sc = sc;
@@ -41,7 +42,7 @@ public class EstoqueController {
                 switch (opcao){
 //                    case 1 -> cadastrarEntrada();
 //                    case 2 -> cadastrarSaida();
-                    case 3 -> view.exibirEstoque();
+                    case 3 -> view.exibirEstoques();
                     case 0 -> System.out.println("Saindo...");
                     default -> System.out.println("VALOR INVALIDO");
                 }

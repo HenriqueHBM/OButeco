@@ -7,7 +7,7 @@ public class Conversoes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "conversao")
     private String nome;
 
     @Column(name = "nomenclatura")
