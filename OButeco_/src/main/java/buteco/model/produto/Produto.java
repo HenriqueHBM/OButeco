@@ -56,7 +56,7 @@ public class Produto {
 //    @ManyToMany
 //    @JoinTable(
 //            name = "insumos_produtos",
-//            joinColumns = @JoinColumn(name = "fk_id_pessoa"),
+//            joinColumns = @JoinColumn(name = "fk_id_produto"),
 //            inverseJoinColumns = @JoinColumn(name = "fk_insumos_produto")
 //    )
 //    private List<Produto> ingredientesProdutos;
