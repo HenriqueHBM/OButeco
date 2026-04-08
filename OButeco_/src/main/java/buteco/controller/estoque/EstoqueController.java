@@ -19,7 +19,7 @@ public class EstoqueController {
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
-        this.viewProd = new ProdutosView(sc, errorEntrada);
+//        this.viewProd = new ProdutosView(sc, errorEntrada);
         this.view = new EstoqueView(sc);
     }
 //    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {

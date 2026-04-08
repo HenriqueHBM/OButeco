@@ -30,7 +30,7 @@ public class Main {
         int entradaMenu = 0;
         ErroEntrada errorEntrada = new ErroEntrada(sc);
 ////      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada);
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository);
         EstoqueController estoqueController = new EstoqueController(sc, errorEntrada);
 
         do{
