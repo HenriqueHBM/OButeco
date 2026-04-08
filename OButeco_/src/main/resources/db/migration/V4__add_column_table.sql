@@ -1,0 +1,1 @@
+alter table insumos_produtos add column qtde decimal(10,2) not null;
