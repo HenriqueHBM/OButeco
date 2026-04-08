@@ -1,5 +1,6 @@
 package buteco.view;
 
+import buteco.model.produto.Cadastro;
 import buteco.model.produto.Produto;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.ProdutoService;
@@ -21,6 +22,11 @@ public class ProdutosView {
 
     public int exibirMenu(){
         return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [3] - EDITAR PRODUTO; [4] - EXCLUIR PRODUTO; [0] - SAIR");
+
+        switch (sc){
+            case 1:
+                private Cadastro cadastro;
+        }
     }
 
     public static void exibirMensagem(String mensagem){
