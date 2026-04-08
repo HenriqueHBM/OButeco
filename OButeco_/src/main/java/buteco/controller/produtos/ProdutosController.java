@@ -1,5 +1,6 @@
 package buteco.controller.produtos;
 
+import buteco.repositories.ProdutoRepository;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.ProdutosView;
 
@@ -7,26 +8,26 @@ import java.util.Scanner;
 
 public class ProdutosController {
     private ProdutosView view;
-//    static List<Produto> produtos;
-//    static List<Estoque> estoques;
     private Scanner sc;
     private ErroEntrada errorEntrada;
+    private ProdutoRepository produtoRepository;
+
 //    public VerificaEntradaProduto verificaEntradaProduto;
-//
-//
-    public ProdutosController(Scanner sc, ErroEntrada errorEntrada){
+
+    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
+        this.view = new ProdutosView(sc, errorEntrada, produtoRepository);
+        this.produtoRepository = produtoRepository;
     }
     public void index(){
-
-        int opcao = 0;
+        int opcao; //declarando vazia
 
         do{
             opcao = view.exibirMenu();
             switch (opcao){
 //                case 1 -> cadastrarProduto();
-//                case 2 -> view.exibirProdutos(this.produtos);
+                case 2 -> view.exibirProdutos();
 //                case 3 -> editarProduto();
 //                case 4 -> excluirProduto();
                 case 0 -> view.exibirMensagem("VOLTANDO..");

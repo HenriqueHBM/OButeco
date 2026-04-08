@@ -1,4 +1,4 @@
-package buteco.service.entradas;
+package buteco.service;
 
 import buteco.model.estoque.MovimentacoesEstoque;
 import buteco.repositories.MovimentacoesEstoqueRepository;

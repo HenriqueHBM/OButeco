@@ -1,6 +1,8 @@
 package buteco.view;
 
 import buteco.model.produto.Produto;
+import buteco.repositories.ProdutoRepository;
+import buteco.service.ProdutoService;
 import buteco.service.entradas.ErroEntrada;
 
 import java.util.List;
@@ -9,10 +11,12 @@ import java.util.Scanner;
 public class ProdutosView {
     private Scanner sc;
     private ErroEntrada errorEntrada;
+    private ProdutoRepository produtoRepository;
 
-    public ProdutosView(Scanner sc, ErroEntrada errorEntrada){
+    public ProdutosView(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
+        this.produtoRepository = produtoRepository;
     }
 
     public int exibirMenu(){
@@ -23,22 +27,32 @@ public class ProdutosView {
         System.out.println(mensagem);
     }
 
-    public void exibirProdutos(List<Produto> produto){
+    public void exibirProdutos(){
         System.out.println("Produtos Cadastrados");
 
         exibirMensagem("===============PRODUTOS CADASTRADOS===============");
-        System.out.printf("%-6s | %-25s | %-25s | %-15s | %-25s\n",
-                "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "OBS");
-        for (Produto p : produto){
-            System.out.printf("%-6d | %-25s | %-25s | %-15.2f \n",
-                    p.getId(),
-                    p.getNome(),
-                    p.getObservacao()
-            );
+        System.out.printf("%-6s | %-25s | %-25s | %-15s | %-15s | %-15s | %-25s\n",
+                "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "GRUPO", "STATUS", "OBS");
 
-//            if(p.getIngredientesProdutos().size() > 0){
-//                exibirIngredienteProduto(p);
-//            }
+
+        try {
+            var service = new ProdutoService(produtoRepository);
+            var prod = service.findAllProdutos();
+
+            prod.stream().forEach(element -> {
+                System.out.printf("%-6s | %-25s | %-25s | %-15s | %-15s | %-15s | %-25s\n",
+                        element.getId(),
+                        element.getNome(),
+                        element.getCategoria().getCategoria(),
+                        element.getPrecoVenda(),
+                        element.getGrupo().getGrupo(),
+                        element.getStatus(),
+                        element.getObservacao()
+                );
+            });
+            System.out.println();
+        }catch (Exception er){
+            System.out.println(er.getMessage());
         }
     }
 
