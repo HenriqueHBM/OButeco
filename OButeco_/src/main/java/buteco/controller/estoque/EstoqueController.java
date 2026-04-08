@@ -36,22 +36,18 @@ public class EstoqueController {
 //
     public void index(){
         int opcao = 0;
-        view.exibirEstoque();
-//        if(this.produtos.size() > 0){
-//            do{
-//                opcao = view.exibirMenu();
-//                switch (opcao){
-////                    case 1 -> cadastrarEntrada();
-////                    case 2 -> cadastrarSaida();
-////                    case 3 -> view.exibirEstoque(this.estoques);
-//                    case 0 -> System.out.println("Saindo...");
-//                    default -> System.out.println("VALOR INVALIDO");
-//                }
-//
-//            }while(opcao != 0 );
-//        }else{
-//            System.out.println("SEM PRODUTO CADASTRADO!!");
-//        }
+            do{
+                opcao = view.exibirMenu();
+                switch (opcao){
+//                    case 1 -> cadastrarEntrada();
+//                    case 2 -> cadastrarSaida();
+                    case 3 -> view.exibirEstoque();
+                    case 0 -> System.out.println("Saindo...");
+                    default -> System.out.println("VALOR INVALIDO");
+                }
+
+            }while(opcao != 0 );
+
 
 
     }
