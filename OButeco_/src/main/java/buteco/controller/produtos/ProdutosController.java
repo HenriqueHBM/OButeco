@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProdutosController {
-//    private ProdutosView view;
-//    static List<Produto> produtos;
-//    static List<Estoque> estoques;
-//    private Scanner sc;
-//    private ErroEntrada errorEntrada;
+    private ProdutosView view;
+    static List<Produto> produtos;
+    static List<Estoque> estoques;
+    private Scanner sc;
+    private ErroEntrada errorEntrada;
 //    public VerificaEntradaProduto verificaEntradaProduto;
 //
 //

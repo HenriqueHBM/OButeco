@@ -1,6 +1,7 @@
 package buteco.view;
 
 import buteco.enums.ETipoProduto;
+import buteco.model.produto.Cadastro;
 import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
 import buteco.service.entradas.ErroEntrada;
@@ -9,19 +10,23 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProdutosView {
-//    private Scanner sc;
-//    private ErroEntrada errorEntrada;
-//
-//    public ProdutosView(Scanner sc, ErroEntrada errorEntrada){
-//        this.sc = sc;
-//        this.errorEntrada = errorEntrada;
-//    }
-//
-//    public int exibirMenu(){
-//        return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [3] - EDITAR PRODUTO; [4] - EXCLUIR PRODUTO; [0] - SAIR");
-//    }
-//
-//    public void exibirProdutos(List<Produto> produto){
+    private Scanner sc;
+    private ErroEntrada errorEntrada ;
+
+    public ProdutosView(Scanner sc, ErroEntrada errorEntrada){
+        this.sc = sc;
+        this.errorEntrada = errorEntrada;
+    }
+
+    public int exibirMenu(){
+        return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [3] - EDITAR PRODUTO; [4] - EXCLUIR PRODUTO; [0] - SAIR");
+   }
+   switch(sc){
+        case 1:
+            private Cadastro cadastro;
+    }
+}
+    public void exibirProdutos(List<Produto> produto){
 //        System.out.println("Produtos Cadastrados");
 //
 //        exibirMensagem("===============PRODUTOS CADASTRADOS===============");
