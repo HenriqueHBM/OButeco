@@ -49,6 +49,9 @@ public class ProdutosView {
                         element.getStatus(),
                         element.getObservacao()
                 );
+            element.getInsumos().stream().forEach(val -> {
+                System.out.println(val.getQtde());
+            });
             });
             System.out.println();
         }catch (Exception er){

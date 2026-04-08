@@ -14,7 +14,7 @@ public class InsumosProduto {
     private Produto produto; //referencia do mappedBy na class Produto
 
     @ManyToOne
-    @JoinColumn(name = "fk_insumo_produto")
+    @JoinColumn(name = "fk_insumos_produto")
     private Produto insumo;
 
     @Column(name = "qtde")
