@@ -1,32 +1,27 @@
 package buteco.controller.estoque;
 
-import buteco.enums.ETipoProduto;
-import buteco.model.estoque.Estoque;
-import buteco.model.movimentacoes.Entrada;
-import buteco.model.movimentacoes.Saida;
-import buteco.model.produto.IngredientesProduto;
-import buteco.model.produto.Produto;
 import buteco.service.entradas.ErroEntrada;
-import buteco.service.entradas.VerificaEntradaProduto;
 import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class EstoqueController {
-//    private EstoqueView view;
+    private EstoqueView view;
 //    static List<Estoque> estoques;
 //    static List<Produto> produtos;
 //    List<Saida> saidas;
-//    private Scanner sc;
-//    private ErroEntrada errorEntrada;
-//    private ProdutosView viewProd;
+    private Scanner sc;
+    private ErroEntrada errorEntrada;
+    private ProdutosView viewProd;
 //    VerificaEntradaProduto verificaEntradaProduto;
 //
+    public EstoqueController(Scanner sc, ErroEntrada errorEntrada){
+        this.sc = sc;
+        this.errorEntrada = errorEntrada;
+//        this.viewProd = new ProdutosView(sc, errorEntrada);
+        this.view = new EstoqueView(sc);
+    }
 //    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
 //        this.sc = sc;
 //        this.produtos = produtos;
@@ -39,16 +34,16 @@ public class EstoqueController {
 //    }
 //
 //
-//    public void index(){
-//        int opcao = 0;
-//
+    public void index(){
+        int opcao = 0;
+        view.exibirEstoque();
 //        if(this.produtos.size() > 0){
 //            do{
 //                opcao = view.exibirMenu();
 //                switch (opcao){
-//                    case 1 -> cadastrarEntrada();
-//                    case 2 -> cadastrarSaida();
-//                    case 3 -> view.exibirEstoque(this.estoques);
+////                    case 1 -> cadastrarEntrada();
+////                    case 2 -> cadastrarSaida();
+////                    case 3 -> view.exibirEstoque(this.estoques);
 //                    case 0 -> System.out.println("Saindo...");
 //                    default -> System.out.println("VALOR INVALIDO");
 //                }
@@ -57,10 +52,9 @@ public class EstoqueController {
 //        }else{
 //            System.out.println("SEM PRODUTO CADASTRADO!!");
 //        }
-//
-////        sc.close();
-//
-//    }
+
+
+    }
 //
 //    public void cadastrarEntrada(){
 //        System.out.println("Produtos para realizar a entrada");

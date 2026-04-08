@@ -1,47 +1,61 @@
 package buteco.view;
 
-import buteco.enums.ETipoProduto;
-import buteco.model.produto.IngredientesProduto;
 import buteco.model.produto.Produto;
+import buteco.repositories.ProdutoRepository;
+import buteco.service.ProdutoService;
 import buteco.service.entradas.ErroEntrada;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class ProdutosView {
-//    private Scanner sc;
-//    private ErroEntrada errorEntrada;
-//
-//    public ProdutosView(Scanner sc, ErroEntrada errorEntrada){
-//        this.sc = sc;
-//        this.errorEntrada = errorEntrada;
-//    }
-//
-//    public int exibirMenu(){
-//        return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [3] - EDITAR PRODUTO; [4] - EXCLUIR PRODUTO; [0] - SAIR");
-//    }
-//
-//    public void exibirProdutos(List<Produto> produto){
-//        System.out.println("Produtos Cadastrados");
-//
-//        exibirMensagem("===============PRODUTOS CADASTRADOS===============");
-//        System.out.printf("%-6s | %-25s | %-25s | %-15s | %-25s\n",
-//                "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "OBS");
-//        for (Produto p : produto){
-//            System.out.printf("%-6d | %-25s | %-25s | %-15.2f \n",
-//                    p.getCodigo(),
-//                    p.getNome(),
-//                    p.getTipoProduto().toString(),
-//                    p.getValorUnitario(),
-//                    p.getObservacao()
-//            );
-//
-//            if(p.getIngredientesProdutos().size() > 0){
-//                exibirIngredienteProduto(p);
-//            }
-//        }
-//    }
-//
+    private Scanner sc;
+    private ErroEntrada errorEntrada;
+    private ProdutoRepository produtoRepository;
+
+    public ProdutosView(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository){
+        this.sc = sc;
+        this.errorEntrada = errorEntrada;
+        this.produtoRepository = produtoRepository;
+    }
+
+    public int exibirMenu(){
+        return errorEntrada.trataEntradaInt("[1] - CADASTRAR PRODUTO; [2] - LISTAR PRODUTOS; [3] - EDITAR PRODUTO; [4] - EXCLUIR PRODUTO; [0] - SAIR");
+    }
+
+    public static void exibirMensagem(String mensagem){
+        System.out.println(mensagem);
+    }
+
+    public void exibirProdutos(){
+        System.out.println("Produtos Cadastrados");
+
+        exibirMensagem("===============PRODUTOS CADASTRADOS===============");
+        System.out.printf("%-6s | %-25s | %-25s | %-15s | %-15s | %-15s | %-25s\n",
+                "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "GRUPO", "STATUS", "OBS");
+
+
+        try {
+            var service = new ProdutoService(produtoRepository);
+            var prod = service.findAllProdutos();
+
+            prod.stream().forEach(element -> {
+                System.out.printf("%-6s | %-25s | %-25s | %-15s | %-15s | %-15s | %-25s\n",
+                        element.getId(),
+                        element.getNome(),
+                        element.getCategoria().getCategoria(),
+                        element.getPrecoVenda(),
+                        element.getGrupo().getGrupo(),
+                        element.getStatus(),
+                        element.getObservacao()
+                );
+            });
+            System.out.println();
+        }catch (Exception er){
+            System.out.println(er.getMessage());
+        }
+    }
+
 //    public void exibirIngredientes(List<Produto> produto){
 //        System.out.println("Produtos Cadastrados");
 //

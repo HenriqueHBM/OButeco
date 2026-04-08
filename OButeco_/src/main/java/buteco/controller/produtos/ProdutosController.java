@@ -1,55 +1,45 @@
 package buteco.controller.produtos;
 
-import buteco.enums.ETipoProduto;
-import buteco.model.estoque.Estoque;
-import buteco.model.produto.IngredientesProduto;
-import buteco.model.produto.Produto;
+import buteco.repositories.ProdutoRepository;
 import buteco.service.entradas.ErroEntrada;
-import buteco.service.entradas.VerificaEntradaProduto;
 import buteco.view.ProdutosView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class ProdutosController {
-//    private ProdutosView view;
-//    static List<Produto> produtos;
-//    static List<Estoque> estoques;
-//    private Scanner sc;
-//    private ErroEntrada errorEntrada;
+    private ProdutosView view;
+    private Scanner sc;
+    private ErroEntrada errorEntrada;
+    private ProdutoRepository produtoRepository;
+
 //    public VerificaEntradaProduto verificaEntradaProduto;
-//
-//
-//    // constructor da classe,
-//    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques){
-//        this.view = new ProdutosView(sc, errorEntrada);
-//        this.sc = sc;
-//        this.produtos = produtos;
-//        this.estoques = estoques;
-//        this.errorEntrada = errorEntrada;
-//        this.verificaEntradaProduto = new VerificaEntradaProduto(errorEntrada, this.produtos);
-//    }
-//    public void index(){
-//
-//        int opcao = 0;
-//
-//        do{
-//            opcao = view.exibirMenu();
-//            switch (opcao){
+
+    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository){
+        this.sc = sc;
+        this.errorEntrada = errorEntrada;
+        this.view = new ProdutosView(sc, errorEntrada, produtoRepository);
+        this.produtoRepository = produtoRepository;
+    }
+    public void index(){
+        int opcao; //declarando vazia
+
+        do{
+            opcao = view.exibirMenu();
+            switch (opcao){
 //                case 1 -> cadastrarProduto();
-//                case 2 -> view.exibirProdutos(this.produtos);
+                case 2 -> view.exibirProdutos();
 //                case 3 -> editarProduto();
 //                case 4 -> excluirProduto();
-//                case 0 -> view.exibirMensagem("VOLTANDO..");
-//                default -> view.exibirMensagem("VALOR INVALIDO!!!");
-//            }
-//
-//        }while(opcao != 0 );
-//    }
+                case 0 -> view.exibirMensagem("VOLTANDO..");
+                default -> view.exibirMensagem("VALOR INVALIDO!!!");
+            }
+
+        }while(opcao != 0 );
+    }
 //
 //    public void cadastrarProduto(){
 //        List<IngredientesProduto> listaIngredientesProdutos = new ArrayList<>();
+//
 //        String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
 //        double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
 //        int opcao = errorEntrada.trataEntradaInt("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");

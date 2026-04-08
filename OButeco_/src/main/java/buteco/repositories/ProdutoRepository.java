@@ -22,7 +22,14 @@ public class ProdutoRepository {
         em.getTransaction().commit();
     }
 
+    public void deletar(long id){
+        var pessoa = findById(id);
+        if(pessoa != null){
+            em.remove(pessoa);
+        }
+    }
+
     public List<Produto> findAll() {
-        return em.createQuery("select p from produtos p", Produto.class).getResultList();
+        return em.createQuery("select p from Produto p", Produto.class).getResultList();
     }
 }

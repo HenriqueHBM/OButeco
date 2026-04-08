@@ -1,23 +1,16 @@
 package buteco.view;
 
-import buteco.controller.estoque.EstoqueController;
-import buteco.model.estoque.Estoque;
-import buteco.model.produto.Produto;
-import buteco.model.movimentacoes.Entrada;
-import buteco.model.movimentacoes.Saida;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class EstoqueView {
-//    private Scanner sc;
+    private Scanner sc;
 //
-//    public EstoqueView(Scanner sc) {
-//        this.sc = sc;
-//    }
+    public EstoqueView(Scanner sc) {
+        this.sc = sc;
+    }
 //
 //    public int exibirMenu(){
-//        System.out.println("[1] CADASTRAR ENTRADA; [2] - CADASTRAR SAÍDA;  [3] - LISTAR ESTOQUE; [4] - MOVIMENTACOES ENTRADAS; [5] - MOVIMENTACOES SAIDAS;  [0] - SAIR");
+//        System.out.println("[1] CADASTRAR ENTRADA; [2] - CADASTRAR SAÍDA;  [3] - LISTAR ESTOQUE; [4] - MOVIMENTACOES; [0] - SAIR");
 //        return sc.nextInt();
 //    }
 //
@@ -27,23 +20,15 @@ public class EstoqueView {
 //        System.out.printf("Margem: %.2f \n", margem);
 //    }
 //
-//    public void exibirEstoque(List<Estoque> estoques){
-//
-//        System.out.println("============== ESTOQUE ==============");
-//
-//        System.out.printf("%-6s | %-25s | %-15s | %-15s\n",
-//                "COD", "PRODUTO", "QTDE", "VALOR TOTAL");
-//
-//        for (Estoque e : estoques){
-//
-//            System.out.printf("%-6d | %-25s | %-15.2f | %-15.2f\n",
-//                    e.getCodEstoque(),
-//                    e.getProduto().getNome(),
-//                    e.getQtdeEstoque(),
-//                    e.getValorTotal()
-//            );
-//        }
-//    }
+    public void exibirEstoque(){
 
+        System.out.println("============== ESTOQUE ==============");
+
+        System.out.printf("%-6s | %-25s | %-15s | %-15s | %-15s | %-20s\n",
+                "COD", "PRODUTO", "QTDE", "VALOR TOTAL", "CONVERSAO", "DATA DE CRIACAO");
+
+
+
+    }
 
 }

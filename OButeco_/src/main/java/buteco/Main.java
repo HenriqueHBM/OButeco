@@ -1,7 +1,11 @@
 package buteco;
 
+import buteco.config.FlyWayconfig;
+import buteco.controller.estoque.EstoqueController;
+import buteco.controller.produtos.ProdutosController;
 import buteco.model.produto.*;
 import buteco.repositories.*;
+import buteco.service.entradas.ErroEntrada;
 import jakarta.persistence.EntityManager;
 
 import java.util.ArrayList;
@@ -11,6 +15,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        FlyWayconfig.migrate();
+
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in); //passar isso para as classesControllers para nao ficar instanciando o tempo todo
         System.out.println("--O BUTECO--");
@@ -21,76 +27,71 @@ public class Main {
         GrupoRepository grupoRepository = new GrupoRepository(em);
         InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
 
-        //criando a tabela e um valor nela já
-        Grupo grupo = new Grupo();
-        grupo.setGrupo("Comida");
-        grupoRepository.create(grupo);
+        int entradaMenu = 0;
+        ErroEntrada errorEntrada = new ErroEntrada(sc);
+////      Declarando os controllers
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada);
 
-        //criando uma categoria nova
-        Categoria new_cat = new Categoria();
-        new_cat.setCategoria("COM_INSUMO");
-        categoriaRepository.create(new_cat);
+        do{
+            // Funcao para tentar tratar caso usuario passe um caracter
+            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
+            switch (entradaMenu){
+                case 1 -> produtosController.index();
+                case 2 -> estoqueController.index();
+                case 3 -> System.out.println("EM DESENVOLVIMENTO");
+                case 0 -> System.out.println("ATE MAIS!!!");
+                default -> System.out.println("VALOR INVALIDO!!!");
+
+            }
+        }while(entradaMenu != 0 );
+
+
+        //criando a tabela e um valor nela já
+//        Grupo grupo = new Grupo();
+//        grupo.setGrupo("Comida");
+//        grupoRepository.create(grupo);
+//
+//        //criando uma categoria nova
+//        Categoria new_cat = new Categoria();
+//        new_cat.setCategoria("COM_INSUMO");
+//        categoriaRepository.create(new_cat);
 
         //buscando as info no banco
-        var cat = categoriaRepository.findById(1L);
-        var grupo_tb = grupoRepository.findById(1L);
-
-        //setando um ingrediente
-        Produto p2 = new Produto();
-        p2.setNome("Queijo");
-        p2.setPrecoVenda(0.50);
-        p2.setCategoria(cat);
-        p2.setGrupo(grupo_tb);
-        produtoRepository.create(p2);
-
-        //setando um novo produto
-        Produto p1 = new Produto();
-        p1.setNome("Pizza");
-        p1.setPrecoVenda(45.00);
-        p1.setCategoria(cat);
-        p1.setGrupo(grupo_tb);
-        produtoRepository.create(p1);
-
-        //relacao de produto e insumos
-        InsumosProduto rel = new InsumosProduto();
-        rel.setProduto(p1);
-        rel.setInsumo(p2);
-        rel.setQtde(200);
-
-        insumosProdutoRepository.create(rel);
-
-        //pegando a relacao do produto(pizza) e add um ingrediente na lista
-        p1.getInsumos().add(rel);
-
-        //p
-        System.out.println(p1);;
-
+//        var cat = categoriaRepository.findById(1L);
+//        var grupo_tb = grupoRepository.findById(1L);
+//
+//        //setando um ingrediente
+//        Produto p2 = new Produto();
+//        p2.setNome("Queijo");
+//        p2.setPrecoVenda(0.50);
+//        p2.setCategoria(cat);
+//        p2.setGrupo(grupo_tb);
+//        produtoRepository.create(p2);
+//
+//        //setando um novo produto
+//        Produto p1 = new Produto();
+//        p1.setNome("Pizza");
+//        p1.setPrecoVenda(45.00);
+//        p1.setCategoria(cat);
+//        p1.setGrupo(grupo_tb);
+//        produtoRepository.create(p1);
+//
+//        //relacao de produto e insumos
+//        InsumosProduto rel = new InsumosProduto();
+//        rel.setProduto(p1);
+//        rel.setInsumo(p2);
+//        rel.setQtde(200);
+//
+//        insumosProdutoRepository.create(rel);
+//
+//        //pegando a relacao do produto(pizza) e add um ingrediente na lista
+//        p1.getInsumos().add(rel);
+////
+//        //p
+//        System.out.println(p1);;
+//
         em.close();
         CustomizerFactory.fechar();
-
-//        int entradaMenu = 0;
-//        List<Produto> produtos = new ArrayList<>();
-//        List<Estoque> estoques = new ArrayList<>();
-//        List<Saida> saidas = new ArrayList<>();
-//        ErroEntrada errorEntrada = new ErroEntrada(sc);
-//
-////      Declarando os controllers
-//        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtos, estoques);
-//        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, produtos, estoques, saidas);
-//        UsuariosController usuarioController = new UsuariosController();
-//
-//
-//        do{
-//            // Funcao para tentar tratar caso usuario passe um caracter
-//            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
-//            switch (entradaMenu){
-//                case 1 -> produtosController.index();
-//                case 2 -> estoqueController.index();
-//                case 3 -> System.out.println("EM DESENVOLVIMENTO");
-//                case 0 -> System.out.println("ATE MAIS!!!");
-//                default -> System.out.println("VALOR INVALIDO!!!");
-//
-//            }
-//        }while(entradaMenu != 0 );
     }
 }
