@@ -1,6 +1,5 @@
-package buteco.model.movimentacoes;
+package buteco.model.estoque;
 
-import buteco.model.estoque.Estoque;
 import buteco.model.pessoa.Usuario;
 import buteco.model.conversao.Conversoes;
 import jakarta.persistence.*;
@@ -17,50 +16,50 @@ public class MovimentacoesEstoque {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_estoque") //colocar nome da coluna como fk_id_estoque? no momento esta como o diagrama
+    @JoinColumn(name = "fk_id_estoque", nullable = false)
     private Estoque estoque; //colocar nome da var como idEstoque?
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario; //colocar nome da var como idUsuario?
-
-    @Column(name = "tipo")
+    @Column(name = "tipo", nullable = false)
     private String tipo;
 
-    @Column(name = "qtde")
+    @Column(name = "qtde", nullable = false)
     private double quantidade;
 
-    @Column(name = "valor_unitario")
+    @Column(name = "valor_unitario", nullable = false)
     private double valorUnitario;
 
     @Column(name = "valor_total")
     private double valorTotal;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_id_usuario", nullable = false)
+    private Usuario usuario; //colocar nome da var como idUsuario?
+
+    @ManyToOne
+    @JoinColumn(name = "fk_id_conversao",nullable = false)
+    private Conversoes conversoes;
+
     @CreationTimestamp
     @Column(name = "data_movimentacao")
     private Instant dataMovimentacao;
 
-    @Column(name = "observacao")
+    @Column(name = "observacao", nullable = true)
     private String observacao;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_id_conversao")
-    private Conversoes conversoes;
 
     public MovimentacoesEstoque() {
     }
 
-    public MovimentacoesEstoque(Long id, Estoque estoque, Usuario usuario, String tipo, double quantidade, double valorUnitario, double valorTotal, Instant dataMovimentacao, String observacao, Conversoes conversoes) {
+    public MovimentacoesEstoque(Long id, Estoque estoque, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, Conversoes conversoes, Instant dataMovimentacao, String observacao) {
         this.id = id;
         this.estoque = estoque;
-        this.usuario = usuario;
         this.tipo = tipo;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
+        this.usuario = usuario;
+        this.conversoes = conversoes;
         this.dataMovimentacao = dataMovimentacao;
         this.observacao = observacao;
-        this.conversoes = conversoes;
     }
 
     public Long getId() {
@@ -77,14 +76,6 @@ public class MovimentacoesEstoque {
 
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public String getTipo() {
@@ -119,6 +110,22 @@ public class MovimentacoesEstoque {
         this.valorTotal = valorTotal;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Conversoes getConversoes() {
+        return conversoes;
+    }
+
+    public void setConversoes(Conversoes conversoes) {
+        this.conversoes = conversoes;
+    }
+
     public Instant getDataMovimentacao() {
         return dataMovimentacao;
     }
@@ -135,27 +142,19 @@ public class MovimentacoesEstoque {
         this.observacao = observacao;
     }
 
-    public Conversoes getConversoes() {
-        return conversoes;
-    }
-
-    public void setConversoes(Conversoes conversoes) {
-        this.conversoes = conversoes;
-    }
-
     @Override
     public String toString() {
         return "MovimentacoesEstoque{" +
                 "id=" + id +
                 ", estoque=" + estoque +
-                ", usuario=" + usuario +
                 ", tipo='" + tipo + '\'' +
                 ", quantidade=" + quantidade +
                 ", valorUnitario=" + valorUnitario +
                 ", valorTotal=" + valorTotal +
+                ", usuario=" + usuario +
+                ", conversoes=" + conversoes +
                 ", dataMovimentacao=" + dataMovimentacao +
                 ", observacao='" + observacao + '\'' +
-                ", conversoes=" + conversoes +
                 '}';
     }
 }
