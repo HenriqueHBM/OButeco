@@ -26,7 +26,7 @@ public class ProdutosController {
         do{
             opcao = view.exibirMenu();
             switch (opcao){
-//                case 1 -> cadastrarProduto();
+                case 1 -> cadastrarProduto();
                 case 2 -> view.exibirProdutos();
 //                case 3 -> editarProduto();
 //                case 4 -> excluirProduto();
@@ -36,23 +36,20 @@ public class ProdutosController {
 
         }while(opcao != 0 );
     }
-//
-//    public void cadastrarProduto(){
-//        List<IngredientesProduto> listaIngredientesProdutos = new ArrayList<>();
-//
-//        String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
-//        double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
-//        int opcao = errorEntrada.trataEntradaInt("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
-//
-//        ETipoProduto tipoProduto = escolheTipoProduto(opcao);
-//
-//        int codigo = produtos.size() + 1;
+
+public void cadastrarProduto(){
+
+        String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
+        double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
+        int opcao = errorEntrada.trataEntradaInt("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
+
+
 //        //cadastrando um novo produto
 //        Produto produto = new Produto(nome, codigo, valUnit, tipoProduto);
-//
+
 //        if(opcao == 2){
 //            cadastrarIngredientes(produto, listaIngredientesProdutos);
-//            /*
+//
 //                int maisIngredientes = 0;
 //                do {
 //                    if(maisIngredientes == 0 || maisIngredientes == 1){
@@ -65,8 +62,8 @@ public class ProdutosController {
 //                    maisIngredientes = errorEntrada.trataEntradaInt("[1] - SIM; [0] - NAO");
 //
 //                }while(maisIngredientes != 0);
-//            */
-//        }
+//
+        }
 //
 //        //setando a lista de ingredientes no produto
 //        produto.setIngredientesProdutos(listaIngredientesProdutos);
