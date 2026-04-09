@@ -16,7 +16,7 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id_produto", nullable = false)
+    @Column(name = "fk_id_produto", nullable = false)
     private Produto produto;
 
     @Column(name = "qtde_estoque", nullable = true)
