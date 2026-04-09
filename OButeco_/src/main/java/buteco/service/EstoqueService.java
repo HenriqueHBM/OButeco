@@ -18,28 +18,4 @@ public class EstoqueService {
         }
         return estoques;
     }
-
-    public void cadastrarEntrada(Long idProduto, double qtde){
-        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
-        if (estoque == null){
-            throw new RuntimeException("Estoque nao encontrado para esse COD.");
-        }
-
-        estoque.setQntdEstoque(estoque.getQntdEstoque() + qtde);
-        estoqueRepository.update(estoque);
-    }
-
-    public void cadastrarSaida(Long idProduto, double qtde){
-        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
-        if (estoque == null){
-            throw new RuntimeException("Estoque nao encontrado para esse COD.");
-        }
-        if (qtde > estoque.getQntdEstoque()){
-            throw new RuntimeException("Quantidade insuficiente no estoque, tente novamente!");
-        }
-
-        estoque.setQntdEstoque(estoque.getQntdEstoque() - qtde);
-        estoqueRepository.update(estoque);
-    }
-
 }
