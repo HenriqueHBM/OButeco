@@ -3,6 +3,7 @@ package buteco.controller.estoque;
 import buteco.repositories.EstoqueRepository;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.EstoqueService;
+import buteco.service.MovimentacoesEstoqueService;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
@@ -15,13 +16,18 @@ public class EstoqueController {
     private ErroEntrada errorEntrada;
     private ProdutosView produtosView;
     private EstoqueService estoqueService;
+    private MovimentacoesEstoqueService movimentacoesEstoqueService;
 
-    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository, EstoqueService estoqueService){
+    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository,
+                             ProdutoRepository produtoRepository, EstoqueService estoqueService,
+                             MovimentacoesEstoqueService movimentacoesEstoqueService){
+
         this.sc = sc;
         this.errorEntrada = errorEntrada;
         this.estoqueView = new EstoqueView(sc, estoqueRepository, produtoRepository);
         this.produtosView = new ProdutosView(sc, errorEntrada, produtoRepository);
-        this.estoqueService = new EstoqueService(estoqueRepository);
+        this.estoqueService = estoqueService;
+        this.movimentacoesEstoqueService = movimentacoesEstoqueService;
     }
 
     public void index(){
@@ -50,8 +56,8 @@ public class EstoqueController {
                 double qtde = errorEntrada.trataEntradaDouble("Insira a quantidade: ");
 
                 switch (tipo) {
-                    case 1 -> estoqueService.cadastrarEntrada(idProduto, qtde);
-                    case 2 -> estoqueService.cadastrarSaida(idProduto, qtde);
+                    case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde);
+                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde);
                 }
                 System.out.println("Cadastro realizado com sucesso!");
                 tentativas = 0;
