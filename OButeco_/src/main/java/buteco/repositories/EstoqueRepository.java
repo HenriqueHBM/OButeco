@@ -17,6 +17,14 @@ public class EstoqueRepository {
         return em.find(Estoque.class, id);
     }
 
+    public Estoque findByProdutoId(Long idProduto) {
+        var resultado = em.createQuery("select e from Estoque e where e.produto.id = :idProduto", Estoque.class)
+                .setParameter("idProduto", idProduto)
+                .getResultList();
+
+        return resultado.isEmpty() ? null : resultado.get(0);
+    }//getResultList no lugar de getSingleResult para poder aparecer a mensagem certa de erro na entrada
+
     public List<Estoque> findAll() {
         return em.createQuery("select e from Estoque e", Estoque.class).getResultList();
     }
@@ -25,14 +33,12 @@ public class EstoqueRepository {
         em.getTransaction().begin();
         em.persist(estoque);
         em.getTransaction().commit();
-        em.close();
     }
 
     public void update(Estoque estoque){
         em.getTransaction().begin();
         em.persist(estoque);
         em.getTransaction().commit();
-        em.close();
     }
 
     public void delete(Estoque estoque){
