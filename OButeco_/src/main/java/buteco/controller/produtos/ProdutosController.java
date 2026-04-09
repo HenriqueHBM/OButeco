@@ -1,8 +1,11 @@
 package buteco.controller.produtos;
 
+import buteco.model.produto.Categoria;
+import buteco.model.produto.Produto;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.ProdutosView;
+import jakarta.persistence.Id;
 
 import java.util.Scanner;
 
@@ -43,12 +46,6 @@ public void cadastrarProduto(){
         double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
         int opcao = errorEntrada.trataEntradaInt("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
 
-
-//        //cadastrando um novo produto
-//        Produto produto = new Produto(nome, codigo, valUnit, tipoProduto);
-
-//        if(opcao == 2){
-//            cadastrarIngredientes(produto, listaIngredientesProdutos);
 //
 //                int maisIngredientes = 0;
 //                do {

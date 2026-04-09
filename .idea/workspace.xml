@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cbec47bd-0b24-4e4d-979b-a943c0cc4ae7" name="Changes" comment="Conexao .env">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Cadastro.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V4__add_column_table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V4__add_column_table.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V5__insert_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V5__insert_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/produtos/ProdutosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/produtos/ProdutosController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V4__add_column_table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V4__add_column_table.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +31,12 @@
     &quot;assignee&quot;: &quot;HenriqueHBM&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/HenriqueHBM/OButeco.git&quot;,
-    &quot;accountId&quot;: &quot;c4c455f8-6508-48c0-bb9d-0e6d6504a3c0&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/HenriqueHBM/OButeco.git",
+    "accountId": "471eea00-978e-4f25-9d42-39cb76afe899"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.7.10/postgresql-42.7.10-sources.jar!/org/postgresql/core/v3/QueryExecutorImpl.java" root0="SKIP_INSPECTION" />
   </component>
@@ -65,9 +59,9 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "dev__riky",
+    "git-widget-placeholder": "dev__dani",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/var/www/html/UniAmerica/Projetos/OButeco",
+    "last_opened_file_path": "D:/projetos/OButeco",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java",
     "settings.editor.selected.configurable": "preferences.lookFeel",
@@ -77,8 +71,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
       </set>
     </attachedChunks>
   </component>
