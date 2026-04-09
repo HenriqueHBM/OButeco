@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbec47bd-0b24-4e4d-979b-a943c0cc4ae7" name="Changes" comment="Conexao .env">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Cadastro.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V4__add_column_table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V4__add_column_table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V5__insert_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V5__insert_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V4__add_column_table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V4__add_column_table.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +43,9 @@
     &quot;accountId&quot;: &quot;c4c455f8-6508-48c0-bb9d-0e6d6504a3c0&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.7.10/postgresql-42.7.10-sources.jar!/org/postgresql/core/v3/QueryExecutorImpl.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -46,22 +57,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev__riky&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/var/www/html/UniAmerica/Projetos/OButeco&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "dev__riky",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/var/www/html/UniAmerica/Projetos/OButeco",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -88,7 +100,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775598475836</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Conexao .env">
+      <option name="closed" value="true" />
+      <created>1775598672801</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1775598672801</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Conexao .env">
+      <option name="closed" value="true" />
+      <created>1775598739279</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775598739279</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,5 +125,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Conexao .env" />
     <option name="LAST_COMMIT_MESSAGE" value="Conexao .env" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

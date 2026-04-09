@@ -16,11 +16,6 @@ public class EstoqueController {
     private ProdutosView produtosView;
     private EstoqueService estoqueService;
 
-    //    static List<Estoque> estoques;
-//    static List<Produto> produtos;
-//    List<Saida> saidas;
-//    VerificaEntradaProduto verificaEntradaProduto;
-//
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository, EstoqueService estoqueService){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
@@ -28,18 +23,7 @@ public class EstoqueController {
         this.produtosView = new ProdutosView(sc, errorEntrada, produtoRepository);
         this.estoqueService = new EstoqueService(estoqueRepository);
     }
-//    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
-//        this.sc = sc;
-//        this.produtos = produtos;
-//        this.estoques = estoques;
-//        this.saidas = saidas;
-//        this.view = new EstoqueView(sc);
-//        this.errorEntrada = errorEntrada;
-//        this.viewProd = new ProdutosView(sc, errorEntrada);
-//        this.verificaEntradaProduto = new VerificaEntradaProduto(errorEntrada, this.produtos);
-//    }
-//
-//
+
     public void index(){
         int opcao = 0;
             do{
