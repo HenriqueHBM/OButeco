@@ -35,6 +35,10 @@
         <mapping class="buteco.model.conversao.Conversoes" />
         <mapping class="buteco.model.produto.InsumosProduto" />
         <mapping class="buteco.model.produto.Grupo" />
+
+        <!-- Estoque -->
+        <mapping class="buteco.model.estoque.Estoque" />
+
         <!-- Fim Produto -->
     </session-factory>
 </hibernate-configuration>

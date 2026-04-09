@@ -1,5 +1,9 @@
 package buteco.controller.estoque;
 
+import buteco.repositories.EstoqueRepository;
+import buteco.repositories.ProdutoRepository;
+import buteco.service.EstoqueService;
+import buteco.service.MovimentacoesEstoqueService;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
@@ -7,113 +11,65 @@ import buteco.view.ProdutosView;
 import java.util.Scanner;
 
 public class EstoqueController {
-    private EstoqueView view;
-//    static List<Estoque> estoques;
-//    static List<Produto> produtos;
-//    List<Saida> saidas;
+    private EstoqueView estoqueView;
     private Scanner sc;
     private ErroEntrada errorEntrada;
-    private ProdutosView viewProd;
-//    VerificaEntradaProduto verificaEntradaProduto;
-//
-    public EstoqueController(Scanner sc, ErroEntrada errorEntrada){
+    private ProdutosView produtosView;
+    private EstoqueService estoqueService;
+    private MovimentacoesEstoqueService movimentacoesEstoqueService;
+
+    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository,
+                             ProdutoRepository produtoRepository, EstoqueService estoqueService,
+                             MovimentacoesEstoqueService movimentacoesEstoqueService){
+
         this.sc = sc;
         this.errorEntrada = errorEntrada;
-//        this.viewProd = new ProdutosView(sc, errorEntrada);
-        this.view = new EstoqueView(sc);
+        this.estoqueView = new EstoqueView(sc, estoqueRepository, produtoRepository);
+        this.produtosView = new ProdutosView(sc, errorEntrada, produtoRepository);
+        this.estoqueService = estoqueService;
+        this.movimentacoesEstoqueService = movimentacoesEstoqueService;
     }
-//    public EstoqueController(Scanner sc, ErroEntrada errorEntrada, List<Produto> produtos, List<Estoque> estoques, List<Saida> saidas) {
-//        this.sc = sc;
-//        this.produtos = produtos;
-//        this.estoques = estoques;
-//        this.saidas = saidas;
-//        this.view = new EstoqueView(sc);
-//        this.errorEntrada = errorEntrada;
-//        this.viewProd = new ProdutosView(sc, errorEntrada);
-//        this.verificaEntradaProduto = new VerificaEntradaProduto(errorEntrada, this.produtos);
-//    }
-//
-//
+
     public void index(){
         int opcao = 0;
-        view.exibirEstoque();
-//        if(this.produtos.size() > 0){
-//            do{
-//                opcao = view.exibirMenu();
-//                switch (opcao){
-////                    case 1 -> cadastrarEntrada();
-////                    case 2 -> cadastrarSaida();
-////                    case 3 -> view.exibirEstoque(this.estoques);
-//                    case 0 -> System.out.println("Saindo...");
-//                    default -> System.out.println("VALOR INVALIDO");
-//                }
-//
-//            }while(opcao != 0 );
-//        }else{
-//            System.out.println("SEM PRODUTO CADASTRADO!!");
-//        }
+            do{
+                opcao = estoqueView.exibirMenu();
+                switch (opcao){
+                    case 1 -> cadastrarMovimentacao(1);
+                    case 2 -> cadastrarMovimentacao(2);
+                    case 3 -> estoqueView.exibirEstoques();
+                    case 0 -> System.out.println("Saindo...");
+                    default -> System.out.println("VALOR INVALIDO");
+                }
 
-
+            }while(opcao != 0 );
     }
-//
-//    public void cadastrarEntrada(){
-//        System.out.println("Produtos para realizar a entrada");
-//        viewProd.exibirProdutos(this.produtos);
-//
-//        Produto produto = this.produtos.get(this.verificaEntradaProduto.verificaEntradaCodProduto());
-//        double qtdeEntrada = errorEntrada.trataEntradaDouble("Insira a quantidade de entrada");
-//        Estoque estoque = produto.getEstoque();
-//
-//        if(estoque == null){
-//            estoque = new Estoque(
-//                    estoques.size() + 1,
-//                    produto,
-//                    qtdeEntrada
-//            );
-//
-//            produto.setEstoque(estoque);
-//            estoques.add(estoque);
-//        }else{
-//            estoque.setQtdeEstoque(
-//                    estoque.getQtdeEstoque() + qtdeEntrada
-//            );
-//        }
-//
-//        estoque.atualizaValorTotalEstoque();
-//        double custo = produto.getValorUnitario() * qtdeEntrada;
-//
-//        Entrada entrada = new Entrada(
-//                produto,
-//                estoque,
-//                custo,
-//                (int) qtdeEntrada,
-//                LocalDateTime.now()
-//        );
-//
-//        estoque.getEntradas().add(entrada);
-//        System.out.println("Entrada realizada!");
-//    }
-//
-//    public void cadastrarSaida(){
-//        System.out.println("produtos para realizar a Saida");
-//        viewProd.exibirProdutos(this.produtos);
-//        //int opcao = errorEntrada.trataEntradaInt("Insira o codigo");
-//        //- 1 pois a lista comeca em "0"
-//        Produto produto = this.produtos.get(this.verificaEntradaProduto.verificaEntradaCodProduto());
-//
-//        double qtdeSaida = errorEntrada.trataEntradaDouble("Insira a quantidade de saida");
-//
-//        Estoque estoque = produto.getEstoque();
-//        double custoProducaoTotal = 0;
-//        switch (produto.getTipoProduto()){
-//            case PRODUTOCOMCOMPLEMENTO -> custoProducaoTotal += saidaComplemento(produto, qtdeSaida);
-//            case SERVICO_Hr -> System.out.println("NAO E POSSIVEL REALIZAR A SAIDA DO TIPO SERVICO");
-//            default -> custoProducaoTotal += saidaNormal(produto, estoque, qtdeSaida);
-//        }
-//
-//        view.exibirMargemLucro(produto, calcularMargem(custoProducaoTotal, produto.getValorUnitario()));
-//        System.out.println("Saida Realizada!");
-//    }
+
+    public void cadastrarMovimentacao(int tipo) {
+        produtosView.exibirProdutos();
+        int tentativas = 0;
+
+        do {
+            try {
+
+                Long idProduto = errorEntrada.trataEntradaLong("Insira o codigo do Produto: ");
+                movimentacoesEstoqueService.confereEstoque(idProduto);
+
+
+                double qtde = errorEntrada.trataEntradaDouble("Insira a quantidade: ");
+
+                switch (tipo) {
+                    case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde);
+                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde);
+                }
+                System.out.println("Cadastro realizado com sucesso!");
+                tentativas = 0;
+            } catch (Exception e) {
+                System.out.println("Erro: " + e.getMessage());
+                tentativas++;
+            }
+        }while(tentativas > 0);
+    }
 //
 //    //produtos que nao tem complemento/ingrediente na montagem
 //    public double saidaNormal(Produto produto, Estoque estoque, double qtdeSaida){

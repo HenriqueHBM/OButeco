@@ -5,6 +5,8 @@ import buteco.controller.estoque.EstoqueController;
 import buteco.controller.produtos.ProdutosController;
 import buteco.model.produto.*;
 import buteco.repositories.*;
+import buteco.service.EstoqueService;
+import buteco.service.MovimentacoesEstoqueService;
 import buteco.service.entradas.ErroEntrada;
 import jakarta.persistence.EntityManager;
 
@@ -22,16 +24,26 @@ public class Main {
         System.out.println("--O BUTECO--");
 
         EntityManager em = CustomizerFactory.getEntityManager();
+
+        //Repositories
         ProdutoRepository produtoRepository = new ProdutoRepository(em);
         CategoriaRepository categoriaRepository = new CategoriaRepository(em);
         GrupoRepository grupoRepository = new GrupoRepository(em);
         InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
+        EstoqueRepository estoqueRepository = new EstoqueRepository(em);
+        MovimentacoesEstoqueRepository movimentacoesEstoqueRepository = new MovimentacoesEstoqueRepository(em);
+        //
+
+        //
+        EstoqueService estoqueService = new EstoqueService(estoqueRepository);
+        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository);
+        //
 
         int entradaMenu = 0;
         ErroEntrada errorEntrada = new ErroEntrada(sc);
 ////      Declarando os controllers
         ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService);
 
         do{
             // Funcao para tentar tratar caso usuario passe um caracter

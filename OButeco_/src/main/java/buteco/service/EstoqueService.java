@@ -2,13 +2,27 @@ package buteco.service;
 
 import buteco.model.estoque.Estoque;
 import buteco.repositories.EstoqueRepository;
+import buteco.service.entradas.ErroEntrada;
+
+import java.util.List;
 
 public class EstoqueService {
-    EstoqueRepository estoqueRepository;
+    private final EstoqueRepository estoqueRepository;
+    private Estoque estoque = new Estoque();
 
-    public void salvarEstoque(Estoque estoque){
-        if(estoque != null) {
-            estoqueRepository.create(estoque);
+    public EstoqueService(EstoqueRepository estoqueRepository) { this.estoqueRepository = estoqueRepository; }
+
+
+    public List<Estoque> findAllEstoques(){
+        var estoques = estoqueRepository.findAll();
+        if(estoques.isEmpty()){
+            throw new RuntimeException("Estoque ausente!");
         }
+        return estoques;
+    }
+
+    public void criarNovoEstoque(Long idProduto){
+        var estoque = estoqueRepository.findByProdutoId(idProduto);
+
     }
 }
