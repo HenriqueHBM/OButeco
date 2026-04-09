@@ -19,3 +19,16 @@ insert into produtos (nome, preco_venda, fk_id_categoria, fk_id_grupo) values
 insert into insumos_produtos (fk_id_produto, fk_insumos_produto, qtde) values
    (4, 2, 200),
    (4, 3, 1);
+
+insert into cargos (cargo) values
+   ('Funcionario'),
+   ('Encarregado');
+
+insert into usuarios (nome, usuario, senha, fk_id_cargo) values
+    ('Ismael', 'ismael', 'ismael123', 2);
+
+insert into conversoes (conversao, nomenclatura) values
+     ('Grama', 'g'),
+     ('Unidade', 'Uni'),
+     ('Quilograma', 'Kg'),
+     ('Hora', 'hr');

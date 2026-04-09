@@ -5,6 +5,7 @@ import buteco.controller.estoque.EstoqueController;
 import buteco.controller.produtos.ProdutosController;
 import buteco.model.produto.*;
 import buteco.repositories.*;
+import buteco.service.EstoqueService;
 import buteco.service.entradas.ErroEntrada;
 import jakarta.persistence.EntityManager;
 
@@ -26,12 +27,14 @@ public class Main {
         CategoriaRepository categoriaRepository = new CategoriaRepository(em);
         GrupoRepository grupoRepository = new GrupoRepository(em);
         InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
+        EstoqueRepository estoqueRepository = new EstoqueRepository(em);
+        EstoqueService estoqueService = new EstoqueService(estoqueRepository);
 
         int entradaMenu = 0;
         ErroEntrada errorEntrada = new ErroEntrada(sc);
 ////      Declarando os controllers
         ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService);
 
         do{
             // Funcao para tentar tratar caso usuario passe um caracter
