@@ -2,8 +2,6 @@ package buteco.controller.usuarios;
 
 import buteco.service.entradas.ErroEntrada;
 import buteco.service.entradas.VerificaEntradaProduto;
-import buteco.model.movimentacoes.Entrada;
-import buteco.model.movimentacoes.Saida;
 import buteco.model.pessoa.Usuario;
 import buteco.model.pessoa.Cargo;
 import java.util.ArrayList;
@@ -11,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UsuariosController {
-
+/*
     //List<Usuario> usuarios = new ArrayList<>();
     //List<Cargo> cargos = new ArrayList<>();
     private Scanner sc;
@@ -63,6 +61,6 @@ public class UsuariosController {
         usuarios.add(u);
 
         System.out.println("Usuario Cadastrado com Sucesso!");
-    */}
+    }*/
 
 }
