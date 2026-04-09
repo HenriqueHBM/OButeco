@@ -6,8 +6,8 @@ import buteco.repositories.EstoqueRepository;
 import buteco.repositories.MovimentacoesEstoqueRepository;
 
 public class MovimentacoesEstoqueService {
-    MovimentacoesEstoqueRepository movimentacoesEstoqueRepository;
-    EstoqueRepository estoqueRepository;
+    private final MovimentacoesEstoqueRepository movimentacoesEstoqueRepository;
+    private final EstoqueRepository estoqueRepository;
 
     public MovimentacoesEstoqueService(MovimentacoesEstoqueRepository movimentacoesEstoqueRepository, EstoqueRepository estoqueRepository) {
         this.movimentacoesEstoqueRepository = movimentacoesEstoqueRepository;
@@ -17,6 +17,14 @@ public class MovimentacoesEstoqueService {
     //    public void salvarMovimentacao(MovimentacoesEstoque movimentacoesEstoque) {
 //        movimentacoesEstoqueRepository.create(movimentacoesEstoque);
 //    }
+
+    public void confereEstoque(Long idProduto){
+        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
+        if (estoque == null) {
+            System.out.println("Estoque inexistente para esse produto, cadastre um novo:");
+        }
+    }
+
 
     public void cadastrarEntrada(Long idProduto, double qtde){
         Estoque estoque = estoqueRepository.findByProdutoId(idProduto);

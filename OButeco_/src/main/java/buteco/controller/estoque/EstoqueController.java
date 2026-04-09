@@ -53,6 +53,9 @@ public class EstoqueController {
             try {
 
                 Long idProduto = errorEntrada.trataEntradaLong("Insira o codigo do Produto: ");
+                movimentacoesEstoqueService.confereEstoque(idProduto);
+
+
                 double qtde = errorEntrada.trataEntradaDouble("Insira a quantidade: ");
 
                 switch (tipo) {

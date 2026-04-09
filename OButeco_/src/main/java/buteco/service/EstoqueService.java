@@ -8,8 +8,10 @@ import java.util.List;
 
 public class EstoqueService {
     private final EstoqueRepository estoqueRepository;
+    private Estoque estoque = new Estoque();
 
     public EstoqueService(EstoqueRepository estoqueRepository) { this.estoqueRepository = estoqueRepository; }
+
 
     public List<Estoque> findAllEstoques(){
         var estoques = estoqueRepository.findAll();
@@ -17,5 +19,10 @@ public class EstoqueService {
             throw new RuntimeException("Estoque ausente!");
         }
         return estoques;
+    }
+
+    public void criarNovoEstoque(Long idProduto){
+        var estoque = estoqueRepository.findByProdutoId(idProduto);
+
     }
 }
