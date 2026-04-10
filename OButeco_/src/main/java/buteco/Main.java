@@ -38,7 +38,7 @@ public class Main {
 
         //Services
         EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, errorEntrada);
-        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository, estoqueService, conversoesRepository, errorEntrada);
+        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository, estoqueService, conversoesRepository, produtoRepository, errorEntrada);
         CategoriaService categoriaService = new CategoriaService(categoriaRepository);
         GrupoService grupoService = new GrupoService(grupoRepository);
         ProdutoService produtoService = new ProdutoService(produtoRepository);

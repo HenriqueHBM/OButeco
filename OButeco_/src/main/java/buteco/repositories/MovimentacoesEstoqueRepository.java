@@ -17,21 +17,19 @@ public class MovimentacoesEstoqueRepository {
     }
 
     public List<MovimentacoesEstoque> findAll() {
-        return em.createQuery("select p from produtos p", MovimentacoesEstoque.class).getResultList();
+        return em.createQuery("select m from MovimentacoesEstoque m", MovimentacoesEstoque.class).getResultList();
     }
 
     public void create(MovimentacoesEstoque movimentacoesEstoque){
         em.getTransaction().begin();
         em.persist(movimentacoesEstoque);
         em.getTransaction().commit();
-        em.close();
     }
 
     public void update(MovimentacoesEstoque movimentacoesEstoque){
         em.getTransaction().begin();
-        em.persist(movimentacoesEstoque);
+        em.merge(movimentacoesEstoque);
         em.getTransaction().commit();
-        em.close();
     }
 
     public void delete(MovimentacoesEstoque movimentacoesEstoque){

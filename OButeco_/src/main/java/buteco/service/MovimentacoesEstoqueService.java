@@ -3,24 +3,33 @@ package buteco.service;
 import buteco.model.conversao.Conversoes;
 import buteco.model.estoque.Estoque;
 import buteco.model.estoque.MovimentacoesEstoque;
+import buteco.model.produto.Produto;
 import buteco.repositories.ConversoesRepository;
 import buteco.repositories.EstoqueRepository;
 import buteco.repositories.MovimentacoesEstoqueRepository;
+import buteco.repositories.ProdutoRepository;
 import buteco.service.entradas.ErroEntrada;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class MovimentacoesEstoqueService {
     private final MovimentacoesEstoqueRepository movimentacoesEstoqueRepository;
     private final EstoqueRepository estoqueRepository;
     private final EstoqueService estoqueService;
     private final ConversoesRepository conversoesRepository;
+    private final ProdutoRepository produtoRepository;
     private ErroEntrada erroEntrada;
 
     public MovimentacoesEstoqueService(MovimentacoesEstoqueRepository movimentacoesEstoqueRepository, EstoqueRepository estoqueRepository,
-                                       EstoqueService estoqueService, ConversoesRepository conversoesRepository, ErroEntrada erroEntrada) {
+                                       EstoqueService estoqueService, ConversoesRepository conversoesRepository, ProdutoRepository produtoRepository, ErroEntrada erroEntrada) {
         this.movimentacoesEstoqueRepository = movimentacoesEstoqueRepository;
         this.estoqueRepository = estoqueRepository;
         this.estoqueService = estoqueService;
         this.conversoesRepository = conversoesRepository;
+        this.produtoRepository = produtoRepository;
         this.erroEntrada = erroEntrada;
     }
 
@@ -63,6 +72,18 @@ public class MovimentacoesEstoqueService {
 
         estoque.setQntdEstoque(estoque.getQntdEstoque() + qtdeNova);
         estoqueRepository.update(estoque);
+
+        Produto produto = produtoRepository.findById(idProduto);
+
+        MovimentacoesEstoque mov = new MovimentacoesEstoque();
+        mov.setProduto(produto);
+        mov.setQuantidade(qtde);
+        mov.setTipo("ENTRADA");
+        mov.setConversoes(conversaoEntrada);
+        mov.setEstoque(estoque);
+        mov.setDataMovimentacao(Instant.now());
+
+        movimentacoesEstoqueRepository.create(mov);
     }
 
     public void cadastrarSaida(Long idProduto, double qtde){
@@ -76,6 +97,52 @@ public class MovimentacoesEstoqueService {
 
         estoque.setQntdEstoque(estoque.getQntdEstoque() - qtde);
         estoqueRepository.update(estoque);
+
+        Produto produto = produtoRepository.findById(idProduto);
+
+        MovimentacoesEstoque mov = new MovimentacoesEstoque();
+        mov.setProduto(produto);
+        mov.setQuantidade(qtde);
+        mov.setTipo("SAIDA");
+        mov.setConversoes(estoque.getConversoes());
+        mov.setEstoque(estoque);
+        mov.setDataMovimentacao(Instant.now());
+
+        movimentacoesEstoqueRepository.create(mov);
+
+    }
+
+    public void exibirMovimentacoesEstoque(){
+
+        var lista = movimentacoesEstoqueRepository.findAll();
+
+        if (lista.isEmpty()){
+            System.out.println("Nenhuma Movimentação Encontrada!");
+            return;
+        }
+
+        System.out.println("=== MOVIMENTAÇÕES DE ESTOQUE === ");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        for (MovimentacoesEstoque m : lista){
+
+            if (m.getProduto() == null){
+                continue;
+            }
+
+            String dataFormatada = m.getDataMovimentacao()
+                    .atZone(ZoneId.systemDefault())
+                    .format(formatter);
+
+            System.out.println(
+                    "Tipo: " + m.getTipo() +
+                    " | Produto: " + m.getProduto().getNome() +
+                    " | Quantidade: " + m.getQuantidade() +
+                    " | Data: " + dataFormatada
+            );
+        }
+
     }
 
 }
