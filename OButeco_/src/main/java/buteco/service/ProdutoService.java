@@ -1,5 +1,6 @@
 package buteco.service;
 
+import buteco.model.produto.Categoria;
 import buteco.model.produto.Produto;
 import buteco.repositories.ProdutoRepository;
 
@@ -23,5 +24,14 @@ public class ProdutoService {
 
     public void salvarProduto(Produto produto){
         produtoRepository.create(produto);
+    }
+
+    public Produto findById(Long id){
+
+        if(produtoRepository.findById(id) == null ){
+            throw new IllegalArgumentException("Valor Nao encontrado");
+        }
+        return produtoRepository.findById(id);
+
     }
 }
