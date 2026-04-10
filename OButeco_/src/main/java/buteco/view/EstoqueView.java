@@ -1,9 +1,11 @@
 package buteco.view;
 
+import buteco.repositories.ConversoesRepository;
 import buteco.repositories.EstoqueRepository;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.EstoqueService;
 import buteco.service.ProdutoService;
+import buteco.service.entradas.ErroEntrada;
 
 import java.util.Scanner;
 import java.time.ZoneId;
@@ -13,13 +15,18 @@ public class EstoqueView {
     private Scanner sc;
     private EstoqueRepository estoqueRepository;
     private ProdutoRepository produtoRepository;
+    private ConversoesRepository conversoesRepository;
+    private ErroEntrada erroEntrada;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.of("UTC"));
 
-    public EstoqueView(Scanner sc, EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository) {
+    public EstoqueView(Scanner sc, EstoqueRepository estoqueRepository, ProdutoRepository
+            produtoRepository, ConversoesRepository conversoesRepository, ErroEntrada erroEntrada) {
         this.sc = sc;
         this.estoqueRepository = estoqueRepository;
         this.produtoRepository = produtoRepository;
+        this.conversoesRepository = conversoesRepository;
+        this.erroEntrada = erroEntrada;
     }
 
     public EstoqueView(Scanner sc) {
@@ -28,7 +35,7 @@ public class EstoqueView {
 
     public int exibirMenu(){
         System.out.println("[1] CADASTRAR ENTRADA; [2] - CADASTRAR SAÍDA;  [3] - LISTAR ESTOQUE; [4] - MOVIMENTACOES; [0] - SAIR");
-        return sc.nextInt();
+        return Integer.parseInt(sc.nextLine());
     }
 
     public static void exibirMensagem(String mensagem) {System.out.println(mensagem);}
@@ -40,7 +47,7 @@ public class EstoqueView {
                 "COD", "PRODUTO", "QTDE", "CONVERSAO", "DATA DE CRIACAO");
 
         try {
-            var service = new EstoqueService(estoqueRepository);
+            var service = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, erroEntrada);
             var estoques = service.findAllEstoques();
 
             estoques.stream().forEach(element -> {

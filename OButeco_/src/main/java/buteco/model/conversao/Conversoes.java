@@ -49,10 +49,7 @@ public class Conversoes {
 
     @Override
     public String toString(){
-        return "Conversoes={" +
-                "id=" + id+
-                ", nome"+nome+
-                ", nomenclatura"+nomenclatura+
-            "}";
+        return
+                "[" + id + "] - " + nome + " (" + nomenclatura + ")";
     }
 }

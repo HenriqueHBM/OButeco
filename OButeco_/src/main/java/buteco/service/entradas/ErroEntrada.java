@@ -49,7 +49,7 @@ public class ErroEntrada {
     public long trataEntradaLong(String texto) {
         while (true) {
             try {
-                System.out.println(texto);
+                System.out.print(texto);
                 return Long.parseLong(sc.nextLine());
             } catch (NumberFormatException e){
                 System.out.println("VALOR INVALIDO (DIGITE UM NUMERO)");
