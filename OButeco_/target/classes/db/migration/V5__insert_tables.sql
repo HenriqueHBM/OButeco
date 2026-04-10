@@ -1,7 +1,8 @@
 insert into categorias (categoria) values
     ('NORMAL'),
     ('PRODUTO COM INSUMOS'),
-    ('INSUMO');
+    ('INSUMO'),
+    ('SERVICO');
 
 insert into grupos (grupo) values
    ('BEBIDA'),
