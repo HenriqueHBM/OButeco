@@ -1,5 +1,6 @@
 package buteco.service;
 
+import buteco.model.conversao.Conversoes;
 import buteco.model.estoque.Estoque;
 import buteco.model.estoque.MovimentacoesEstoque;
 import buteco.repositories.ConversoesRepository;
@@ -38,10 +39,15 @@ public class MovimentacoesEstoqueService {
             throw new RuntimeException("Estoque nao encontrado para esse COD.");
         }
 
-        System.out.println("Unidade no estoque" + estoque.getConversoes().getNome()); //mostra para o usuario qual a unidade cadastrada no estoque
+        System.out.println("Unidade no estoque " + estoque.getConversoes().getNome()); //mostra para o usuario qual a unidade cadastrada no estoque
         var medidas = conversoesRepository.findAllConversoes();
         medidas.stream().forEach(System.out::println); //lista unidades de conversao
         Long idConversoes = erroEntrada.trataEntradaLong("Insira o codigo de unidade que voce esta usando: ");
+
+        Conversoes conversaoEntrada = conversoesRepository.findById(idConversoes);
+        if(conversaoEntrada == null){
+            throw new RuntimeException("Unidade de conversao nao encontrada");
+        }
 
         double qtdeNova;
         if(idConversoes.equals(estoque.getConversoes().getId())){ //.equals necessario para comparar os valores, == nao funciona para Long por ser objeto
