@@ -19,6 +19,11 @@ public class CategoriaService {
     }
 
     public Categoria findById(Long id){
+
+        if(categoriaRepository.findById(id) == null ){
+             throw new IllegalArgumentException("Valor Nao encontrado");
+        }
         return categoriaRepository.findById(id);
+
     }
 }

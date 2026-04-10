@@ -2,6 +2,7 @@ package buteco.controller.produtos;
 
 import buteco.model.produto.Categoria;
 import buteco.model.produto.Grupo;
+import buteco.model.produto.InsumosProduto;
 import buteco.model.produto.Produto;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.CategoriaService;
@@ -11,6 +12,8 @@ import buteco.service.entradas.ErroEntrada;
 import buteco.view.ProdutosView;
 import jakarta.persistence.Id;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ProdutosController {
@@ -55,23 +58,20 @@ public void cadastrarProduto(){
         String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
         double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
 
-        System.out.println("========CATEGORIAS========");
-        categoriaService.findAllCategoria().stream().forEach(System.out::println);
-        Long opcao = errorEntrada.trataEntradaLong("Insira a categoria: ");
-
-        System.out.println("========GRUPOS========");
-        grupoService.findAllGrupo().stream().forEach(System.out::println);
-        Long idGrupo = errorEntrada.trataEntradaLong("Insira o grupo: ");
+        //chama funcao para verificar entradas;
+        Categoria categoria = this.solicitaEntradaCategoria();
+        Grupo grupo = this.solicitaEntradaGrupo();
 
         //caso queira add observacao no produto
-        sc.nextLine(); //esse sc server pois as vezes vem um "enter" a mais
+        //sc.nextLine(); //esse sc server pois as vezes vem um "enter" a mais
         view.exibirMensagem("Observacao produto(opcional)");
         String obs = sc.nextLine();
 
         Produto produto = new Produto();
+        if (categoria.getCategoria().equals("PRODUTO COM INSUMOS")){
+            produto.setInsumos(this.adicionarInsumos(produto));
+        }
 
-        Categoria categoria = categoriaService.findById(opcao);
-        Grupo grupo = grupoService.findById(idGrupo);
 
         produto.setCategoria(categoria);
         produto.setGrupo(grupo);
@@ -82,23 +82,77 @@ public void cadastrarProduto(){
 
         produtoService.salvarProduto(produto);
 
-    System.out.println("Produto Cadastrado!!");
-
-
-//                int maisIngredientes = 0;
-//                do {
-//                    if(maisIngredientes == 0 || maisIngredientes == 1){
-//                        cadastrarIngredienteProduto(produto, listaIngredientesProdutos);
-//                    }else{
-//                        view.exibirMensagem("VALOR INVALIDO");
-//                    }
-//
-//                    view.exibirMensagem("Deseja cadastrar mais Ingredientes para esse produto?");
-//                    maisIngredientes = errorEntrada.trataEntradaInt("[1] - SIM; [0] - NAO");
-//
-//                }while(maisIngredientes != 0);
-//
+        System.out.println("Produto Cadastrado!!");
         }
+
+        public Categoria solicitaEntradaCategoria(){
+            while(true){
+                try{
+                    System.out.println("========CATEGORIAS========");
+                    categoriaService.findAllCategoria().stream().forEach(System.out::println);
+                    Long opcao = errorEntrada.trataEntradaLong("Insira a categoria: ");
+                    return categoriaService.findById(opcao);
+                }catch (IllegalArgumentException e){
+                    System.out.println("Categoria não encontrada, tente novamente!");
+                }
+
+            }
+
+        }
+
+        public Grupo solicitaEntradaGrupo(){
+            while(true){
+                try{
+                    System.out.println("========GRUPOS========");
+                    grupoService.findAllGrupo().stream().forEach(System.out::println);
+                    Long idGrupo = errorEntrada.trataEntradaLong("Insira o grupo: ");
+                    return grupoService.findById(idGrupo);
+                }catch (IllegalArgumentException e){
+                    System.out.println("Grupo não encontrada, tente novamente!");
+                }
+
+            }
+        }
+
+        public List<InsumosProduto> adicionarInsumos(Produto prod){
+            System.out.println("Produtos");
+
+            List <InsumosProduto> list = new ArrayList<>();
+
+            while(true){
+                InsumosProduto insumosProduto = new InsumosProduto();
+                Produto insumo = this.solicitaEntradaIngrediente();
+
+                insumosProduto.setProduto(prod);
+                insumosProduto.setInsumo(insumo);
+                double qtde = errorEntrada.trataEntradaDouble("Insira a quantidade a ser usada: ");
+                insumosProduto.setQtde(qtde);
+
+                list.add(insumosProduto);
+                int resp = errorEntrada.trataEntradaInt("Deseja adicionar mais? [1] - SIM; [0] - NAO.");
+                if (resp == 0){
+                    return list;
+                }
+            }
+
+        }
+
+        public Produto solicitaEntradaIngrediente(){
+            while (true){
+                try{
+                    view.exibirIngredientes();
+                    Long idProd = errorEntrada.trataEntradaLong("Insira o Insumo");
+                    Produto ing = produtoService.findById(idProd);
+
+                    if (ing.getCategoria().getCategoria().equals("INSUMO") || ing.getCategoria().getCategoria().equals("SERVICO") ){
+                        return ing;
+                    }
+                }catch (IllegalArgumentException e ){
+                    System.out.println("Ingrediente nao encontrado");
+                }
+            }
+        }
+
 //
 //        //setando a lista de ingredientes no produto
 //        produto.setIngredientesProdutos(listaIngredientesProdutos);
