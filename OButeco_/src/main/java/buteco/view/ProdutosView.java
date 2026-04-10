@@ -58,15 +58,33 @@ public class ProdutosView {
         }
     }
 
-//    public void exibirIngredientes(List<Produto> produto){
-//        System.out.println("Produtos Cadastrados");
-//
-//        for (Produto p : produto){
-//            if(p.getTipoProduto() == ETipoProduto.INGREDIENTE){
-//                System.out.println("Nome: " + p.getNome()+ " aa "+p.getTipoProduto());
-//            }
-//        }
-//    }
+    public void exibirIngredientes(){
+        exibirMensagem("===============INSUMOS CADASTRADOS===============");
+        System.out.printf("%-6s | %-25s | %-25s | %-15s | %-25s\n",
+                "CODIGO", "NOME", "TIPO PRODUTO",  "GRUPO", "OBS");
+
+
+        try {
+            var service = new ProdutoService(produtoRepository);
+            var prod = service.findAllProdutos();
+
+            prod.stream().forEach(element -> {
+                String cat = element.getCategoria().getCategoria();
+                if(cat.equals("INSUMO") || cat.equals("SERVICO")){
+                    System.out.printf("%-6s | %-25s | %-25s | %-15s | %-25s\n",
+                            element.getId(),
+                            element.getNome(),
+                            element.getCategoria().getCategoria(),
+                            element.getGrupo().getGrupo(),
+                            element.getObservacao()
+                    );
+                }
+            });
+            System.out.println();
+        }catch (Exception er){
+            System.out.println(er.getMessage());
+        }
+    }
 //
 //    public void exibirMensagem(String mensagem){
 //        System.out.println(mensagem);

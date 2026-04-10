@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //FlyWayconfig.migrate();
+        FlyWayconfig.migrate();
 
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in); //passar isso para as classesControllers para nao ficar instanciando o tempo todo
