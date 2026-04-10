@@ -5,8 +5,7 @@ import buteco.controller.estoque.EstoqueController;
 import buteco.controller.produtos.ProdutosController;
 import buteco.model.produto.*;
 import buteco.repositories.*;
-import buteco.service.EstoqueService;
-import buteco.service.MovimentacoesEstoqueService;
+import buteco.service.*;
 import buteco.service.entradas.ErroEntrada;
 import jakarta.persistence.EntityManager;
 
@@ -17,7 +16,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        FlyWayconfig.migrate();
+        //FlyWayconfig.migrate();
 
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in); //passar isso para as classesControllers para nao ficar instanciando o tempo todo
@@ -32,18 +31,24 @@ public class Main {
         InsumosProdutoRepository insumosProdutoRepository = new InsumosProdutoRepository(em);
         EstoqueRepository estoqueRepository = new EstoqueRepository(em);
         MovimentacoesEstoqueRepository movimentacoesEstoqueRepository = new MovimentacoesEstoqueRepository(em);
+        ConversoesRepository conversoesRepository = new ConversoesRepository(em);
         //
 
-        //
-        EstoqueService estoqueService = new EstoqueService(estoqueRepository);
-        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository);
+        ErroEntrada errorEntrada = new ErroEntrada(sc);
+
+        //Services
+        EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, errorEntrada);
+        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository, estoqueService, conversoesRepository, errorEntrada);
+        CategoriaService categoriaService = new CategoriaService(categoriaRepository);
+        GrupoService grupoService = new GrupoService(grupoRepository);
+        ProdutoService produtoService = new ProdutoService(produtoRepository);
         //
 
         int entradaMenu = 0;
-        ErroEntrada errorEntrada = new ErroEntrada(sc);
+
 ////      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService);
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository);
 
         do{
             // Funcao para tentar tratar caso usuario passe um caracter

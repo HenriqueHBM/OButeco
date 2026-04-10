@@ -1,5 +1,6 @@
 package buteco.controller.estoque;
 
+import buteco.repositories.ConversoesRepository;
 import buteco.repositories.EstoqueRepository;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.EstoqueService;
@@ -17,14 +18,16 @@ public class EstoqueController {
     private ProdutosView produtosView;
     private EstoqueService estoqueService;
     private MovimentacoesEstoqueService movimentacoesEstoqueService;
+    private ConversoesRepository conversoesRepository;
 
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository,
                              ProdutoRepository produtoRepository, EstoqueService estoqueService,
-                             MovimentacoesEstoqueService movimentacoesEstoqueService){
+                             MovimentacoesEstoqueService movimentacoesEstoqueService,
+                             ConversoesRepository conversoesRepository){
 
         this.sc = sc;
         this.errorEntrada = errorEntrada;
-        this.estoqueView = new EstoqueView(sc, estoqueRepository, produtoRepository);
+        this.estoqueView = new EstoqueView(sc, estoqueRepository, produtoRepository,conversoesRepository ,errorEntrada);
         this.produtosView = new ProdutosView(sc, errorEntrada, produtoRepository);
         this.estoqueService = estoqueService;
         this.movimentacoesEstoqueService = movimentacoesEstoqueService;
@@ -47,16 +50,24 @@ public class EstoqueController {
 
     public void cadastrarMovimentacao(int tipo) {
         produtosView.exibirProdutos();
-        int tentativas = 0;
+        int tentativas = 0; //mantem o do-while funcionando ate finalizar a operacao
 
         do {
             try {
 
-                Long idProduto = errorEntrada.trataEntradaLong("Insira o codigo do Produto: ");
-                movimentacoesEstoqueService.confereEstoque(idProduto);
+                Long idProduto = errorEntrada.trataEntradaLong("Insira o codigo do Produto (0 para cancelar): ");
+                if (idProduto == 0) {
+                    System.out.println("Cadastro cancelado.");
+                    break;
+                } else if (tipo == 1) {
+                    movimentacoesEstoqueService.confereEstoque(idProduto); //confere existencia de estoque do produto, se nao existir cria um novo
+                }
 
-
-                double qtde = errorEntrada.trataEntradaDouble("Insira a quantidade: ");
+                double qtde = errorEntrada.trataEntradaDouble("Insira a quantidade (0 para cancelar): ");
+                if (qtde == 0) {
+                    System.out.println("Cadastro cancelado.");
+                    break;
+                }
 
                 switch (tipo) {
                     case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde);
