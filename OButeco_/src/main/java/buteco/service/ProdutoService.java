@@ -20,4 +20,8 @@ public class ProdutoService {
         }
         return produtos;
     }
+
+    public void salvarProduto(Produto produto){
+        produtoRepository.create(produto);
+    }
 }

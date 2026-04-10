@@ -1,8 +1,12 @@
 package buteco.controller.produtos;
 
 import buteco.model.produto.Categoria;
+import buteco.model.produto.Grupo;
 import buteco.model.produto.Produto;
 import buteco.repositories.ProdutoRepository;
+import buteco.service.CategoriaService;
+import buteco.service.GrupoService;
+import buteco.service.ProdutoService;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.ProdutosView;
 import jakarta.persistence.Id;
@@ -14,14 +18,20 @@ public class ProdutosController {
     private Scanner sc;
     private ErroEntrada errorEntrada;
     private ProdutoRepository produtoRepository;
+    private CategoriaService categoriaService;
+    private GrupoService grupoService;
+    private ProdutoService produtoService;
 
 //    public VerificaEntradaProduto verificaEntradaProduto;
 
-    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository){
+    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository, CategoriaService categoriaService, GrupoService grupoService, ProdutoService produtoService){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
         this.view = new ProdutosView(sc, errorEntrada, produtoRepository);
         this.produtoRepository = produtoRepository;
+        this.categoriaService = categoriaService;
+        this.grupoService = grupoService;
+        this.produtoService = produtoService;
     }
     public void index(){
         int opcao; //declarando vazia
@@ -44,9 +54,37 @@ public void cadastrarProduto(){
 
         String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
         double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
-        int opcao = errorEntrada.trataEntradaInt("Tipo de produto: [1] - NORMAL; [2] - PRODUTO COM COMPLEMENTOS; [3] - INGREDIENTE; [4] - SERVICO(NAO DESCONTA DO ESTOQUE);");
 
-//
+        System.out.println("========CATEGORIAS========");
+        categoriaService.findAllCategoria().stream().forEach(System.out::println);
+        Long opcao = errorEntrada.trataEntradaLong("Insira a categoria: ");
+
+        System.out.println("========GRUPOS========");
+        grupoService.findAllGrupo().stream().forEach(System.out::println);
+        Long idGrupo = errorEntrada.trataEntradaLong("Insira o grupo: ");
+
+        //caso queira add observacao no produto
+        sc.nextLine(); //esse sc server pois as vezes vem um "enter" a mais
+        view.exibirMensagem("Observacao produto(opcional)");
+        String obs = sc.nextLine();
+
+        Produto produto = new Produto();
+
+        Categoria categoria = categoriaService.findById(opcao);
+        Grupo grupo = grupoService.findById(idGrupo);
+
+        produto.setCategoria(categoria);
+        produto.setGrupo(grupo);
+
+        produto.setNome(nome);
+        produto.setPrecoVenda(valUnit);
+        produto.setObservacao(obs);
+
+        produtoService.salvarProduto(produto);
+
+    System.out.println("Produto Cadastrado!!");
+
+
 //                int maisIngredientes = 0;
 //                do {
 //                    if(maisIngredientes == 0 || maisIngredientes == 1){

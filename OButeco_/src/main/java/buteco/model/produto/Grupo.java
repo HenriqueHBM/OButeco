@@ -15,6 +15,10 @@ public class Grupo {
 
     }
 
+    public Grupo(Long id, String grupo){
+        this.id = id;
+        this.grupo = grupo;
+    }
     public Long getId() {
         return id;
     }
@@ -27,7 +31,10 @@ public class Grupo {
         return grupo;
     }
 
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
+    public void setGrupo(String grupo) { this.grupo = grupo; }
+
+    @Override
+    public String toString(){
+        return "[" + id + "] - " + grupo;
     }
 }
