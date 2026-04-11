@@ -48,7 +48,7 @@ public class MovimentacoesEstoqueService {
             throw new RuntimeException("Estoque nao encontrado para esse COD.");
         }
 
-        System.out.println("Unidade no estoque " + estoque.getConversoes().getNome()); //mostra para o usuario qual a unidade cadastrada no estoque
+        System.out.println("Unidade no estoque: " + estoque.getConversoes().getNome()); //mostra para o usuario qual a unidade cadastrada no estoque
         var medidas = conversoesRepository.findAllConversoes();
         medidas.stream().forEach(System.out::println); //lista unidades de conversao
         Long idConversoes = erroEntrada.trataEntradaLong("Insira o codigo de unidade que voce esta usando: ");
@@ -86,7 +86,7 @@ public class MovimentacoesEstoqueService {
         movimentacoesEstoqueRepository.create(mov);
     }
 
-    public void cadastrarSaida(Long idProduto, double qtde){
+    public void cadastrarSaida(Long idProduto, double qtde, boolean cria_mov){
         Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
         if (estoque == null){
             throw new RuntimeException("Estoque nao encontrado para esse COD.");
@@ -100,6 +100,13 @@ public class MovimentacoesEstoqueService {
 
         Produto produto = produtoRepository.findById(idProduto);
 
+        if(cria_mov == true){
+            this.movimentacaoEstoque(produto, estoque, qtde);
+        }
+
+    }
+
+    public void movimentacaoEstoque(Produto produto, Estoque estoque, double qtde){
         MovimentacoesEstoque mov = new MovimentacoesEstoque();
         mov.setProduto(produto);
         mov.setQuantidade(qtde);
@@ -109,7 +116,6 @@ public class MovimentacoesEstoqueService {
         mov.setDataMovimentacao(Instant.now());
 
         movimentacoesEstoqueRepository.create(mov);
-
     }
 
     public void exibirMovimentacoesEstoque(){
@@ -143,6 +149,33 @@ public class MovimentacoesEstoqueService {
             );
         }
 
+    }
+
+    public void cadastrarSaidacComInsumos(Produto produto, double qtde){
+        //passa uma vez no foreach para validar os insumos
+        for (int index = 1; index <= qtde;  index++){
+            produto.getInsumos().forEach(element -> {
+                if(!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")){ // se nao for um servico
+                    Estoque estoque = estoqueRepository.findByProdutoId(element.getInsumo().getId());
+                    if (estoque == null){
+                        throw new RuntimeException("Estoque nao encontrado para esse produto: "+ element.getInsumo().getNome());
+                    }
+                    if (element.getQtde() > estoque.getQntdEstoque()){
+                        throw new RuntimeException("Quantidade insuficiente no estoque: "+ element.getInsumo().getNome()+", Quantidade: " + estoque.getQntdEstoque());
+                    }
+                }
+            });
+
+            produto.getInsumos().forEach(element -> {
+                if(!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")){
+                    this.cadastrarSaida(element.getInsumo().getId(), element.getQtde(), false);
+                }
+            });
+
+
+            Estoque estoque = produto.getEstoques().get(0);
+            this.movimentacaoEstoque(produto, estoque, 1);
+        }
     }
 
 }

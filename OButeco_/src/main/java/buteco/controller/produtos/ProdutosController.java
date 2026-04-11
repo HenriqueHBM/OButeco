@@ -1,15 +1,14 @@
 package buteco.controller.produtos;
 
 import buteco.enums.EStatus;
+import buteco.model.conversao.Conversoes;
+import buteco.model.estoque.Estoque;
 import buteco.model.produto.Categoria;
 import buteco.model.produto.Grupo;
 import buteco.model.produto.InsumosProduto;
 import buteco.model.produto.Produto;
 import buteco.repositories.ProdutoRepository;
-import buteco.service.CategoriaService;
-import buteco.service.GrupoService;
-import buteco.service.InsumosProdutoService;
-import buteco.service.ProdutoService;
+import buteco.service.*;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.ProdutosView;
 import jakarta.persistence.Id;
@@ -27,10 +26,20 @@ public class ProdutosController {
     private GrupoService grupoService;
     private ProdutoService produtoService;
     private InsumosProdutoService insumosProdutoService;
+    private EstoqueService estoqueService;
 
 //    public VerificaEntradaProduto verificaEntradaProduto;
 
-    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository, CategoriaService categoriaService, GrupoService grupoService, ProdutoService produtoService, InsumosProdutoService insumosProdutoService){
+    public ProdutosController(
+            Scanner sc,
+            ErroEntrada errorEntrada,
+            ProdutoRepository produtoRepository,
+            CategoriaService categoriaService,
+            GrupoService grupoService,
+            ProdutoService produtoService,
+            InsumosProdutoService insumosProdutoService,
+            EstoqueService estoqueService
+    ){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
         this.view = new ProdutosView(sc, errorEntrada, produtoRepository);
@@ -39,6 +48,7 @@ public class ProdutosController {
         this.grupoService = grupoService;
         this.produtoService = produtoService;
         this.insumosProdutoService = insumosProdutoService;
+        this.estoqueService = estoqueService;
     }
     public void index(){
         int opcao; //declarando vazia
@@ -85,6 +95,10 @@ public class ProdutosController {
         produto.setObservacao(obs);
 
         produtoService.salvarProduto(produto);
+
+        if (categoria.getCategoria().equals("PRODUTO COM INSUMOS")){
+            this.cadastraEstoqueProdutoComInsumo(produto);
+        }
 
         System.out.println("Produto Cadastrado!!");
     }
@@ -161,10 +175,9 @@ public class ProdutosController {
         }
 
     public Produto solicitaEntradaProduto(){
+        view.exibirProdutos();
         while(true){
             try{
-//                System.out.println("========Produtos========");
-                view.exibirProdutos();
                 Long idProduto = errorEntrada.trataEntradaLong("Insira o produto: ");
 
                 Produto prod = produtoService.findById(idProduto);
@@ -216,6 +229,10 @@ public class ProdutosController {
 
         produtoService.salvarProduto(produto);
 
+        if (categoria.getCategoria().equals("PRODUTO COM INSUMOS")){
+            this.cadastraEstoqueProdutoComInsumo(produto);
+        }
+
         System.out.println("Produto Editado!!");
 
     }
@@ -232,6 +249,10 @@ public class ProdutosController {
         Produto produto = this.solicitaEntradaProduto();
         produto.setStatus(EStatus.INATIVO);
         System.out.println("PRODUTO INATIVADO");
+    }
+
+    public void cadastraEstoqueProdutoComInsumo(Produto prod){
+        estoqueService.createSimpleEstoque(prod);
     }
 //
 //        //setando a lista de ingredientes no produto

@@ -1,5 +1,6 @@
 package buteco.model.produto;
 import buteco.enums.EStatus;
+import buteco.model.estoque.Estoque;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -52,6 +53,8 @@ public class Produto {
     @Column(name = "observacao", nullable = true)
     private String observacao;
 
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    private List<Estoque> estoques = new ArrayList<>();
 
 //    @ManyToMany
 //    @JoinTable(
@@ -147,6 +150,14 @@ public class Produto {
     public Grupo getGrupo() { return grupo; }
 
     public void setGrupo(Grupo grupo) { this.grupo = grupo; }
+
+    public List<Estoque> getEstoques() {
+        return estoques;
+    }
+
+    public void setEstoques(List<Estoque> estoques) {
+        this.estoques = estoques;
+    }
 
     @Override
     public String toString(){

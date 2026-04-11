@@ -1,10 +1,13 @@
 package buteco.controller.estoque;
 
+import buteco.enums.EStatus;
+import buteco.model.produto.Produto;
 import buteco.repositories.ConversoesRepository;
 import buteco.repositories.EstoqueRepository;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.EstoqueService;
 import buteco.service.MovimentacoesEstoqueService;
+import buteco.service.ProdutoService;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.EstoqueView;
 import buteco.view.ProdutosView;
@@ -19,11 +22,14 @@ public class EstoqueController {
     private EstoqueService estoqueService;
     private MovimentacoesEstoqueService movimentacoesEstoqueService;
     private ConversoesRepository conversoesRepository;
+    private ProdutoService produtoService;
 
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository,
                              ProdutoRepository produtoRepository, EstoqueService estoqueService,
                              MovimentacoesEstoqueService movimentacoesEstoqueService,
-                             ConversoesRepository conversoesRepository){
+                             ConversoesRepository conversoesRepository,
+                             ProdutoService produtoService
+    ){
 
         this.sc = sc;
         this.errorEntrada = errorEntrada;
@@ -31,6 +37,7 @@ public class EstoqueController {
         this.produtosView = new ProdutosView(sc, errorEntrada, produtoRepository);
         this.estoqueService = estoqueService;
         this.movimentacoesEstoqueService = movimentacoesEstoqueService;
+        this.produtoService = produtoService;
     }
 
     public void index(){
@@ -56,7 +63,21 @@ public class EstoqueController {
         do {
             try {
 
-                Long idProduto = errorEntrada.trataEntradaLong("Insira o codigo do Produto (0 para cancelar): ");
+                Produto produto = this.solicitaEntradaProduto();
+                Long idProduto = produto.getId();
+
+                if(produto.getCategoria().getCategoria().equals("SERVICO")){
+                    System.out.println("Produto como servico nao tem estoque!!");
+                    tentativas++;
+                    break;
+                }
+
+                if(produto.getCategoria().getCategoria().equals("PRODUTO COM INSUMOS") && tipo == 1){
+                    System.out.println("PRODUTO COM O TIPO INSUMO, NAO CADASTRA ENTRADA!!");
+                    tentativas++;
+                    break;
+                }
+
                 if (idProduto == 0) {
                     System.out.println("Cadastro cancelado.");
                     break;
@@ -70,9 +91,15 @@ public class EstoqueController {
                     break;
                 }
 
+                if(produto.getCategoria().getCategoria().equals("PRODUTO COM INSUMOS")){
+                    tipo = 3;
+                }
+
+                System.out.println(tipo);
                 switch (tipo) {
                     case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde);
-                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde);
+                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde, true);
+                    case 3 -> movimentacoesEstoqueService.cadastrarSaidacComInsumos(produto, qtde);
                 }
                 System.out.println("Cadastro realizado com sucesso!");
                 tentativas = 0;
@@ -81,6 +108,24 @@ public class EstoqueController {
                 tentativas++;
             }
         }while(tentativas > 0);
+    }
+
+    public Produto solicitaEntradaProduto(){
+        while(true){
+            try{
+                Long idProduto = errorEntrada.trataEntradaLong("Insira o produto: ");
+
+                Produto prod = produtoService.findById(idProduto);
+                if(prod.getStatus().equals(EStatus.ATIVO)){
+                    return produtoService.findById(idProduto);
+                }else{
+                    System.out.println("PRODUTO INATIVO NAO PODE SER MEXIDO!");
+                }
+            }catch (IllegalArgumentException e){
+                System.out.println("Produto não encontrada, tente novamente!");
+            }
+
+        }
     }
 //
 //    //produtos que nao tem complemento/ingrediente na montagem
