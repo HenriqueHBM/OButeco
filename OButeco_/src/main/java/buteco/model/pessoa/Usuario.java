@@ -1,39 +1,58 @@
 package buteco.model.pessoa;
 
-import java.time.LocalDateTime;
 
-public class Usuario  extends Pessoa{
-    private String usuario;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+
+@Entity
+@Table (name = "usuarios")
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "senha")
     private String senha;
-    private LocalDateTime data_admissao;
-    private boolean status_login;
-    private int celular;
 
-    public Usuario(String usuario, String senha, boolean status_login, int celular) {
-        this.usuario = usuario;
+    @ManyToOne
+    @JoinColumn(name = "fk_cargo_id")
+    private Cargo cargo;
+
+    public Usuario(Long id, String nome, String login, String senha, Cargo cargo) {
+        this.id = id;
+        this.nome = nome;
+        this.login = login;
         this.senha = senha;
-        this.data_admissao = LocalDateTime.now();
-        this.status_login = status_login;
-        this.celular = celular;
+        this.cargo = cargo;
     }
 
-    public String getUsuario() { return usuario; }
 
-    public void setUsuario(String usuario) { this.usuario = usuario; }
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
+
+    public String getNome() { return nome; }
+
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getLogin() { return login; }
+
+    public void setLogin(String login) { this.login = login; }
 
     public String getSenha() { return senha; }
 
     public void setSenha(String senha) { this.senha = senha; }
 
-    public LocalDateTime getData_admissao() { return data_admissao; }
+    public Cargo getCargo() { return cargo; }
 
-    public void setData_admissao(LocalDateTime data_admissao) { this.data_admissao = data_admissao; }
+    public void setCargo(Cargo cargo) { this.cargo = cargo; }
 
-    public boolean isStatus_login() { return status_login; }
-
-    public void setStatus_login(boolean status_login) { this.status_login = status_login; }
-
-    public int getCelular() { return celular; }
-
-    public void setCelular(int celular) { this.celular = celular; }
 }

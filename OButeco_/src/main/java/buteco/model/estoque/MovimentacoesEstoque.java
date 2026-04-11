@@ -2,6 +2,7 @@ package buteco.model.estoque;
 
 import buteco.model.pessoa.Usuario;
 import buteco.model.conversao.Conversoes;
+import buteco.model.produto.Produto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,9 +32,9 @@ public class MovimentacoesEstoque {
     @Column(name = "valor_total")
     private double valorTotal;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_usuario", nullable = false)
-    private Usuario usuario; //colocar nome da var como idUsuario?
+  ///  @ManyToOne
+   // @JoinColumn(name = "fk_id_usuario", nullable = false)
+   // private Usuario usuario; //colocar nome da var como idUsuario?
 
     @ManyToOne
     @JoinColumn(name = "fk_id_conversao",nullable = false)
@@ -46,20 +47,25 @@ public class MovimentacoesEstoque {
     @Column(name = "observacao", nullable = true)
     private String observacao;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_id_produto")
+    private Produto produto;
+
     public MovimentacoesEstoque() {
     }
 
-    public MovimentacoesEstoque(Long id, Estoque estoque, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, Conversoes conversoes, Instant dataMovimentacao, String observacao) {
+    public MovimentacoesEstoque(Long id, Estoque estoque, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, Conversoes conversoes, Instant dataMovimentacao, String observacao, Produto produto) {
         this.id = id;
         this.estoque = estoque;
         this.tipo = tipo;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
-        this.usuario = usuario;
+        //this.usuario = usuario;
         this.conversoes = conversoes;
         this.dataMovimentacao = dataMovimentacao;
         this.observacao = observacao;
+        this.produto = produto;
     }
 
     public Long getId() {
@@ -110,13 +116,13 @@ public class MovimentacoesEstoque {
         this.valorTotal = valorTotal;
     }
 
-    public Usuario getUsuario() {
+   /* public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
+    }*/
 
     public Conversoes getConversoes() {
         return conversoes;
@@ -142,6 +148,10 @@ public class MovimentacoesEstoque {
         this.observacao = observacao;
     }
 
+    public Produto getProduto() { return  produto; }
+
+    public void setProduto(Produto produto) { this.produto = produto; }
+
     @Override
     public String toString() {
         return "MovimentacoesEstoque{" +
@@ -151,7 +161,7 @@ public class MovimentacoesEstoque {
                 ", quantidade=" + quantidade +
                 ", valorUnitario=" + valorUnitario +
                 ", valorTotal=" + valorTotal +
-                ", usuario=" + usuario +
+               // ", usuario=" + usuario +
                 ", conversoes=" + conversoes +
                 ", dataMovimentacao=" + dataMovimentacao +
                 ", observacao='" + observacao + '\'' +

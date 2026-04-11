@@ -38,6 +38,7 @@
 
         <!-- Estoque -->
         <mapping class="buteco.model.estoque.Estoque" />
+        <mapping class="buteco.model.estoque.MovimentacoesEstoque" />
 
         <!-- Fim Produto -->
     </session-factory>

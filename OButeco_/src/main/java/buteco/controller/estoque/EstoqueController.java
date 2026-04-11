@@ -41,6 +41,7 @@ public class EstoqueController {
                     case 1 -> cadastrarMovimentacao(1);
                     case 2 -> cadastrarMovimentacao(2);
                     case 3 -> estoqueView.exibirEstoques();
+                    case 4 -> movimentacoesEstoqueService.exibirMovimentacoesEstoque();
                     case 0 -> System.out.println("Saindo...");
                     default -> System.out.println("VALOR INVALIDO");
                 }
