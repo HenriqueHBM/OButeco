@@ -133,8 +133,6 @@ public class ProdutosController {
     }
 
     public List<InsumosProduto> adicionarInsumos(Produto prod){
-            System.out.println("Produtos");
-
             List <InsumosProduto> list = new ArrayList<>();
 
             while(true){
