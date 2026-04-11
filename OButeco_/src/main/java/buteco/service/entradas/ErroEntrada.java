@@ -16,7 +16,7 @@ public class ErroEntrada {
                 int valor = Integer.parseInt(sc.nextLine());
                 return valor;
             }catch (NumberFormatException e ){
-                System.out.println("VALOR INVALIDO (INSIRA UM NUMERO)");
+                System.out.println("VALOR INVALIDO (DIGITE UM NUMERO)");
             }
         }
     }
@@ -43,6 +43,17 @@ public class ErroEntrada {
             }
 
             System.out.println("O campo não pode estar vazio.");
+        }
+    }
+
+    public long trataEntradaLong(String texto) {
+        while (true) {
+            try {
+                System.out.print(texto);
+                return Long.parseLong(sc.nextLine());
+            } catch (NumberFormatException e){
+                System.out.println("VALOR INVALIDO (DIGITE UM NUMERO)");
+            }
         }
     }
 }
