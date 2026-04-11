@@ -13,9 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.logging.LogManager;
 
 public class Main {
     public static void main(String[] args) {
+        try {
+            LogManager.getLogManager().readConfiguration(
+                    Main.class.getClassLoader().getResourceAsStream("logging.properties")
+            );
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar configuração de log");
+        }
+
+        FlyWayconfig.migrate();
         FlyWayconfig.migrate();
 
         Locale.setDefault(Locale.US);

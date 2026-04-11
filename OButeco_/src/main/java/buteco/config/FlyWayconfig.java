@@ -2,6 +2,10 @@ package buteco.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.configuration.FluentConfiguration;
+
+import org.flywaydb.core.api.logging.LogFactory;
+import org.flywaydb.core.api.logging.LogCreator;
 
 public class FlyWayconfig {
     public static void migrate(){
