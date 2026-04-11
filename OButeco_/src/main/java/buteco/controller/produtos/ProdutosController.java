@@ -7,6 +7,7 @@ import buteco.model.produto.Produto;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.CategoriaService;
 import buteco.service.GrupoService;
+import buteco.service.InsumosProdutoService;
 import buteco.service.ProdutoService;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.ProdutosView;
@@ -24,10 +25,11 @@ public class ProdutosController {
     private CategoriaService categoriaService;
     private GrupoService grupoService;
     private ProdutoService produtoService;
+    private InsumosProdutoService insumosProdutoService;
 
 //    public VerificaEntradaProduto verificaEntradaProduto;
 
-    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository, CategoriaService categoriaService, GrupoService grupoService, ProdutoService produtoService){
+    public ProdutosController(Scanner sc, ErroEntrada errorEntrada, ProdutoRepository produtoRepository, CategoriaService categoriaService, GrupoService grupoService, ProdutoService produtoService, InsumosProdutoService insumosProdutoService){
         this.sc = sc;
         this.errorEntrada = errorEntrada;
         this.view = new ProdutosView(sc, errorEntrada, produtoRepository);
@@ -35,6 +37,7 @@ public class ProdutosController {
         this.categoriaService = categoriaService;
         this.grupoService = grupoService;
         this.produtoService = produtoService;
+        this.insumosProdutoService = insumosProdutoService;
     }
     public void index(){
         int opcao; //declarando vazia
@@ -44,7 +47,7 @@ public class ProdutosController {
             switch (opcao){
                 case 1 -> cadastrarProduto();
                 case 2 -> view.exibirProdutos();
-//                case 3 -> editarProduto();
+                case 3 -> editarProduto();
 //                case 4 -> excluirProduto();
                 case 0 -> view.exibirMensagem("VOLTANDO..");
                 default -> view.exibirMensagem("VALOR INVALIDO!!!");
@@ -53,7 +56,7 @@ public class ProdutosController {
         }while(opcao != 0 );
     }
 
-public void cadastrarProduto(){
+    public void cadastrarProduto(){
 
         String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
         double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
@@ -83,38 +86,38 @@ public void cadastrarProduto(){
         produtoService.salvarProduto(produto);
 
         System.out.println("Produto Cadastrado!!");
-        }
+    }
 
-        public Categoria solicitaEntradaCategoria(){
-            while(true){
-                try{
-                    System.out.println("========CATEGORIAS========");
-                    categoriaService.findAllCategoria().stream().forEach(System.out::println);
-                    Long opcao = errorEntrada.trataEntradaLong("Insira a categoria: ");
-                    return categoriaService.findById(opcao);
-                }catch (IllegalArgumentException e){
-                    System.out.println("Categoria não encontrada, tente novamente!");
-                }
-
+    public Categoria solicitaEntradaCategoria(){
+        while(true){
+            try{
+                System.out.println("========CATEGORIAS========");
+                categoriaService.findAllCategoria().stream().forEach(System.out::println);
+                Long opcao = errorEntrada.trataEntradaLong("Insira a categoria: ");
+                return categoriaService.findById(opcao);
+            }catch (IllegalArgumentException e){
+                System.out.println("Categoria não encontrada, tente novamente!");
             }
 
         }
 
-        public Grupo solicitaEntradaGrupo(){
-            while(true){
-                try{
-                    System.out.println("========GRUPOS========");
-                    grupoService.findAllGrupo().stream().forEach(System.out::println);
-                    Long idGrupo = errorEntrada.trataEntradaLong("Insira o grupo: ");
-                    return grupoService.findById(idGrupo);
-                }catch (IllegalArgumentException e){
-                    System.out.println("Grupo não encontrada, tente novamente!");
-                }
+    }
 
+    public Grupo solicitaEntradaGrupo(){
+        while(true){
+            try{
+                System.out.println("========GRUPOS========");
+                grupoService.findAllGrupo().stream().forEach(System.out::println);
+                Long idGrupo = errorEntrada.trataEntradaLong("Insira o grupo: ");
+                return grupoService.findById(idGrupo);
+            }catch (IllegalArgumentException e){
+                System.out.println("Grupo não encontrada, tente novamente!");
             }
-        }
 
-        public List<InsumosProduto> adicionarInsumos(Produto prod){
+        }
+    }
+
+    public List<InsumosProduto> adicionarInsumos(Produto prod){
             System.out.println("Produtos");
 
             List <InsumosProduto> list = new ArrayList<>();
@@ -137,7 +140,7 @@ public void cadastrarProduto(){
 
         }
 
-        public Produto solicitaEntradaIngrediente(){
+    public Produto solicitaEntradaIngrediente(){
             while (true){
                 try{
                     view.exibirIngredientes();
@@ -153,6 +156,67 @@ public void cadastrarProduto(){
             }
         }
 
+    public Produto solicitaEntradaProduto(){
+        while(true){
+            try{
+                System.out.println("========GRUPOS========");
+                produtoService.findAllProdutos().stream().forEach(System.out::println);
+                Long idProduto = errorEntrada.trataEntradaLong("Insira o produto: ");
+
+                return produtoService.findById(idProduto);
+            }catch (IllegalArgumentException e){
+                System.out.println("Grupo não encontrada, tente novamente!");
+            }
+
+        }
+    }
+    public void editarProduto(){
+        Produto produto = this.solicitaEntradaProduto();
+
+        String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
+        double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
+
+        Categoria categoria = produto.getCategoria();
+
+        //nao deixa alterar o tipo de produto, caso seja insumo ou servico
+        if(produto.getCategoria().getCategoria().equals("NORMAL") ){
+            //chama funcao para verificar entradas;
+            categoria = this.solicitaEntradaCategoria();
+        }
+
+        Grupo grupo = this.solicitaEntradaGrupo();
+
+        //caso queira add observacao no produto
+        //sc.nextLine(); //esse sc server pois as vezes vem um "enter" a mais
+        view.exibirMensagem("Observacao produto(opcional)");
+        String obs = sc.nextLine();
+
+        if (categoria.getCategoria().equals("PRODUTO COM INSUMOS")){
+            this.removerInsumos(produto);
+            produto.setInsumos(this.adicionarInsumos(produto));
+        }
+
+
+        produto.setCategoria(categoria);
+        produto.setGrupo(grupo);
+
+        produto.setNome(nome);
+        produto.setPrecoVenda(valUnit);
+        produto.setObservacao(obs);
+
+        produtoService.salvarProduto(produto);
+
+        System.out.println("Produto Editado!!");
+
+    }
+
+    public void removerInsumos(Produto prod){
+        if(!prod.getInsumos().isEmpty()){
+            prod.getInsumos().forEach(element -> {
+                insumosProdutoService.deletarInsumos(element.getId());
+            });
+        }
+    }
 //
 //        //setando a lista de ingredientes no produto
 //        produto.setIngredientesProdutos(listaIngredientesProdutos);

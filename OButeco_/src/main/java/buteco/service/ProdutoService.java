@@ -2,6 +2,7 @@ package buteco.service;
 
 import buteco.model.produto.Categoria;
 import buteco.model.produto.Produto;
+import buteco.repositories.InsumosProdutoRepository;
 import buteco.repositories.ProdutoRepository;
 
 import java.util.List;
