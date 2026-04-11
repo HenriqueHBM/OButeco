@@ -51,4 +51,13 @@ public class EstoqueService {
 
         estoqueRepository.create(estoque);
     }
+
+    public void createSimpleEstoque(Produto prod){
+        Estoque estoque = new Estoque();
+        estoque.setProduto(prod);
+        Conversoes conversoes = conversoesRepository.findById(3L); // 3 = (unidade)
+        estoque.setConversoes(conversoes);
+
+        estoqueRepository.create(estoque);
+    }
 }

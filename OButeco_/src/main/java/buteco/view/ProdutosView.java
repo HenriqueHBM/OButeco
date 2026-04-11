@@ -54,9 +54,6 @@ public class ProdutosView {
                 if(!element.getInsumos().isEmpty()){
                     this.exibirIngredienteProduto(element.getInsumos());
                 }
-//                element.getInsumos().stream().forEach(val -> {
-//                    System.out.println(val.getQtde());
-//                });
             });
             System.out.println();
         }catch (Exception er){

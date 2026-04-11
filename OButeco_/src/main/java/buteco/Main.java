@@ -48,8 +48,8 @@ public class Main {
         int entradaMenu = 0;
 
 ////      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository);
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
 
         do{
             // Funcao para tentar tratar caso usuario passe um caracter
