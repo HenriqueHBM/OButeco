@@ -42,12 +42,13 @@ public class Main {
         CategoriaService categoriaService = new CategoriaService(categoriaRepository);
         GrupoService grupoService = new GrupoService(grupoRepository);
         ProdutoService produtoService = new ProdutoService(produtoRepository);
+        InsumosProdutoService insumosProdutoService = new InsumosProdutoService(insumosProdutoRepository);
         //
 
         int entradaMenu = 0;
 
 ////      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService);
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService);
         EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository);
 
         do{

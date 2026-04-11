@@ -1,9 +1,11 @@
 package buteco.view;
 
+import buteco.model.produto.InsumosProduto;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.ProdutoService;
 import buteco.service.entradas.ErroEntrada;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ProdutosView {
@@ -48,6 +50,9 @@ public class ProdutosView {
                         element.getStatus(),
                         element.getObservacao()
                 );
+                if(!element.getInsumos().isEmpty()){
+                    this.exibirIngredienteProduto(element.getInsumos());
+                }
 //                element.getInsumos().stream().forEach(val -> {
 //                    System.out.println(val.getQtde());
 //                });
@@ -90,19 +95,21 @@ public class ProdutosView {
 //        System.out.println(mensagem);
 //    }
 //
-//    public void exibirIngredienteProduto(Produto produto){
-//        exibirMensagem("\t===================COMPLEMENTO PRODUTO===================");
-//            System.out.printf("%6s %-6s | %-25s | %-25s | %-15s | %-25s \n",
-//                    "|-", "CODIGO",  "NOME", "TIPO PRODUTO", "VALOR UNIDADE", "QTDE. USADA");
-//            for (IngredientesProduto ip : produto.getIngredientesProdutos()){
-//                System.out.printf("%6s %-6d | %-25s | %-25s | %-15.2f | %-15.2f\n",
-//                        "|-",
-//                        ip.getIngredienteProduto().getCodigo(),
-//                        ip.getIngredienteProduto().getNome(),
-//                        ip.getIngredienteProduto().getTipoProduto().toString(),
-//                        ip.getIngredienteProduto().getValorUnitario(),
-//                        ip.getQtde()
-//                );
-//            }
-//    }
+    public void exibirIngredienteProduto(List<InsumosProduto> insumo){
+        exibirMensagem("\t===================COMPLEMENTO PRODUTO===================");
+            System.out.printf("%6s %-6s | %-25s | %-25s | %-15s | %-25s \n",
+                    "||-", "CODIGO",  "NOME", "TIPO PRODUTO",  "GRUPO", "QTDE. USADA");
+
+        insumo.stream().forEach(element -> {
+            System.out.printf("%6s %-6s | %-25s | %-25s | %-15s | %-25s\n",
+                    "||-",
+                    element.getInsumo().getId(),
+                    element.getInsumo().getNome(),
+                    element.getInsumo().getCategoria().getCategoria(),
+                    element.getInsumo().getGrupo().getGrupo(),
+                    element.getQtde()
+            );
+        });
+        exibirMensagem("\t=========================================================");
+    }
 }
