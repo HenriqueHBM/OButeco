@@ -248,6 +248,7 @@ public class ProdutosController {
     public void excluirProduto(){
         Produto produto = this.solicitaEntradaProduto();
         produto.setStatus(EStatus.INATIVO);
+        produtoService.excluirProduto(produto);
         System.out.println("PRODUTO INATIVADO");
     }
 

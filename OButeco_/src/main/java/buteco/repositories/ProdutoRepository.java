@@ -2,6 +2,7 @@ package buteco.repositories;
 
 import buteco.model.produto.Produto;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -31,5 +32,12 @@ public class ProdutoRepository {
 
     public List<Produto> findAll() {
         return em.createQuery("select p from Produto p", Produto.class).getResultList();
+    }
+
+    @Transactional
+    public void excluirProduto(Produto prod){
+        em.getTransaction().begin();
+        em.merge(prod);
+        em.getTransaction().commit();
     }
 }

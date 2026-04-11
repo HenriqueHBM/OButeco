@@ -35,4 +35,8 @@ public class ProdutoService {
         }
         return produtoRepository.findById(id);
     }
+
+    public void excluirProduto(Produto prod){
+        produtoRepository.excluirProduto(prod);
+    }
 }
