@@ -1,5 +1,6 @@
 package buteco.controller.produtos;
 
+import buteco.enums.EStatus;
 import buteco.model.produto.Categoria;
 import buteco.model.produto.Grupo;
 import buteco.model.produto.InsumosProduto;
@@ -48,7 +49,7 @@ public class ProdutosController {
                 case 1 -> cadastrarProduto();
                 case 2 -> view.exibirProdutos();
                 case 3 -> editarProduto();
-//                case 4 -> excluirProduto();
+                case 4 -> excluirProduto();
                 case 0 -> view.exibirMensagem("VOLTANDO..");
                 default -> view.exibirMensagem("VALOR INVALIDO!!!");
             }
@@ -147,6 +148,9 @@ public class ProdutosController {
                     Long idProd = errorEntrada.trataEntradaLong("Insira o Insumo");
                     Produto ing = produtoService.findById(idProd);
 
+                    if(ing.getStatus().equals(EStatus.INATIVO)){
+                        System.out.println("Ingrediente INATIVO");
+                    }
                     if (ing.getCategoria().getCategoria().equals("INSUMO") || ing.getCategoria().getCategoria().equals("SERVICO") ){
                         return ing;
                     }
@@ -159,19 +163,25 @@ public class ProdutosController {
     public Produto solicitaEntradaProduto(){
         while(true){
             try{
-                System.out.println("========Produtos========");
+//                System.out.println("========Produtos========");
                 view.exibirProdutos();
                 Long idProduto = errorEntrada.trataEntradaLong("Insira o produto: ");
 
-                return produtoService.findById(idProduto);
+                Produto prod = produtoService.findById(idProduto);
+                if(prod.getStatus().equals(EStatus.ATIVO)){
+                    return produtoService.findById(idProduto);
+                }else{
+                    System.out.println("PRODUTO INATIVO NAO PODE SER MEXIDO!");
+                }
             }catch (IllegalArgumentException e){
-                System.out.println("Grupo não encontrada, tente novamente!");
+                System.out.println("Produto não encontrada, tente novamente!");
             }
 
         }
     }
     public void editarProduto(){
         Produto produto = this.solicitaEntradaProduto();
+
 
         String nome = errorEntrada.trataEntradaString("Insira o nome do Produto:");
         double valUnit = errorEntrada.trataEntradaDouble("Insira o valor unitario:");
@@ -216,6 +226,12 @@ public class ProdutosController {
                 insumosProdutoService.deletarInsumos(element.getId());
             });
         }
+    }
+
+    public void excluirProduto(){
+        Produto produto = this.solicitaEntradaProduto();
+        produto.setStatus(EStatus.INATIVO);
+        System.out.println("PRODUTO INATIVADO");
     }
 //
 //        //setando a lista de ingredientes no produto

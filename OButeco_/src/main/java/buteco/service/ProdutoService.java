@@ -4,6 +4,7 @@ import buteco.model.produto.Categoria;
 import buteco.model.produto.Produto;
 import buteco.repositories.InsumosProdutoRepository;
 import buteco.repositories.ProdutoRepository;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -33,6 +34,5 @@ public class ProdutoService {
             throw new IllegalArgumentException("Valor Nao encontrado");
         }
         return produtoRepository.findById(id);
-
     }
 }
