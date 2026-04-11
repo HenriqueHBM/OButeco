@@ -31,7 +31,7 @@ public class ProdutoRepository {
     }
 
     public List<Produto> findAll() {
-        return em.createQuery("select p from Produto p", Produto.class).getResultList();
+        return em.createQuery("select p from Produto p order by p.id asc", Produto.class).getResultList();
     }
 
     @Transactional

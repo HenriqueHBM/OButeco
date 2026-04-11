@@ -250,6 +250,7 @@ public class ProdutosController {
         produto.setStatus(EStatus.INATIVO);
         produtoService.excluirProduto(produto);
         System.out.println("PRODUTO INATIVADO");
+
     }
 
     public void cadastraEstoqueProdutoComInsumo(Produto prod){
