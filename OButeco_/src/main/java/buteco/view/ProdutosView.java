@@ -1,5 +1,6 @@
 package buteco.view;
 
+import buteco.enums.EStatus;
 import buteco.model.produto.InsumosProduto;
 import buteco.repositories.ProdutoRepository;
 import buteco.service.ProdutoService;
@@ -29,7 +30,7 @@ public class ProdutosView {
     }
 
     public void exibirProdutos(){
-        System.out.println("Produtos Cadastrados");
+//        System.out.println("Produtos Cadastrados");
 
         exibirMensagem("===============PRODUTOS CADASTRADOS===============");
         System.out.printf("%-6s | %-25s | %-25s | %-15s | %-15s | %-15s | %-25s\n",
@@ -75,7 +76,7 @@ public class ProdutosView {
 
             prod.stream().forEach(element -> {
                 String cat = element.getCategoria().getCategoria();
-                if(cat.equals("INSUMO") || cat.equals("SERVICO")){
+                if((cat.equals("INSUMO") || cat.equals("SERVICO")) && element.getStatus().equals(EStatus.ATIVO)){
                     System.out.printf("%-6s | %-25s | %-25s | %-15s | %-25s\n",
                             element.getId(),
                             element.getNome(),
