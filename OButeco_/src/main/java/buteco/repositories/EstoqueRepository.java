@@ -26,7 +26,7 @@ public class EstoqueRepository {
     }//getResultList no lugar de getSingleResult para poder aparecer a mensagem certa de erro na entrada
 
     public List<Estoque> findAll() {
-        return em.createQuery("select e from Estoque e", Estoque.class).getResultList();
+        return em.createQuery("select e from Estoque e order by e.id asc", Estoque.class).getResultList();
     }
 
     public void create(Estoque estoque){
