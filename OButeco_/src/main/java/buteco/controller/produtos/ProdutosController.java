@@ -159,8 +159,8 @@ public class ProdutosController {
     public Produto solicitaEntradaProduto(){
         while(true){
             try{
-                System.out.println("========GRUPOS========");
-                produtoService.findAllProdutos().stream().forEach(System.out::println);
+                System.out.println("========Produtos========");
+                view.exibirProdutos();
                 Long idProduto = errorEntrada.trataEntradaLong("Insira o produto: ");
 
                 return produtoService.findById(idProduto);
