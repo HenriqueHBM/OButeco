@@ -1,66 +1,96 @@
 package buteco.controller.usuarios;
 
 import buteco.service.entradas.ErroEntrada;
+import buteco.service.UsuarioService;
+import buteco.repositories.UsuarioRepository;
+import buteco.repositories.CargoRepository;
 import buteco.service.entradas.VerificaEntradaProduto;
 import buteco.model.pessoa.Usuario;
 import buteco.model.pessoa.Cargo;
-import java.util.ArrayList;
-import java.util.List;
+import buteco.view.UsuariosView;
+
 import java.util.Scanner;
 
 public class UsuariosController {
-/*
-    //List<Usuario> usuarios = new ArrayList<>();
-    //List<Cargo> cargos = new ArrayList<>();
+
+    private UsuariosView view;
+    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
+    private CargoRepository cargoRepository;
     private Scanner sc;
     private ErroEntrada erroEntrada;
+    private Usuario usuarioLogado;
 
-
-    public UsuariosController(List<Usuario> usuarios, List<Cargo> cargos, Scanner sc, ErroEntrada erroEntrada) {
-    //    this.usuarios = usuarios;
-    //    this.cargos = cargos;
+    public UsuariosController(
+            Scanner sc,
+            ErroEntrada erroEntrada,
+            CargoRepository cargoRepository,
+            UsuarioRepository usuarioRepository,
+            UsuarioService usuarioService,
+            Usuario usuarioLogado
+            )
+    {
         this.sc = sc;
         this.erroEntrada = erroEntrada;
-    //    cargos.add(new Cargo(1, "ADMIN"));
-    //    cargos.add(new Cargo(2, "FUNCIONARIO"));
-    //    usuarios.add(new Usuario(1, "Dono", "dono", "123", cargos.get(1)));
+        this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
+        this.view = new UsuariosView(sc, erroEntrada, usuarioRepository);
+        this.cargoRepository = cargoRepository;
+        this.usuarioLogado = usuarioLogado;
     }
 
-    public Usuario login(List<Usuario> usuarios) {
+    public void index(){
+        int opcao;
+
+        do {
+            opcao = view.exibirMenu();
+            switch (opcao) {
+                case 1 -> cadastrarUsuario(usuarioLogado);
+                case 0 -> System.out.println("Saindo...");
+                default -> System.out.println("VALOR INVALIDO");
+            }
+        }while (opcao != 0);
+    }
+
+    public Usuario login () {
 
         System.out.println("===== LOGIN ======");
 
         String login = erroEntrada.trataEntradaString("Login: ");
         String senha = erroEntrada.trataEntradaString("Senha: ");
 
-        for(Usuario u : usuarios){
-            if(u.getLogin().equals(login) && u.getSenha().equals(senha)){
-                System.out.println("Bem-vindo " + u.getNome());
-                return u;
-            }
+        try{
+            usuarioLogado = usuarioService.login(login, senha);
+            System.out.println("Bem-vindo " + usuarioLogado.getNome());
+            return usuarioLogado;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-
-        System.out.println("Login Inválido!");
-        return null;
     }
 
-    public void cadastrarUsuario(){
+    public void cadastrarUsuario(Usuario usuarioLogado) {
+
+        if(usuarioLogado.getCargo().getId() != 2){
+            System.out.println("Acesso negado!");
+            return;
+        }
 
         String nome = erroEntrada.trataEntradaString("Nome: ");
         String login = erroEntrada.trataEntradaString("Login: ");
         String senha = erroEntrada.trataEntradaString("Senha: ");
 
-        /*Usuario u = new Usuario(
-                usuarios.size()+1,
-                nome,
-                login,
-                senha,
-                cargos.get(1)
-        );
+        Long idCargo = erroEntrada.trataEntradaLong("Id do Cargo: ");
+        Cargo cargo = cargoRepository.findById(idCargo);
 
-        usuarios.add(u);
+        if (cargo == null) {
+            System.out.println("Cargo não encontrado");
+            return;
+        }
 
-        System.out.println("Usuario Cadastrado com Sucesso!");
-    }*/
+        usuarioService.cadastrar(nome, login, senha, cargo);
+
+        System.out.println("Usuário cadastrado com sucesso!");
+    }
 
 }
