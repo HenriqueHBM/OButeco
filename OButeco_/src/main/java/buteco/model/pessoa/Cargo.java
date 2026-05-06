@@ -11,12 +11,10 @@ public class Cargo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "cargo")
     private String nome;
 
-    @ManyToOne
-    @Column(name = "fk_cargos_id")
-    private Cargo cargo;
+    public Cargo() {}
 
     public Cargo(Long id, String nome){
         this.id = id;

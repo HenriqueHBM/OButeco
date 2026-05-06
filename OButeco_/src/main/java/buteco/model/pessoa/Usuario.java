@@ -16,15 +16,17 @@ public class Usuario {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "login")
+    @Column(name = "usuario")
     private String login;
 
     @Column(name = "senha")
     private String senha;
 
     @ManyToOne
-    @JoinColumn(name = "fk_cargo_id")
+    @JoinColumn(name = "fk_id_cargo")
     private Cargo cargo;
+
+    public Usuario() {}
 
     public Usuario(Long id, String nome, String login, String senha, Cargo cargo) {
         this.id = id;

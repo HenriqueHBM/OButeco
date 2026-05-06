@@ -40,6 +40,10 @@
         <mapping class="buteco.model.estoque.Estoque" />
         <mapping class="buteco.model.estoque.MovimentacoesEstoque" />
 
+        <!-- Usuario -->
+        <mapping class="buteco.model.pessoa.Usuario" />
+        <mapping class="buteco.model.pessoa.Cargo" />
+
         <!-- Fim Produto -->
     </session-factory>
 </hibernate-configuration>

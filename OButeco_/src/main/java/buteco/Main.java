@@ -3,7 +3,9 @@ package buteco;
 import buteco.config.FlyWayconfig;
 import buteco.controller.estoque.EstoqueController;
 import buteco.controller.produtos.ProdutosController;
+import buteco.controller.usuarios.UsuariosController;
 import buteco.model.produto.*;
+import buteco.model.pessoa.Usuario;
 import buteco.repositories.*;
 import buteco.service.*;
 import buteco.service.entradas.ErroEntrada;
@@ -42,9 +44,12 @@ public class Main {
         EstoqueRepository estoqueRepository = new EstoqueRepository(em);
         MovimentacoesEstoqueRepository movimentacoesEstoqueRepository = new MovimentacoesEstoqueRepository(em);
         ConversoesRepository conversoesRepository = new ConversoesRepository(em);
+        UsuarioRepository usuarioRepository = new UsuarioRepository(em);
+        CargoRepository cargoRepository = new CargoRepository(em);
         //
 
         ErroEntrada errorEntrada = new ErroEntrada(sc);
+        Usuario usuarioLogado = new Usuario();
 
         //Services
         EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, errorEntrada);
@@ -53,6 +58,7 @@ public class Main {
         GrupoService grupoService = new GrupoService(grupoRepository);
         ProdutoService produtoService = new ProdutoService(produtoRepository);
         InsumosProdutoService insumosProdutoService = new InsumosProdutoService(insumosProdutoRepository);
+        UsuarioService usuarioService = new UsuarioService(usuarioRepository);
         //
 
         int entradaMenu = 0;
@@ -60,6 +66,9 @@ public class Main {
 ////      Declarando os controllers
         ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
         EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
+        UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
+
+        usuariosController.login();
 
         do{
             // Funcao para tentar tratar caso usuario passe um caracter
@@ -67,7 +76,7 @@ public class Main {
             switch (entradaMenu){
                 case 1 -> produtosController.index();
                 case 2 -> estoqueController.index();
-                case 3 -> System.out.println("EM DESENVOLVIMENTO");
+                case 3 -> usuariosController.index();
                 case 0 -> System.out.println("ATE MAIS!!!");
                 default -> System.out.println("VALOR INVALIDO!!!");
 
