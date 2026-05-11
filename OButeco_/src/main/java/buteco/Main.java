@@ -9,6 +9,9 @@ import buteco.model.pessoa.Usuario;
 import buteco.repositories.*;
 import buteco.service.*;
 import buteco.service.entradas.ErroEntrada;
+import buteco.view.MainView;
+import buteco.view.components.Cards;
+import buteco.view.components.Colors;
 import jakarta.persistence.EntityManager;
 
 import java.util.ArrayList;
@@ -70,19 +73,34 @@ public class Main {
 
         usuariosController.login();
 
-        do{
-            // Funcao para tentar tratar caso usuario passe um caracter
-            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
-            switch (entradaMenu){
-                case 1 -> produtosController.index();
-                case 2 -> estoqueController.index();
-                case 3 -> usuariosController.index();
-                case 0 -> System.out.println("ATE MAIS!!!");
-                default -> System.out.println("VALOR INVALIDO!!!");
+        Colors colors = new Colors();
+        Cards cards = new Cards(colors);
+        MainView view = new MainView(colors, cards);
 
-            }
-        }while(entradaMenu != 0 );
+        view.clicarUsuarioAction( e ->  new Thread(() -> usuariosController.index()).start());
+        view.clicarProdutoAction( e ->  new Thread(() -> produtosController.index()).start());
+        view.clicarEstoqueAction( e ->  new Thread(() -> estoqueController.index()).start());
+//        view.clicarUsuarioAction(e  -> new Thread(() -> usuariosController.index()).start());
 
+
+//        do{
+//            // Funcao para tentar tratar caso usuario passe um caracter
+//            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
+//            switch (entradaMenu){
+//                case 1 -> produtosController.index();
+//                case 2 -> estoqueController.index();
+//                case 3 -> usuariosController.index();
+//                case 0 -> System.out.println("ATE MAIS!!!");
+//                default -> System.out.println("VALOR INVALIDO!!!");
+//
+//            }
+//        }while(entradaMenu != 0 );
+
+        view.clicarSair(e -> {
+            em.close();
+            CustomizerFactory.fechar();
+            System.exit(0);
+        });
 
         //criando a tabela e um valor nela já
 //        Grupo grupo = new Grupo();
@@ -128,7 +146,6 @@ public class Main {
 //        //p
 //        System.out.println(p1);;
 //
-        em.close();
-        CustomizerFactory.fechar();
+
     }
 }
