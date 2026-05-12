@@ -49,7 +49,7 @@ public class Main {
         //
 
         ErroEntrada errorEntrada = new ErroEntrada(sc);
-        Usuario usuarioLogado = new Usuario();
+        Usuario usuarioLogado = null;
 
         //Services
         EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, errorEntrada);

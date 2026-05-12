@@ -54,19 +54,24 @@ public class UsuariosController {
 
     public Usuario login () {
 
-        System.out.println("===== LOGIN ======");
+        while( usuarioLogado == null ) {
 
-        String login = erroEntrada.trataEntradaString("Login: ");
-        String senha = erroEntrada.trataEntradaString("Senha: ");
+            System.out.println("===== LOGIN ======");
 
-        try{
-            usuarioLogado = usuarioService.login(login, senha);
-            System.out.println("Bem-vindo " + usuarioLogado.getNome());
-            return usuarioLogado;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+            String login = erroEntrada.trataEntradaString("Login: ");
+            String senha = erroEntrada.trataEntradaString("Senha: ");
+
+            try {
+                usuarioLogado = usuarioService.login(login, senha);
+                if( usuarioLogado == null ) {
+                    System.out.println("Usuário ou Senha Inválidos!");
+                }
+            } catch (Exception e) {
+                System.out.println("Usuário ou Senha Inválidos!");
+            }
         }
+        System.out.println("Bem-vindo " + usuarioLogado.getNome());
+        return usuarioLogado;
     }
 
     public void cadastrarUsuario(Usuario usuarioLogado) {

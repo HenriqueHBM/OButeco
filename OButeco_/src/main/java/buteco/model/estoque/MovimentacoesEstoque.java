@@ -32,9 +32,9 @@ public class MovimentacoesEstoque {
     @Column(name = "valor_total")
     private double valorTotal;
 
-  ///  @ManyToOne
-   // @JoinColumn(name = "fk_id_usuario", nullable = false)
-   // private Usuario usuario; //colocar nome da var como idUsuario?
+    @ManyToOne
+    @JoinColumn(name = "fk_id_usuario", nullable = false)
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_conversao",nullable = false)
@@ -116,37 +116,21 @@ public class MovimentacoesEstoque {
         this.valorTotal = valorTotal;
     }
 
-   /* public Usuario getUsuario() {
-        return usuario;
-    }
+    public Usuario getUsuario() { return usuario; }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }*/
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 
-    public Conversoes getConversoes() {
-        return conversoes;
-    }
+    public Conversoes getConversoes() { return conversoes; }
 
-    public void setConversoes(Conversoes conversoes) {
-        this.conversoes = conversoes;
-    }
+    public void setConversoes(Conversoes conversoes) { this.conversoes = conversoes; }
 
-    public Instant getDataMovimentacao() {
-        return dataMovimentacao;
-    }
+    public Instant getDataMovimentacao() { return dataMovimentacao; }
 
-    public void setDataMovimentacao(Instant dataMovimentacao) {
-        this.dataMovimentacao = dataMovimentacao;
-    }
+    public void setDataMovimentacao(Instant dataMovimentacao) { this.dataMovimentacao = dataMovimentacao; }
 
-    public String getObservacao() {
-        return observacao;
-    }
+    public String getObservacao() { return observacao; }
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
+    public void setObservacao(String observacao) { this.observacao = observacao; }
 
     public Produto getProduto() { return  produto; }
 
