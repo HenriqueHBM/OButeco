@@ -129,11 +129,11 @@ As migrações do Flyway serão executadas automaticamente na primeira inicializ
 
 ## 👥 Equipe de Desenvolvimento
 
-| Participante            | Papel |
-|-------------------------|---|
-| **Jonas L. Pereira**    | Desenvolvedor |
+| Participante            | Papel         |
+|-------------------------|---------------|
+| **Jonas L. Pereira**    | Líder         |
 | **Henrique B. Madeira** | Desenvolvedor |
-| **Daniela E. Moreira**  | Desenvolvedor |
+| **Daniela E. Moreira**  | Scrum Master  |
 | **João V. de Mello**    | Desenvolvedor |
 
 ---
