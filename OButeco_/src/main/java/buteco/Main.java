@@ -2,12 +2,14 @@ package buteco;
 
 import buteco.config.FlyWayconfig;
 import buteco.controller.estoque.EstoqueController;
+import buteco.controller.estoque.EstoquesController;
 import buteco.controller.produtos.ProdutosController;
 import buteco.controller.usuarios.UsuariosController;
 import buteco.model.produto.*;
 import buteco.model.pessoa.Usuario;
 import buteco.repositories.*;
 import buteco.service.*;
+import buteco.service.entradas.ConversoesService;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.MainView;
 import buteco.view.components.Cards;
@@ -22,6 +24,8 @@ import java.util.logging.LogManager;
 
 public class Main {
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.uiScale", "1.0");
+
         try {
             LogManager.getLogManager().readConfiguration(
                     Main.class.getClassLoader().getResourceAsStream("logging.properties")
@@ -56,12 +60,13 @@ public class Main {
 
         //Services
         EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, errorEntrada);
-        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository, estoqueService, conversoesRepository, produtoRepository, errorEntrada);
+        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository, estoqueService, conversoesRepository, produtoRepository, errorEntrada, usuarioRepository);
         CategoriaService categoriaService = new CategoriaService(categoriaRepository);
         GrupoService grupoService = new GrupoService(grupoRepository);
         ProdutoService produtoService = new ProdutoService(produtoRepository);
         InsumosProdutoService insumosProdutoService = new InsumosProdutoService(insumosProdutoRepository);
         UsuarioService usuarioService = new UsuarioService(usuarioRepository);
+        ConversoesService conversoesService = new ConversoesService(conversoesRepository);
         //
 
         int entradaMenu = 0;
@@ -70,6 +75,7 @@ public class Main {
         ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
         EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
         UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
+        EstoquesController estoquesController = new EstoquesController(produtoService, conversoesService, estoqueService, movimentacoesEstoqueService);
 
         usuariosController.login();
 
@@ -79,7 +85,11 @@ public class Main {
 
         view.clicarUsuarioAction( e ->  new Thread(() -> usuariosController.index()).start());
         view.clicarProdutoAction( e ->  new Thread(() -> produtosController.index()).start());
-        view.clicarEstoqueAction( e ->  new Thread(() -> estoqueController.index()).start());
+//        view.clicarEstoqueAction( e ->  new Thread(() -> estoqueController.index()).start());
+        view.clicarEstoqueAction(e -> {
+            buteco.view.EstoquesView estoquesView = new buteco.view.EstoquesView(estoquesController, usuarioLogado);
+            estoquesView.setVisible(true);
+        });
 //        view.clicarUsuarioAction(e  -> new Thread(() -> usuariosController.index()).start());
 
 
