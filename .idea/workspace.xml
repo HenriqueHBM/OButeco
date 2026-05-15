@@ -5,7 +5,152 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbec47bd-0b24-4e4d-979b-a943c0cc4ae7" name="Changes" comment="Conexao .env">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/OButeco_/.ai/mcp/mcp.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/config/FlyWayconfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/config/JpaUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/estoque/EstoqueController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/produtos/ProdutosController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/controller/usuarios/UsuariosController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/enums/EStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/enums/ETipoProduto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/conversao/Conversoes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/Estoque.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/estoque/MovimentacoesEstoque.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/pessoa/Cargo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/pessoa/Usuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Categoria.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Grupo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/InsumosProduto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/produto/Produto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/model/restaurante/Restaurante.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/CargoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/CategoriaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/ConversoesRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/CustomizerFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/EstoqueRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/GrupoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/InsumosProdutoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/MovimentacoesEstoqueRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/ProdutoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/repositories/UsuarioRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/CategoriaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/EstoqueService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/GrupoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/InsumosProdutoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/MovimentacoesEstoqueService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/PessoaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/ProdutoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/UsuarioService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/entradas/ErroEntrada.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/service/entradas/VerificaEntradaProduto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/EstoqueView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/EstoquesView.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/EstoquesView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/MainView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/ProdutosView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/UsuariosView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/components/Cards.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/java/buteco/view/components/Colors.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V1__create_databse.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V2__create_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V3__alter_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V4__add_column_table.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V5__insert_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V6__alter_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V7__alter_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/db/migration/V8__triggers.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/hibernate.cfg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/left-arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/shopping-cart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/stock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/user.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/logging.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/OButeco_-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/FlyWayconfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/JpaUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/estoque/EstoqueController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/usuarios/UsuariosController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/enums/EStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/enums/ETipoProduto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/conversao/Conversoes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/Estoque.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/estoque/MovimentacoesEstoque.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/pessoa/Cargo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/pessoa/Usuario.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Categoria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Grupo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/InsumosProduto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Produto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/restaurante/Restaurante.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/CargoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/CategoriaRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ConversoesRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/CustomizerFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/EstoqueRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/GrupoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/InsumosProdutoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/MovimentacoesEstoqueRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/ProdutoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/repositories/UsuarioRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/CategoriaService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/EstoqueService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/GrupoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/InsumosProdutoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/MovimentacoesEstoqueService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/PessoaService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/ProdutoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/UsuarioService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/entradas/ErroEntrada.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/entradas/VerificaEntradaProduto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/EstoqueView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/EstoquesView$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/EstoquesView$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/EstoquesView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/MainView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/NewJFrame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/UsuariosView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/components/Cards.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/components/Colors.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V1__create_databse.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V2__create_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V3__alter_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V4__add_column_table.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V5__insert_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V6__alter_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V7__alter_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/db/migration/V8__triggers.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/hibernate.cfg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/left-arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/shopping-cart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/stock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/user.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/logging.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OButeco_/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+>>>>>>> 966c00747f46cdfc9427eaf5aaaabc0a01f171b4
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,18 +200,29 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+<<<<<<< HEAD
     "Application.EstoquesView.executor": "Run",
     "Application.Main.executor": "Run",
     "RunOnceActivity.MCP Project settings loaded": "true",
+=======
+    "Application.Main.executor": "Run",
+>>>>>>> 966c00747f46cdfc9427eaf5aaaabc0a01f171b4
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+<<<<<<< HEAD
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "dev.jonas",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/projetos/OButeco",
+=======
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "dev__riky",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/var/www/html/UniAmerica/Projetos",
+>>>>>>> 966c00747f46cdfc9427eaf5aaaabc0a01f171b4
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java",
     "settings.editor.selected.configurable": "preferences.lookFeel",
@@ -74,7 +230,11 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/OButeco_" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/OButeco_" />
       <recent name="$PROJECT_DIR$/OButeco_/src/main/resources/icons" />
     </key>
   </component>
