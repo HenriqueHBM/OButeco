@@ -6,24 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cbec47bd-0b24-4e4d-979b-a943c0cc4ae7" name="Changes" comment="Conexao .env">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/home.png" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/home.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/stock.png" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/src/main/resources/icons/stock.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/FlyWayconfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/config/FlyWayconfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/estoque/EstoqueController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/estoque/EstoqueController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/produtos/ProdutosController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/usuarios/UsuariosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/controller/usuarios/UsuariosController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/conversao/Conversoes.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/conversao/Conversoes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Categoria.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Categoria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Grupo.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Grupo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Produto.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/model/produto/Produto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/EstoqueService.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/EstoqueService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/MovimentacoesEstoqueService.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/service/MovimentacoesEstoqueService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/EstoqueView.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/EstoqueView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/ProdutosView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/components/Cards.class" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/components/Cards.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/home.png" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/icons/home.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/stock.png" beforeDir="false" afterPath="$PROJECT_DIR$/OButeco_/target/classes/icons/stock.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +32,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/HenriqueHBM/OButeco.git&quot;,
-    &quot;accountId&quot;: &quot;c4c455f8-6508-48c0-bb9d-0e6d6504a3c0&quot;
+    &quot;accountId&quot;: &quot;69f6f92a-920d-47f2-9076-e434ac8ccaaa&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -71,23 +53,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev__riky&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/projetos/OButeco&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.EstoquesView.executor": "Run",
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "dev.jonas",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/projetos/OButeco",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/var/www/html/UniAmerica/Projetos/OButeco/OButeco_/src/main/java/buteco/Main.java",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/OButeco_/src/main/resources/icons" />
