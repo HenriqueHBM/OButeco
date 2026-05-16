@@ -86,7 +86,7 @@ public class Main {
 
         view.clicarUsuarioAction( e ->  new Thread(() -> usuariosController.index()).start());
         view.clicarProdutoAction( e ->  {
-            ProdutoView produtoView = new ProdutoView(produtoService,categoriaService, grupoService);
+            ProdutoView produtoView = new ProdutoView(produtoService,categoriaService, grupoService, insumosProdutoService);
             produtoView.setVisible(true);
         });
         view.clicarEstoqueAction(e -> {

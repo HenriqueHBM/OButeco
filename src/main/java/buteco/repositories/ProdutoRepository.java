@@ -47,4 +47,11 @@ public class ProdutoRepository {
         em.getTransaction().commit();
     }
 
+    public Produto findByIdComInsumos(Long id) {
+        return em.createQuery(
+                        "SELECT p FROM Produto p LEFT JOIN FETCH p.insumos i LEFT JOIN FETCH i.insumo WHERE p.id = :id",
+                        Produto.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
 }

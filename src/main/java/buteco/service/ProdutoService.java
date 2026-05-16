@@ -43,4 +43,8 @@ public class ProdutoService {
     public void atualizarProduto(Produto produto) {
         produtoRepository.atualizarProduto(produto);
     }
+
+    public Produto findByIdComInsumos(Long id) {
+        return produtoRepository.findByIdComInsumos(id);
+    }
 }
