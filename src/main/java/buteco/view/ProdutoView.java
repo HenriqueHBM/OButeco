@@ -61,7 +61,11 @@ public class ProdutoView extends javax.swing.JFrame {
         initComponents();
         carregarDados();
 
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
         addMaisInsumos.setLayout(new BoxLayout(addMaisInsumos, BoxLayout.Y_AXIS));
+
 
 
         //listar selecao dos insumos ao apertar -----------------------------------------------------------------------
