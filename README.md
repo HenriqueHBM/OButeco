@@ -1,7 +1,7 @@
 # 🍺 O Buteco — Sistema de Gestão de Estoque
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Java-25-orange?style=for-the-badge&logo=java" />
+  <img src="https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java" />
   <img src="https://img.shields.io/badge/Swing-GUI-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Flyway-Migration-red?style=for-the-badge&logo=flyway" />
 </p>

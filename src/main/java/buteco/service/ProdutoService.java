@@ -39,4 +39,8 @@ public class ProdutoService {
     public void excluirProduto(Produto prod){
         produtoRepository.excluirProduto(prod);
     }
+
+    public void atualizarProduto(Produto produto) {
+        produtoRepository.atualizarProduto(produto);
+    }
 }

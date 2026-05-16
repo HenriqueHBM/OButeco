@@ -10,6 +10,7 @@ import buteco.repositories.*;
 import buteco.service.*;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.MainView;
+import buteco.view.ProdutoView;
 import buteco.view.components.Cards;
 import buteco.view.components.Colors;
 import jakarta.persistence.EntityManager;
@@ -71,14 +72,17 @@ public class Main {
         EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
         UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
 
-        usuariosController.login();
+//        usuariosController.login();
 
         Colors colors = new Colors();
         Cards cards = new Cards(colors);
         MainView view = new MainView(colors, cards);
 
         view.clicarUsuarioAction( e ->  new Thread(() -> usuariosController.index()).start());
-        view.clicarProdutoAction( e ->  new Thread(() -> produtosController.index()).start());
+        view.clicarProdutoAction( e ->  {
+            ProdutoView produtoView = new ProdutoView(produtoService,categoriaService, grupoService);
+            produtoView.setVisible(true);
+        });
         view.clicarEstoqueAction( e ->  new Thread(() -> estoqueController.index()).start());
 //        view.clicarUsuarioAction(e  -> new Thread(() -> usuariosController.index()).start());
 
