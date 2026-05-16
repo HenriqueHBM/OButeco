@@ -6,6 +6,7 @@ package buteco.view;
 
 import buteco.controller.estoque.EstoquesController;
 import buteco.controller.usuarios.UsuariosController;
+import buteco.enums.EStatus;
 import buteco.model.conversao.Conversoes;
 import buteco.model.estoque.Estoque;
 import buteco.model.estoque.MovimentacoesEstoque;
@@ -15,6 +16,7 @@ import buteco.model.produto.Produto;
 import javax.swing.*;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +31,7 @@ public class EstoquesView extends javax.swing.JFrame {
     private List<Produto> listaProdutos;
     private List<Conversoes> listaConversoes;
     private final Usuario usuarioLogado;
+    private List<Produto> produtosExibidos = new ArrayList<>();
 
 
     /**
@@ -65,9 +68,22 @@ public class EstoquesView extends javax.swing.JFrame {
     public void carregarProdutos(){
         listaProdutos = estoquesController.getProdutos();
         selectProduto.removeAllItems();
+        produtosExibidos.clear();
 
         for(Produto p : listaProdutos) {
-            selectProduto.addItem(p.getNome());
+            if (!p.getStatus().equals(EStatus.ATIVO)) {
+                continue;
+            }
+
+            // ignora serviços
+            if (p.getCategoria().getCategoria().equals("SERVICO")) {
+                continue;
+            }
+
+            String texto = p.getNome() + " - " + p.getCategoria().getCategoria();
+            selectProduto.addItem(texto);
+
+            produtosExibidos.add(p);
         }
     }
 
@@ -112,8 +128,8 @@ public class EstoquesView extends javax.swing.JFrame {
                     m.getProduto().getNome(),
                     m.getConversoes().getNomenclatura(),
                     m.getQuantidade(),
-                    m.getUsuario() != null ? m.getUsuario().getNome() : "-",
                     data,
+                    m.getUsuario() != null ? m.getUsuario().getNome() : "-",
                     m.getTipo()
             });
         }
@@ -497,7 +513,7 @@ public class EstoquesView extends javax.swing.JFrame {
                 return;
             }
 
-            Produto produto = listaProdutos.get(indexProduto);
+            Produto produto = produtosExibidos.get(indexProduto);
             Conversoes unidadeEntrada = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
@@ -554,7 +570,7 @@ public class EstoquesView extends javax.swing.JFrame {
                 return;
             }
 
-            Produto produto = listaProdutos.get(indexProduto);
+            Produto produto = produtosExibidos.get(indexProduto);
             Conversoes unidadeSaida = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
@@ -634,8 +650,8 @@ public class EstoquesView extends javax.swing.JFrame {
         double quantidade = (double) tbMovimentacoes.getValueAt(linha, 3);
 
         //preenche o produto
-        for (int i = 0; i < listaProdutos.size(); i++) {
-            if (listaProdutos.get(i).getNome().equals(nomeProduto)) {
+        for (int i = 0; i < produtosExibidos.size(); i++) {
+            if (produtosExibidos.get(i).getNome().equals(nomeProduto)) {
                 selectProduto.setSelectedIndex(i);
                 break;
             }
@@ -680,8 +696,8 @@ public class EstoquesView extends javax.swing.JFrame {
             int indexProduto = selectProduto.getSelectedIndex();
             int indexUnEntrada = selectUnEntrada.getSelectedIndex();
 
-            Produto produto     = listaProdutos.get(indexProduto);
-            Conversoes unidade  = listaConversoes.get(indexUnEntrada);
+            Produto produto = produtosExibidos.get(indexProduto);
+            Conversoes unidade = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if (qtdeStr.isEmpty()) {
@@ -750,7 +766,7 @@ public class EstoquesView extends javax.swing.JFrame {
             return;
         }
 
-        Produto produto = listaProdutos.get(index);
+        Produto produto = produtosExibidos.get(index);
         String unidadeEstoque = estoquesController.getUnidadeEstoquePorProduto(produto.getId());
 
         if (unidadeEstoque != null) {
