@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a97d491e-140c-4392-b28b-b221092adf9a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/controller/estoque/EstoquesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/controller/estoque/EstoquesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/MovimentacoesEstoqueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/repositories/MovimentacoesEstoqueRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/EstoqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/service/EstoqueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/MovimentacoesEstoqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/service/MovimentacoesEstoqueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
