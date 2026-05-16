@@ -44,6 +44,7 @@ public class EstoquesView extends javax.swing.JFrame {
         initComponents();
 
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnEntrada.addActionListener(this::btnEntradaAction);
         btnSaida.addActionListener(this::btnSaidaAction);

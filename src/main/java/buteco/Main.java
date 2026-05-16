@@ -22,6 +22,9 @@ import java.util.logging.LogManager;
 
 public class Main {
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.uiScale", "1.0");
+        System.setProperty("sun.java2d.dpiaware", "true");
+
         try {
             LogManager.getLogManager().readConfiguration(
                     Main.class.getClassLoader().getResourceAsStream("logging.properties")

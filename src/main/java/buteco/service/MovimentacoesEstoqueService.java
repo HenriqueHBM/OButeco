@@ -90,7 +90,6 @@ public class MovimentacoesEstoqueService {
         mov.setQuantidade(qtdeNova);
         mov.setDataMovimentacao(Instant.now());
 
-        usuario = usuarioRepository.findById(1L); // lembrar de remover isso
         mov.setUsuario(usuario);
 
         mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
@@ -141,7 +140,6 @@ public class MovimentacoesEstoqueService {
         mov.setQuantidade(qtdeNova);
         mov.setDataMovimentacao(Instant.now());
 
-        usuario = usuarioRepository.findById(1L); // lembrar de remover isso
         mov.setUsuario(usuario);
 
         mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
@@ -271,7 +269,7 @@ public class MovimentacoesEstoqueService {
             mov.setConversoes(estoqueProdfinal.getConversoes());
             mov.setEstoque(estoqueProdfinal);
             mov.setDataMovimentacao(Instant.now());
-            mov.setUsuario(usuarioRepository.findById(1L)); // remover depois
+            mov.setUsuario(usuario);
             mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
 
             movimentacoesEstoqueRepository.create(mov);

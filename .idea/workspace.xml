@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a97d491e-140c-4392-b28b-b221092adf9a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/LoginView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/buteco/view/UsuarioView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/classes/icons/usuario.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OButeco_/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/buteco/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/controller/estoque/EstoqueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/controller/estoque/EstoqueController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/repositories/UsuarioRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/UsuarioView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/UsuarioView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/UsuariosView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/UsuariosView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/MovimentacoesEstoqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/service/MovimentacoesEstoqueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/ProdutoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/ProdutoView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,30 +19,27 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;Jonas-Lacerda&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Jonas-Lacerda"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/HenriqueHBM/OButeco.git&quot;,
-    &quot;accountId&quot;: &quot;69f6f92a-920d-47f2-9076-e434ac8ccaaa&quot;
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/HenriqueHBM/OButeco.git",
+    "accountId": "69f6f92a-920d-47f2-9076-e434ac8ccaaa"
   }
-}</component>
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 3
-}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
   <component name="ProjectId" id="3DmEgRgny0UKgVbszpI6mfu1MQM" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -60,7 +51,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#58 on dev__joao",
+    "git-widget-placeholder": "dev__jonas",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
