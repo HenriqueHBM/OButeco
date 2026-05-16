@@ -40,6 +40,8 @@ public class EstoquesView extends javax.swing.JFrame {
 
         initComponents();
 
+        setLocationRelativeTo(null);
+
         btnEntrada.addActionListener(this::btnEntradaAction);
         btnSaida.addActionListener(this::btnSaidaAction);
         btnExcluir.addActionListener(this::btnExcluirAction);
@@ -121,7 +123,7 @@ public class EstoquesView extends javax.swing.JFrame {
         txtQuantidade.setText("");
         txtLocal.setText("");
         txtConversao.setText("");
-        jTextArea1.setText("");
+        txtAreaObservacao.setText("");
         selectProduto.setSelectedIndex(0);
         selectUnidade.setSelectedIndex(0);
         selectUnEntrada.setSelectedIndex(0);
@@ -155,7 +157,7 @@ public class EstoquesView extends javax.swing.JFrame {
         lbConversao = new javax.swing.JLabel();
         selectUnEntrada = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAreaObservacao = new javax.swing.JTextArea();
         lbObs = new javax.swing.JLabel();
         btnEntrada = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -251,11 +253,11 @@ public class EstoquesView extends javax.swing.JFrame {
         lbConversao.setBackground(new java.awt.Color(0, 0, 0));
         lbConversao.setFont(new java.awt.Font("Liberation Sans", 0, 13)); // NOI18N
         lbConversao.setForeground(new java.awt.Color(255, 255, 255));
-        lbConversao.setText("1 Qtde da entrada para o 1 do tipo do estoque(1Kg = 1000g)");
+        lbConversao.setText("Quantas unidades de entrada equivalem a 1 do estoque?");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaObservacao.setColumns(20);
+        txtAreaObservacao.setRows(5);
+        jScrollPane1.setViewportView(txtAreaObservacao);
 
         lbObs.setBackground(new java.awt.Color(0, 0, 0));
         lbObs.setForeground(new java.awt.Color(255, 255, 255));
@@ -383,12 +385,12 @@ public class EstoquesView extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(lbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(selectProduto, 0, 365, Short.MAX_VALUE))
+                                    .addComponent(selectProduto, 0, 384, Short.MAX_VALUE))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(7, 7, 7)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                                            .addComponent(txtQuantidade)
                                             .addComponent(lbQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -526,7 +528,9 @@ public class EstoquesView extends javax.swing.JFrame {
 
             String local = txtLocal.getText().trim();
 
-            estoquesController.cadastrarEntrada(produto, qtde, unidadeEntrada.getId(), fator, local, usuarioLogado);
+            String observacao = txtAreaObservacao.getText().trim();
+
+            estoquesController.cadastrarEntrada(produto, qtde, unidadeEntrada.getId(), fator, local, usuarioLogado, observacao);
 
             JOptionPane.showMessageDialog(this, "Entrada cadastrada com sucesso!");
 
@@ -575,7 +579,9 @@ public class EstoquesView extends javax.swing.JFrame {
                 fator = Double.parseDouble(fatorStr);
             }
 
-            estoquesController.cadastarSaida(produto, qtde, unidadeSaida.getId(), fator, usuarioLogado);
+            String observacao = txtAreaObservacao.getText().trim();
+
+            estoquesController.cadastarSaida(produto, qtde, unidadeSaida.getId(), fator, usuarioLogado, observacao);
 
             JOptionPane.showMessageDialog(this, "Saída cadastrada com sucesso!");
             carregarTabelaEstoque();
@@ -627,6 +633,7 @@ public class EstoquesView extends javax.swing.JFrame {
         String nomenclatura = (String) tbMovimentacoes.getValueAt(linha, 2);
         double quantidade = (double) tbMovimentacoes.getValueAt(linha, 3);
 
+        //preenche o produto
         for (int i = 0; i < listaProdutos.size(); i++) {
             if (listaProdutos.get(i).getNome().equals(nomeProduto)) {
                 selectProduto.setSelectedIndex(i);
@@ -634,6 +641,22 @@ public class EstoquesView extends javax.swing.JFrame {
             }
         }
 
+        //preenche unidade do estoque buscando pelo produto selecionado
+        Produto produto = listaProdutos.stream()
+                .filter(p -> p.getNome().equals(nomeProduto))
+                .findFirst().orElse(null);
+
+        if (produto != null) {
+            String unidadeEstoque = estoquesController.getUnidadeEstoquePorProduto(produto.getId());
+            for (int i = 0; i < listaConversoes.size(); i++) {
+                if (listaConversoes.get(i).getNomenclatura().equals(unidadeEstoque)) {
+                    selectUnidade.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+
+        //preenche unidade entrada
         for (int i = 0; i < listaConversoes.size(); i++) {
             if (listaConversoes.get(i).getNomenclatura().equals(nomenclatura)){
                 selectUnEntrada.setSelectedIndex(i);
@@ -642,9 +665,12 @@ public class EstoquesView extends javax.swing.JFrame {
         }
 
         txtQuantidade.setText(String.valueOf(quantidade));
+
+        String observacao = estoquesController.getObservacaoMovimentacao(idMovimentacaoSelecionada);
+        txtAreaObservacao.setText(observacao != null ? observacao : "");
     }
 
-    private void btnEditarAction(java.awt.event.ActionEvent evt) {
+    private void btnEditarAction (java.awt.event.ActionEvent evt) {
         if (idMovimentacaoSelecionada == null) {
             JOptionPane.showMessageDialog(this, "Selecione uma movimentacao para editar!");
             return;
@@ -654,8 +680,8 @@ public class EstoquesView extends javax.swing.JFrame {
             int indexProduto = selectProduto.getSelectedIndex();
             int indexUnEntrada = selectUnEntrada.getSelectedIndex();
 
-            Produto produto = listaProdutos.get(indexProduto);
-            Conversoes unidade = listaConversoes.get(indexUnEntrada);
+            Produto produto     = listaProdutos.get(indexProduto);
+            Conversoes unidade  = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if (qtdeStr.isEmpty()) {
@@ -664,7 +690,24 @@ public class EstoquesView extends javax.swing.JFrame {
             }
             double qtde = Double.parseDouble(qtdeStr);
 
-            estoquesController.editarMovimentacao(idMovimentacaoSelecionada, produto, qtde, unidade.getId());
+            boolean mesmaUnidade = unidade.getId().equals(
+                    listaConversoes.get(selectUnidade.getSelectedIndex()).getId()
+            );
+            double fator;
+            if(mesmaUnidade) {
+                fator = 1.0;
+            } else {
+                String fatorStr = txtConversao.getText().trim();
+                if (fatorStr.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Informe o fator de conversao!");
+                    return;
+                }
+                fator = Double.parseDouble(fatorStr);
+            }
+
+            String observacao = txtAreaObservacao.getText().trim();
+
+            estoquesController.editarMovimentacao(idMovimentacaoSelecionada, produto, qtde, unidade.getId(), fator, observacao);
 
             JOptionPane.showMessageDialog(this, "Movimentacao editada com sucesso!");
             idMovimentacaoSelecionada = null;
@@ -681,6 +724,7 @@ public class EstoquesView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void txtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeActionPerformed
@@ -700,7 +744,23 @@ public class EstoquesView extends javax.swing.JFrame {
     }//GEN-LAST:event_selectUnidadeActionPerformed
 
     private void selectProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectProdutoActionPerformed
-        // TODO add your handling code here:
+        int index = selectProduto.getSelectedIndex();
+
+        if (index < 0 || listaProdutos == null || listaConversoes == null) {
+            return;
+        }
+
+        Produto produto = listaProdutos.get(index);
+        String unidadeEstoque = estoquesController.getUnidadeEstoquePorProduto(produto.getId());
+
+        if (unidadeEstoque != null) {
+            for (int i = 0; i < listaConversoes.size(); i++) {
+                if (listaConversoes.get(i).getNomenclatura().equals(unidadeEstoque)) {
+                    selectUnidade.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
     }//GEN-LAST:event_selectProdutoActionPerformed
 
     /**
@@ -740,7 +800,6 @@ public class EstoquesView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lbConversao;
     private javax.swing.JLabel lbEstoque;
     private javax.swing.JLabel lbLocal;
@@ -757,6 +816,7 @@ public class EstoquesView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> selectUnidade;
     private javax.swing.JTable tbEstoque;
     private javax.swing.JTable tbMovimentacoes;
+    private javax.swing.JTextArea txtAreaObservacao;
     private javax.swing.JTextField txtConversao;
     private javax.swing.JTextField txtLocal;
     private javax.swing.JTextField txtQuantidade;

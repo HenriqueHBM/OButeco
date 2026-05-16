@@ -11,6 +11,7 @@ import buteco.repositories.*;
 import buteco.service.*;
 import buteco.service.entradas.ConversoesService;
 import buteco.service.entradas.ErroEntrada;
+import buteco.view.EstoquesView;
 import buteco.view.MainView;
 import buteco.view.components.Cards;
 import buteco.view.components.Colors;
@@ -87,7 +88,7 @@ public class Main {
         view.clicarProdutoAction( e ->  new Thread(() -> produtosController.index()).start());
 //        view.clicarEstoqueAction( e ->  new Thread(() -> estoqueController.index()).start());
         view.clicarEstoqueAction(e -> {
-            buteco.view.EstoquesView estoquesView = new buteco.view.EstoquesView(estoquesController, usuarioLogado);
+            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioLogado);
             estoquesView.setVisible(true);
         });
 //        view.clicarUsuarioAction(e  -> new Thread(() -> usuariosController.index()).start());

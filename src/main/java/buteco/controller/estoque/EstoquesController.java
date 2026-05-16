@@ -38,10 +38,18 @@ public class EstoquesController {
 
     public List<MovimentacoesEstoque> getMovimentacoes(){ return movimentacoesEstoqueService.findAllMovimentacoes();}
 
+    public String getObservacaoMovimentacao(Long idMovimentacao) {
+        return movimentacoesEstoqueService.getObservacao(idMovimentacao);
+    }
+
+    public String getUnidadeEstoquePorProduto(Long idProduto) {
+        return estoqueService.getUnidadeEstoquePorProduto(idProduto);
+    }
+
 // Metodos para os botoes
 
     public void cadastrarEntrada(Produto produto, double qtde, Long idConversaoEntrada,
-                                 double fatorConversao, String local, Usuario usuario) {
+                                 double fatorConversao, String local, Usuario usuario, String observacao) {
         if (produto.getCategoria().getCategoria().equals("SERVICO")) {
             throw new RuntimeException("Produto do tipo SERVICO nao tem estoque!");
         }
@@ -51,22 +59,28 @@ public class EstoquesController {
         }
 
         movimentacoesEstoqueService.cadastrarEntradaSwing(
-                produto.getId(), qtde, idConversaoEntrada, fatorConversao, local, usuario);
+                produto.getId(), qtde, idConversaoEntrada, fatorConversao, local, usuario, observacao);
     }
 
-    public void cadastarSaida(Produto produto, double qtde, Long idConversaoSaida, double fatorConversao, Usuario usuario){
+    public void cadastarSaida(Produto produto, double qtde, Long idConversaoSaida, double fatorConversao, Usuario usuario, String observacao) {
         if (produto.getCategoria().getCategoria().equals("SERVICO")) {
-            throw new RuntimeException("Produto do tipo SERVICO nao tem estoque!");
+            throw new RuntimeException("Produto do tipo SERVIÇO não tem estoque!");
         }
-        movimentacoesEstoqueService.cadastrarSaidaSwing(produto.getId(), qtde, idConversaoSaida, fatorConversao, usuario);
+
+        if (produto.getCategoria().getCategoria().equals("PRODUTO COM INSUMOS")) {
+            movimentacoesEstoqueService.cadastrarSaidaComInsumosSwing(produto, qtde, usuario, observacao);
+            return;
+        }
+
+        movimentacoesEstoqueService.cadastrarSaidaSwing(produto.getId(), qtde, idConversaoSaida, fatorConversao, usuario, observacao);
     }
 
     public void excluirMovimentacao(Long idMovimentacao) {
         movimentacoesEstoqueService.excluirMovimentacao(idMovimentacao);
     }
 
-    public void editarMovimentacao(Long idMovimentacao, Produto produto, double qtde, Long idConversao) {
-        movimentacoesEstoqueService.editarMovimentacao(idMovimentacao, produto, qtde, idConversao);
+    public void editarMovimentacao(Long idMovimentacao, Produto produto, double qtde, Long idConversao, double fatorConversao, String observacao) {
+        movimentacoesEstoqueService.editarMovimentacao(idMovimentacao, produto, qtde, idConversao, fatorConversao, observacao);
     }
 
 }
