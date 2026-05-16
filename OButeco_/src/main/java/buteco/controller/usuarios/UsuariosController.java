@@ -46,6 +46,9 @@ public class UsuariosController {
             opcao = view.exibirMenu();
             switch (opcao) {
                 case 1 -> cadastrarUsuario(usuarioLogado);
+                case 2 -> editarUsuario(usuarioLogado);
+                case 3 -> deletarUsuario(usuarioLogado);
+                case 4 -> view.exibirUsuario();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("VALOR INVALIDO");
             }
@@ -61,15 +64,14 @@ public class UsuariosController {
             String login = erroEntrada.trataEntradaString("Login: ");
             String senha = erroEntrada.trataEntradaString("Senha: ");
 
-            try {
+
                 usuarioLogado = usuarioService.login(login, senha);
+
                 if( usuarioLogado == null ) {
                     System.out.println("Usuário ou Senha Inválidos!");
                 }
-            } catch (Exception e) {
-                System.out.println("Usuário ou Senha Inválidos!");
-            }
         }
+
         System.out.println("Bem-vindo " + usuarioLogado.getNome());
         return usuarioLogado;
     }
@@ -96,6 +98,70 @@ public class UsuariosController {
         usuarioService.cadastrar(nome, login, senha, cargo);
 
         System.out.println("Usuário cadastrado com sucesso!");
+    }
+
+    public void editarUsuario(Usuario usuarioLogado) {
+
+        if(usuarioLogado.getCargo().getId() != 2){
+            System.out.println("Acesso negado!");
+            return;
+        }
+            view.exibirUsuario();
+
+        Long id = erroEntrada.trataEntradaLong("Id do Usuario (0 para voltar): ");
+
+        if( id == 0 ){
+            return;
+        }
+
+        Usuario usuario = usuarioRepository.findById(id);
+
+        if (usuario == null) {
+            System.out.println("Usuario não encontrado!");
+            return;
+        }
+
+        String nome = erroEntrada.trataEntradaString("Novo nome: ");
+        String login = erroEntrada.trataEntradaString("Novo login: ");
+        String senha = erroEntrada.trataEntradaString("Nova senha: ");
+
+        usuario.setNome(nome);
+        usuario.setLogin(login);
+        usuario.setSenha(senha);
+
+        usuarioRepository.update(usuario);
+
+        System.out.println("Usuario atualizado com sucesso!");
+
+    }
+
+    public void deletarUsuario(Usuario usuarioLogado) {
+
+        if(usuarioLogado.getCargo().getId() != 2){
+            System.out.println("Acesso negado!");
+            return;
+        }
+         view.exibirUsuario();
+
+        Long id = erroEntrada.trataEntradaLong("Id do Usuario (0 para voltar): ");
+
+        if( id == 0 ){
+            return;
+        }
+
+        Usuario usuario = usuarioRepository.findById(id);
+
+        if (usuario == null) {
+            System.out.println("Usuario não encontrado!");
+            return;
+        }
+
+        usuarioRepository.delete(usuario);
+        System.out.println("Usuario deletado com sucesso!");
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
     }
 
 }

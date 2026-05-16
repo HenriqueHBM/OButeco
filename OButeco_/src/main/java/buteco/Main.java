@@ -9,7 +9,9 @@ import buteco.model.pessoa.Usuario;
 import buteco.repositories.*;
 import buteco.service.*;
 import buteco.service.entradas.ErroEntrada;
+import buteco.view.LoginView;
 import buteco.view.MainView;
+import buteco.view.UsuarioView;
 import buteco.view.components.Cards;
 import buteco.view.components.Colors;
 import jakarta.persistence.EntityManager;
@@ -64,20 +66,33 @@ public class Main {
         UsuarioService usuarioService = new UsuarioService(usuarioRepository);
         //
 
+
+        LoginView loginView = new LoginView(usuarioService);
+
+        loginView.setLocationRelativeTo(null);
+        loginView.setVisible(true);
+        while (loginView.getUsuarioLogado() == null) {
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) { e.printStackTrace(); }
+        }
+
+        usuarioLogado = loginView.getUsuarioLogado();
+
         int entradaMenu = 0;
 
 ////      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
         UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
+        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
+        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService, usuarioLogado);
 
-        usuariosController.login();
 
         Colors colors = new Colors();
         Cards cards = new Cards(colors);
         MainView view = new MainView(colors, cards);
 
-        view.clicarUsuarioAction( e ->  new Thread(() -> usuariosController.index()).start());
+        view.clicarUsuarioAction( e -> {UsuarioView usuarioView = new UsuarioView(usuarioService, cargoRepository, usuarioRepository); usuarioView.setLocationRelativeTo(null); usuarioView.setVisible(true);});
         view.clicarProdutoAction( e ->  new Thread(() -> produtosController.index()).start());
         view.clicarEstoqueAction( e ->  new Thread(() -> estoqueController.index()).start());
 //        view.clicarUsuarioAction(e  -> new Thread(() -> usuariosController.index()).start());

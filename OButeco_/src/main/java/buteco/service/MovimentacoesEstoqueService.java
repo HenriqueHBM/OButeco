@@ -3,6 +3,7 @@ package buteco.service;
 import buteco.model.conversao.Conversoes;
 import buteco.model.estoque.Estoque;
 import buteco.model.estoque.MovimentacoesEstoque;
+import buteco.model.pessoa.Usuario;
 import buteco.model.produto.Produto;
 import buteco.repositories.ConversoesRepository;
 import buteco.repositories.EstoqueRepository;
@@ -24,7 +25,8 @@ public class MovimentacoesEstoqueService {
     private ErroEntrada erroEntrada;
 
     public MovimentacoesEstoqueService(MovimentacoesEstoqueRepository movimentacoesEstoqueRepository, EstoqueRepository estoqueRepository,
-                                       EstoqueService estoqueService, ConversoesRepository conversoesRepository, ProdutoRepository produtoRepository, ErroEntrada erroEntrada) {
+                                       EstoqueService estoqueService, ConversoesRepository conversoesRepository,
+                                       ProdutoRepository produtoRepository, ErroEntrada erroEntrada) {
         this.movimentacoesEstoqueRepository = movimentacoesEstoqueRepository;
         this.estoqueRepository = estoqueRepository;
         this.estoqueService = estoqueService;
@@ -42,7 +44,7 @@ public class MovimentacoesEstoqueService {
     }
 
 
-    public void cadastrarEntrada(Long idProduto, double qtde){
+    public void cadastrarEntrada(Long idProduto, double qtde, Usuario usuarioLogado){
         Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
         if (estoque == null){
             throw new RuntimeException("Estoque nao encontrado para esse COD.");
@@ -81,12 +83,13 @@ public class MovimentacoesEstoqueService {
         mov.setTipo("ENTRADA");
         mov.setConversoes(conversaoEntrada);
         mov.setEstoque(estoque);
+        mov.setUsuario(usuarioLogado);
         mov.setDataMovimentacao(Instant.now());
 
         movimentacoesEstoqueRepository.create(mov);
     }
 
-    public void cadastrarSaida(Long idProduto, double qtde, boolean cria_mov){
+    public void cadastrarSaida(Long idProduto, double qtde, boolean cria_mov, Usuario usuarioLogado){
         Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
         if (estoque == null){
             throw new RuntimeException("Estoque nao encontrado para esse COD.");
@@ -101,18 +104,19 @@ public class MovimentacoesEstoqueService {
         Produto produto = produtoRepository.findById(idProduto);
 
         if(cria_mov == true){
-            this.movimentacaoEstoque(produto, estoque, qtde);
+            this.movimentacaoEstoque(produto, estoque, qtde, usuarioLogado);
         }
 
     }
 
-    public void movimentacaoEstoque(Produto produto, Estoque estoque, double qtde){
+    public void movimentacaoEstoque(Produto produto, Estoque estoque, double qtde, Usuario usuarioLogado){
         MovimentacoesEstoque mov = new MovimentacoesEstoque();
         mov.setProduto(produto);
         mov.setQuantidade(qtde);
         mov.setTipo("SAIDA");
         mov.setConversoes(estoque.getConversoes());
         mov.setEstoque(estoque);
+        mov.setUsuario(usuarioLogado);
         mov.setDataMovimentacao(Instant.now());
 
         movimentacoesEstoqueRepository.create(mov);
@@ -145,13 +149,14 @@ public class MovimentacoesEstoqueService {
                     "Tipo: " + m.getTipo() +
                     " | Produto: " + m.getProduto().getNome() +
                     " | Quantidade: " + m.getQuantidade() +
-                    " | Data: " + dataFormatada
+                    " | Data: " + dataFormatada +
+                    " | Usuário: " + m.getUsuario().getNome()
             );
         }
 
     }
 
-    public void cadastrarSaidacComInsumos(Produto produto, double qtde){
+    public void cadastrarSaidacComInsumos(Produto produto, double qtde, Usuario usuarioLogado){
         //passa uma vez no foreach para validar os insumos
         for (int index = 1; index <= qtde;  index++){
             produto.getInsumos().forEach(element -> {
@@ -168,13 +173,13 @@ public class MovimentacoesEstoqueService {
 
             produto.getInsumos().forEach(element -> {
                 if(!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")){
-                    this.cadastrarSaida(element.getInsumo().getId(), element.getQtde(), false);
+                    this.cadastrarSaida(element.getInsumo().getId(), element.getQtde(), false, usuarioLogado);
                 }
             });
 
 
             Estoque estoque = produto.getEstoques().get(0);
-            this.movimentacaoEstoque(produto, estoque, 1);
+            this.movimentacaoEstoque(produto, estoque, 1, usuarioLogado);
         }
     }
 
