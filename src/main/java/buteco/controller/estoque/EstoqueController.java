@@ -124,46 +124,6 @@ public class EstoqueController {
             }catch (IllegalArgumentException e){
                 System.out.println("Produto não encontrada, tente novamente!");
             }
-
         }
     }
-//
-//    //produtos que nao tem complemento/ingrediente na montagem
-//    public double saidaNormal(Produto produto, Estoque estoque, double qtdeSaida){
-//        //ajustando o estoque
-//        estoque.setQtdeEstoque(estoque.getQtdeEstoque() - qtdeSaida);
-//        //atualizando o valor no estoque
-//        estoque.atualizaValorTotalEstoque();
-//        //salvando o custo de producao
-//        double custoProducao = produto.getValorUnitario() * qtdeSaida;
-//        //criando a movimentacao de saida e add no estoque
-//        Saida saida = new Saida(produto, estoque, custoProducao, qtdeSaida);
-//        estoque.addSaida(saida);
-//
-//        //salvando na variavel global a saida
-//        this.saidas.add(saida);
-//        return custoProducao;
-//    }
-//
-//    public double saidaComplemento(Produto produto, double qtdeSaida){
-//        double custoProducao = 0;
-//        //passando pelos ingredientes do produto
-//        for (IngredientesProduto ip : produto.getIngredientesProdutos()){
-//            Estoque estoque = ip.getIngredienteProduto().getEstoque();
-//
-//            //caso o complemento nao seja do tipo servivo, realiza as saidas
-//            if (ip.getIngredienteProduto().getTipoProduto() != ETipoProduto.SERVICO_Hr){
-//                custoProducao += saidaNormal(ip.getIngredienteProduto(), estoque, qtdeSaida * ip.getQtde());
-//            }else{
-//                //caso for um servico apenas pegar o custo de mao de obra
-//                custoProducao += ip.getIngredienteProduto().getValorUnitario() * qtdeSaida;
-//            }
-//        }
-//        return  custoProducao;
-//    }
-//
-//    public double calcularMargem(double custo, double precoVenda){
-//        return ((precoVenda - custo) / precoVenda) * 100;
-//    }
-
 }

@@ -18,7 +18,7 @@ public class MovimentacoesEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_estoque", nullable = false)
-    private Estoque estoque; //colocar nome da var como idEstoque?
+    private Estoque estoque;
 
     @Column(name = "tipo", nullable = false)
     private String tipo;
@@ -32,9 +32,9 @@ public class MovimentacoesEstoque {
     @Column(name = "valor_total")
     private double valorTotal;
 
-  ///  @ManyToOne
-   // @JoinColumn(name = "fk_id_usuario", nullable = false)
-   // private Usuario usuario; //colocar nome da var como idUsuario?
+    @ManyToOne
+    @JoinColumn(name = "fk_id_usuario", nullable = false)
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_conversao",nullable = false)
@@ -61,7 +61,7 @@ public class MovimentacoesEstoque {
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
-        //this.usuario = usuario;
+        this.usuario = usuario;
         this.conversoes = conversoes;
         this.dataMovimentacao = dataMovimentacao;
         this.observacao = observacao;
@@ -116,13 +116,13 @@ public class MovimentacoesEstoque {
         this.valorTotal = valorTotal;
     }
 
-   /* public Usuario getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }*/
+    }
 
     public Conversoes getConversoes() {
         return conversoes;
@@ -151,6 +151,7 @@ public class MovimentacoesEstoque {
     public Produto getProduto() { return  produto; }
 
     public void setProduto(Produto produto) { this.produto = produto; }
+
 
     @Override
     public String toString() {
