@@ -17,7 +17,7 @@ public class MovimentacoesEstoqueRepository {
     }
 
     public List<MovimentacoesEstoque> findAll() {
-        return em.createQuery("select m from MovimentacoesEstoque m", MovimentacoesEstoque.class).getResultList();
+        return em.createQuery("select m from MovimentacoesEstoque m order by m.id asc", MovimentacoesEstoque.class).getResultList();
     }
 
     public void create(MovimentacoesEstoque movimentacoesEstoque){
@@ -33,7 +33,9 @@ public class MovimentacoesEstoqueRepository {
     }
 
     public void delete(MovimentacoesEstoque movimentacoesEstoque){
+        em.getTransaction().begin();
         em.remove(em.contains(movimentacoesEstoque) ? movimentacoesEstoque : em.merge(movimentacoesEstoque));
+        em.getTransaction().commit();
     }
 
 }

@@ -1,5 +1,6 @@
 package buteco.repositories;
 
+import buteco.model.estoque.MovimentacoesEstoque;
 import buteco.model.pessoa.Usuario;
 import buteco.model.pessoa.Cargo;
 import jakarta.persistence.EntityManager;
@@ -24,6 +25,10 @@ public class UsuarioRepository {
                 .getResultStream()
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Usuario findById(Long id){
+        return em.find(Usuario.class, id);
     }
 
 }

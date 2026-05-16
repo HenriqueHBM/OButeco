@@ -31,6 +31,12 @@ public class EstoqueService {
         return estoques;
     }
 
+    public String getUnidadeEstoquePorProduto(Long idProduto) {
+        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
+        if (estoque == null) return null;
+        return estoque.getConversoes().getNomenclatura();
+    }
+
     public void criarNovoEstoque(Long idProduto){
         var medidas = conversoesRepository.findAllConversoes();
         medidas.stream().forEach(System.out::println);  //lista todos as unidades de conversao
