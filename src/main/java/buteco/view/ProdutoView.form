@@ -72,8 +72,6 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="lbProduto" min="-2" pref="115" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
-                                      <Component id="lbValUnit" min="-2" pref="115" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -81,11 +79,6 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="addMaisInsumos" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtProduto" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtValorUnit" max="32767" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="selectStatus" alignment="0" max="32767" attributes="0"/>
@@ -110,28 +103,40 @@
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lbSubTituloProdutos" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="323" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                      <Component id="lbInsumo" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtInsumo" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lbInsumoQtde" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtInsumosQtde" min="-2" pref="262" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                      <Component id="btnAdcInsumos" min="-2" pref="54" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <Component id="btnAdicionar" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="404" max="-2" attributes="0"/>
-                                      <Component id="btnEditar" min="-2" pref="160" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtInsumo" max="32767" attributes="0"/>
-                                          <Component id="lbInsumo" min="-2" pref="115" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="lbSubTituloProdutos" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="323" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="btnAdicionar" min="-2" pref="160" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="404" max="-2" attributes="0"/>
+                                              <Component id="btnEditar" min="-2" pref="160" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtProduto" max="32767" attributes="0"/>
                                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbInsumoQtde" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
-                                              <Component id="txtInsumosQtde" max="32767" attributes="0"/>
-                                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                              <Component id="btnAdcInsumos" min="-2" pref="54" max="-2" attributes="0"/>
+                                              <Component id="lbValUnit" min="-2" pref="81" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
+                                          <Component id="txtValorUnit" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -179,16 +184,13 @@
                           <Component id="selectCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="selectGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbInsumoQtde" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbInsumo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnAdcInsumos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtInsumosQtde" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtInsumo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbInsumo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbInsumoQtde" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="addMaisInsumos" min="-2" max="-2" attributes="0"/>
@@ -399,7 +401,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Quantidade"/>
+                <Property name="text" type="java.lang.String" value="Qtde"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -456,6 +458,9 @@
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusPainted" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lbSubTituloProdutos">
               <Properties>
@@ -478,7 +483,7 @@
                 <Component class="javax.swing.JTable" name="tbProdutos">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="9">
+                      <Table columnCount="7" rowCount="9">
                         <Column editable="false" title="ID" type="java.lang.Object">
                           <Data value=""/>
                           <Data value=""/>
@@ -495,6 +500,7 @@
                         <Column editable="false" title="Status" type="java.lang.Object"/>
                         <Column editable="false" title="Categoria" type="java.lang.Object"/>
                         <Column editable="false" title="Grupo" type="java.lang.Object"/>
+                        <Column editable="false" title="Obs" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -522,7 +528,7 @@
                 <Component class="javax.swing.JTable" name="tbInsumos">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="3" rowCount="9">
+                      <Table columnCount="3" rowCount="5">
                         <Column editable="false" title="ID" type="java.lang.Object"/>
                         <Column editable="false" title="Produto" type="java.lang.Object"/>
                         <Column editable="false" title="Qtde Usada" type="java.lang.Object"/>
@@ -592,6 +598,9 @@
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusPainted" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdcInsumosActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="addMaisInsumos">
               <Properties>

@@ -40,4 +40,11 @@ public class ProdutoRepository {
         em.merge(prod);
         em.getTransaction().commit();
     }
+
+    public void atualizarProduto(Produto produto) {
+        em.getTransaction().begin();
+        em.merge(produto);
+        em.getTransaction().commit();
+    }
+
 }

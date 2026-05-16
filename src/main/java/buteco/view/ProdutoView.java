@@ -4,10 +4,38 @@
  */
 package buteco.view;
 
+import buteco.enums.EStatus;
+import buteco.model.produto.Categoria;
+import buteco.model.produto.Grupo;
+import buteco.model.produto.InsumosProduto;
+import buteco.model.produto.Produto;
+import buteco.service.CategoriaService;
+import buteco.service.GrupoService;
+import buteco.service.InsumosProdutoService;
+import buteco.service.ProdutoService;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author henrique
  */
+//public ProdutoService produtoService;
+//public CategoriaService categoriaService;
+//public GrupoService grupoService;
+//
+//public ProdutoView(ProdutoService produtoService, CategoriaService categoriaService, GrupoService grupoService)
+//{
+//    this.produtoService = produtoService;
+//    this.categoriaService = categoriaService;
+//    this.grupoService = grupoService;
+//    initComponents();
+//    carregarDados();
+//}
 public class ProdutoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProdutoView.class.getName());
@@ -15,8 +43,53 @@ public class ProdutoView extends javax.swing.JFrame {
     /**
      * Creates new form ProdutoView
      */
-    public ProdutoView() {
+    private ProdutoService produtoService;
+    private CategoriaService categoriaService;
+    private GrupoService grupoService;
+    private List<Categoria> categorias;
+    private List<Grupo> grupos;
+    private InsumosProdutoService insumosProdutoService;
+    private Produto produtoSelecionado;
+
+    private List<JTextField[]> linhasInsumo = new ArrayList<>();
+
+
+    public ProdutoView(ProdutoService produtoService, CategoriaService categoriaService, GrupoService grupoService) {
+        this.produtoService = produtoService;
+        this.categoriaService = categoriaService;
+        this.grupoService = grupoService;
         initComponents();
+        carregarDados();
+
+        addMaisInsumos.setLayout(new BoxLayout(addMaisInsumos, BoxLayout.Y_AXIS));
+
+
+        //listar selecao dos insumos ao apertar -----------------------------------------------------------------------
+        tbProdutos.getSelectionModel().addListSelectionListener( e ->{
+            if(!e.getValueIsAdjusting()){
+                int linha = tbProdutos.getSelectedRow();
+                if(linha >= 0){
+                    Long id = (Long) tbProdutos.getValueAt(linha, 0);
+                    produtoSelecionado = produtoService.findById(id);
+                    carregarInsumos(id);
+                    carregarInfoProduto(id);
+                }
+            }
+        });
+        // ----------------------------------------------------------------------------------------------------------
+
+        //esconder/mostrar linha de insumos -------------------------------------------------------------------------
+        ocultarCamposInsumos();
+        selectCategoria.addActionListener( e -> {
+            String select = (String) selectCategoria.getSelectedItem();
+            if("PRODUTO COM INSUMOS".equals(select)){
+                mostrarCamposInsumos();
+            }else{
+                ocultarCamposInsumos();
+            }
+        });
+
+        // ----------------------------------------------------------------------------------------------------------
     }
 
     /**
@@ -144,7 +217,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
         lbInsumoQtde.setBackground(new java.awt.Color(0, 0, 0));
         lbInsumoQtde.setForeground(new java.awt.Color(255, 255, 255));
-        lbInsumoQtde.setText("Quantidade");
+        lbInsumoQtde.setText("Qtde");
 
         txtObservacao.setColumns(20);
         txtObservacao.setRows(5);
@@ -166,6 +239,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnEditar.setText("Editar");
         btnEditar.setBorderPainted(false);
         btnEditar.setFocusPainted(false);
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         lbSubTituloProdutos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         lbSubTituloProdutos.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,22 +247,22 @@ public class ProdutoView extends javax.swing.JFrame {
 
         tbProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null, null, null},
-                {"", null, null, null, null, null},
-                {"", null, null, null, null, null},
-                {"", null, null, null, null, null},
-                {"", null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {"", null, null, null, null, null, null},
+                {"", null, null, null, null, null, null},
+                {"", null, null, null, null, null, null},
+                {"", null, null, null, null, null, null},
+                {"", null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Produto", "Valor Unit.", "Status", "Categoria", "Grupo"
+                "ID", "Produto", "Valor Unit.", "Status", "Categoria", "Grupo", "Obs"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -203,10 +277,6 @@ public class ProdutoView extends javax.swing.JFrame {
 
         tbInsumos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -242,6 +312,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnAdcInsumos.setText("+");
         btnAdcInsumos.setBorderPainted(false);
         btnAdcInsumos.setFocusPainted(false);
+        btnAdcInsumos.addActionListener(this::btnAdcInsumosActionPerformed);
 
         addMaisInsumos.setBackground(new java.awt.Color(28, 28, 30));
 
@@ -274,16 +345,10 @@ public class ProdutoView extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(lbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(228, 228, 228)
-                                .addComponent(lbValUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(addMaisInsumos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtValorUnit))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(selectStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -303,24 +368,34 @@ public class ProdutoView extends javax.swing.JFrame {
                                 .addComponent(lbObs, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lbSubTituloProdutos)
-                                .addGap(323, 323, 323))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(404, 404, 404)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtInsumo)
-                                    .addComponent(lbInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lbInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtInsumo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbInsumoQtde)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtInsumosQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(btnAdcInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(lbSubTituloProdutos)
+                                        .addGap(323, 323, 323))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(404, 404, 404)
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbInsumoQtde)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtInsumosQtde)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnAdcInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(lbValUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtValorUnit))))
                         .addGap(41, 41, 41))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -354,15 +429,13 @@ public class ProdutoView extends javax.swing.JFrame {
                     .addComponent(selectStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(selectCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbInsumoQtde)
-                    .addComponent(lbInsumo))
-                .addGap(2, 2, 2)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdcInsumos)
                     .addComponent(txtInsumosQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbInsumo)
+                    .addComponent(lbInsumoQtde))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addMaisInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -404,8 +477,93 @@ public class ProdutoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ocultarCamposInsumos()
+    {
+        lbInsumo.setVisible(false);
+        txtInsumo.setVisible(false);
+        lbInsumoQtde.setVisible(false);
+        txtInsumosQtde.setVisible(false);
+        btnAdcInsumos.setVisible(false);
+        addMaisInsumos.setVisible(false);
+    }
+
+    private void mostrarCamposInsumos()
+    {
+        lbInsumo.setVisible(true);
+        txtInsumo.setVisible(true);
+        lbInsumoQtde.setVisible(true);
+        txtInsumosQtde.setVisible(true);
+        btnAdcInsumos.setVisible(true);
+        addMaisInsumos.setVisible(true);
+    }
+
+    private void carregarDados()
+    {
+        categorias = categoriaService.findAllCategoria();
+        grupos = grupoService.findAllGrupo();
+
+        selectCategoria.removeAllItems();
+        for (Categoria c : categorias) selectCategoria.addItem(c.getCategoria());
+
+        selectGrupo.removeAllItems();
+        for (Grupo g : grupos) selectGrupo.addItem(g.getGrupo());
+
+        DefaultTableModel model = (DefaultTableModel) tbProdutos.getModel();
+        model.setRowCount(0); //zera a tabela
+
+        List<Produto> produtos = produtoService.findAllProdutos();
+        for(Produto p : produtos){
+            model.addRow(new Object[]{
+                    p.getId(),
+                    p.getNome(),
+                    p.getPrecoVenda(),
+                    p.getStatus(),
+                    p.getCategoria(),
+                    p.getGrupo().getGrupo(),
+                    p.getObservacao()
+            });
+        }
+    }
+
+    private void carregarInfoProduto(Long id)
+    {
+        Produto produto = produtoService.findById(id);
+
+        txtProduto.setText(produto.getNome());
+        txtValorUnit.setText(Double.toString(produto.getPrecoVenda()));
+        txtObservacao.setText(produto.getObservacao());
+
+        //preenchendo os select
+        selectStatus.setSelectedItem(produto.getStatus() == EStatus.ATIVO ? "Ativo" : "Inativo");
+        selectCategoria.setSelectedItem(produto.getCategoria().getCategoria());
+        selectGrupo.setSelectedItem(produto.getGrupo().getGrupo());
+
+        if ("PRODUTO COM INSUMOS".equals(produto.getCategoria().getCategoria())) {
+            JOptionPane.showMessageDialog(this, "Desculpa, campo de Insumos nao sao editaveis", "Campos Insumos", JOptionPane.INFORMATION_MESSAGE);
+            ocultarCamposInsumos();
+        }
+    }
+
+    private void carregarInsumos(Long id)
+    {
+        DefaultTableModel model = (DefaultTableModel) tbInsumos.getModel();
+        model.setRowCount(0); //zera a tabela
+
+        Produto produto = produtoService.findById(id);
+
+        for(InsumosProduto insumo: produto.getInsumos()){
+            model.addRow(new Object[]{
+                    insumo.getId(),
+                    insumo.getInsumo().getNome(),
+                    insumo.getQtde()
+
+            });
+        }
+    }
+
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void txtProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProdutoActionPerformed
@@ -424,17 +582,227 @@ public class ProdutoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtInsumoActionPerformed
 
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt)
+    {
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+        List<String> errors = rules();
+        if(!errors.isEmpty()){
+            JOptionPane.showMessageDialog(this, String.join("\n", errors), "Campos Invalidos", JOptionPane.WARNING_MESSAGE);
+            return; //trava para nao continuar
+        }
+
+        try {
+            String nomeCategoria = (String) selectCategoria.getSelectedItem();
+            Categoria categoria = categorias.stream()
+                    .filter(c -> c.getCategoria().equals(nomeCategoria))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+            String nomeGrupo = (String) selectGrupo.getSelectedItem();
+            Grupo grupo = grupos.stream()
+                    .filter(g -> g.getGrupo().equals(nomeGrupo))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
+
+            Produto produto = new Produto();
+            produto.setNome(txtProduto.getText());
+            produto.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
+            produto.setObservacao(txtObservacao.getText());
+            produto.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO); //tem que fazer isso, pois na hora que criei a tabela usei enum ;-;
+            produto.setCategoria(categoria);
+            produto.setGrupo(grupo);
+
+            produtoService.salvarProduto(produto); //salva o produto
+            if ("PRODUTO COM INSUMOS".equals(nomeCategoria)) { //caso for do tipo com insumo
+                salvarInsumo(produto, txtInsumo.getText().trim(), Double.parseDouble(txtInsumosQtde.getText())); //pega a info da linha fixa
+
+                for (JTextField[] linha : linhasInsumo) { //percorre as demais linhas para ver se tem mais insumos
+                    if (!linha[0].getText().isBlank()) {
+                        salvarInsumo(produto, linha[0].getText().trim(), Double.parseDouble(linha[1].getText()));
+                    }
+                }
+            }
+            //mesagem de sucesso
+            JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparCampos(); //limpa os campos
+            carregarDados(); //carrega os dados da tabela novamente
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Erro ao salvar: "+e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }                                            
+
+    private void salvarInsumo(Produto produto, String nomeInsumo, double qtde) {
+        Produto insumo = produtoService.findAllProdutos().stream()
+                .filter(p -> p.getNome().equalsIgnoreCase(nomeInsumo))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Insumo \"" + nomeInsumo + "\" não encontrado"));
+
+        insumosProdutoService.salvarInsumo(new InsumosProduto(produto, insumo, qtde));
+    }
 
     private void txtInsumosQtdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInsumosQtdeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtInsumosQtdeActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)
+    {
+        if (produtoSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.", "Nenhum produto selecionado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        List<String> errors = rules();
+        if(!errors.isEmpty()){
+            JOptionPane.showMessageDialog(this, String.join("\n", errors), "Campos Invalidos", JOptionPane.WARNING_MESSAGE);
+            return; //trava para nao continuar
+        }
+
+        try {
+            // Atualiza os campos no objeto já existente
+            produtoSelecionado.setNome(txtProduto.getText().trim());
+            produtoSelecionado.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
+            produtoSelecionado.setObservacao(txtObservacao.getText().trim());
+            produtoSelecionado.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO);
+
+            String nomeCategoria = (String) selectCategoria.getSelectedItem();
+            Categoria categoria = categorias.stream()
+                    .filter(c -> c.getCategoria().equals(nomeCategoria))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+            String nomeGrupo = (String) selectGrupo.getSelectedItem();
+            Grupo grupo = grupos.stream()
+                    .filter(g -> g.getGrupo().equals(nomeGrupo))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
+
+            produtoSelecionado.setCategoria(categoria);
+            produtoSelecionado.setGrupo(grupo);
+
+            produtoService.atualizarProduto(produtoSelecionado);
+
+            JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            produtoSelecionado = null;
+            limparCampos();
+            carregarDados();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void btnAdcInsumosActionPerformed(java.awt.event.ActionEvent evt)
+    {
+        // TODO add your handling code here:
+        JPanel linha = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        linha.setBackground(new java.awt.Color(28, 28, 30));
+
+        JTextField campoInsumo = new JTextField(25);
+        JTextField campoQtde   = new JTextField(25);
+
+        JLabel lbI = new JLabel("Insumo:");
+        JLabel lbQ = new JLabel("Qtde:");
+        lbI.setForeground(java.awt.Color.WHITE);
+        lbQ.setForeground(java.awt.Color.WHITE);
+
+        linha.add(lbI);
+        linha.add(campoInsumo);
+        linha.add(lbQ);
+        linha.add(campoQtde);
+
+        linhasInsumo.add(new JTextField[]{campoInsumo, campoQtde});
+
+        addMaisInsumos.add(linha);
+        addMaisInsumos.revalidate();
+        addMaisInsumos.repaint();
+    }                                             
+
+    private List<String> rules()
+    {
+        List<String> errors = new ArrayList<>();
+
+        if(txtProduto.getText().isBlank()){
+            errors.add("Nome do produto obrigatorio");
+        }
+
+        if (txtValorUnit.getText().isBlank()) {
+            errors.add("Valor Unit obrigatorio");
+        }else{
+            try {
+                double valor = Double.parseDouble(txtValorUnit.getText());
+                if (valor <= 0) {
+                    errors.add("Valor maior que zero");
+                }
+            } catch (NumberFormatException e) {
+                errors.add("Valor Invalido!!!");
+            }
+        }
+
+        //insumo so valida de selecionado
+        if ("PRODUTO COM INSUMOS".equals(selectCategoria.getSelectedItem())) {
+
+            //valdia os primeiros campos
+            if (txtInsumo.getText().isBlank()) {
+                errors.add("Informe ao menos um insumo.");
+            }
+            if (txtInsumosQtde.getText().isBlank()) {
+                errors.add("Informe a quantidade do insumo.");
+            } else { //mesma coisa do valor unitario
+                try {
+                    double qtde = Double.parseDouble(txtInsumosQtde.getText());
+                    if (qtde <= 0) errors.add("Quantidade do insumo deve ser maior que zero.");
+                } catch (NumberFormatException e) {
+                    errors.add("Quantidade do insumo inválida.");
+                }
+            }
+
+            // caso usado o btn de mais(+), ai percorre as linhas criadas e valida um por um
+            for (int i = 0; i < linhasInsumo.size(); i++) {
+                String nome = linhasInsumo.get(i)[0].getText();
+                String qtde = linhasInsumo.get(i)[1].getText();
+                int num = i + 2; // começa na linha 2
+
+                if (nome.isBlank() && !qtde.isBlank()) {
+                    errors.add("Linha " + num + ": nome do insumo não informado.");
+                }
+                if (!nome.isBlank() && qtde.isBlank()) {
+                    errors.add("Linha " + num + ": quantidade não informada para \"" + nome + "\".");
+                }
+                if (!qtde.isBlank()) {
+                    try {
+                        double q = Double.parseDouble(qtde);
+                        if (q <= 0) errors.add("Linha " + num + ": quantidade deve ser maior que zero.");
+                    } catch (NumberFormatException e) {
+                        errors.add("Linha " + num + ": quantidade inválida.");
+                    }
+                }
+            }
+        }
+
+        return errors;
+    }
+
+    private void limparCampos()
+    {
+        txtProduto.setText("");
+        txtValorUnit.setText("");
+        txtObservacao.setText("");
+        txtInsumo.setText("");
+        txtInsumosQtde.setText("");
+        linhasInsumo.clear();
+        addMaisInsumos.removeAll();
+        addMaisInsumos.revalidate();
+        addMaisInsumos.repaint();
+//        ocultarCamposInsumo();
+        selectCategoria.setSelectedIndex(0);
+        selectGrupo.setSelectedIndex(0);
+        selectStatus.setSelectedIndex(0);
+
+    }
+        /**
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -454,7 +822,7 @@ public class ProdutoView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ProdutoView().setVisible(true));
+//        java.awt.EventQueue.invokeLater(() -> new ProdutoView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -465,7 +833,6 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JButton btnVoltar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

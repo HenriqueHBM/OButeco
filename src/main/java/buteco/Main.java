@@ -12,7 +12,9 @@ import buteco.service.*;
 import buteco.service.entradas.ConversoesService;
 import buteco.service.entradas.ErroEntrada;
 import buteco.view.EstoquesView;
+import buteco.view.EstoquesView;
 import buteco.view.MainView;
+import buteco.view.ProdutoView;
 import buteco.view.components.Cards;
 import buteco.view.components.Colors;
 import jakarta.persistence.EntityManager;
@@ -25,8 +27,6 @@ import java.util.logging.LogManager;
 
 public class Main {
     public static void main(String[] args) {
-        System.setProperty("sun.java2d.uiScale", "1.0");
-
         try {
             LogManager.getLogManager().readConfiguration(
                     Main.class.getClassLoader().getResourceAsStream("logging.properties")
@@ -85,8 +85,10 @@ public class Main {
         MainView view = new MainView(colors, cards);
 
         view.clicarUsuarioAction( e ->  new Thread(() -> usuariosController.index()).start());
-        view.clicarProdutoAction( e ->  new Thread(() -> produtosController.index()).start());
-//        view.clicarEstoqueAction( e ->  new Thread(() -> estoqueController.index()).start());
+        view.clicarProdutoAction( e ->  {
+            ProdutoView produtoView = new ProdutoView(produtoService,categoriaService, grupoService);
+            produtoView.setVisible(true);
+        });
         view.clicarEstoqueAction(e -> {
             EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioLogado);
             estoquesView.setVisible(true);
