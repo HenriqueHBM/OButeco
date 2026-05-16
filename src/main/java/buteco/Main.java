@@ -11,16 +11,11 @@ import buteco.repositories.*;
 import buteco.service.*;
 import buteco.service.entradas.ConversoesService;
 import buteco.service.entradas.ErroEntrada;
-import buteco.view.EstoquesView;
-import buteco.view.EstoquesView;
-import buteco.view.MainView;
-import buteco.view.ProdutoView;
+import buteco.view.*;
 import buteco.view.components.Cards;
 import buteco.view.components.Colors;
 import jakarta.persistence.EntityManager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.logging.LogManager;
@@ -73,30 +68,41 @@ public class Main {
         ConversoesService conversoesService = new ConversoesService(conversoesRepository);
         //
 
-        int entradaMenu = 0;
-
 ////      Declarando os controllers
-        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
-        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
+//        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
+//        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
         UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
         EstoquesController estoquesController = new EstoquesController(produtoService, conversoesService, estoqueService, movimentacoesEstoqueService);
 
-        usuariosController.login();
+        LoginView loginView = new LoginView(usuarioService);
+
+        loginView.setLocationRelativeTo(null);
+        loginView.setVisible(true);
+        while (loginView.getUsuarioLogado() == null) {
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) { e.printStackTrace(); }
+        }
+
+        final Usuario usuarioFinal = loginView.getUsuarioLogado();
 
         Colors colors = new Colors();
         Cards cards = new Cards(colors);
         MainView view = new MainView(colors, cards);
 
-        view.clicarUsuarioAction( e ->  new Thread(() -> usuariosController.index()).start());
-        view.clicarProdutoAction( e ->  {
-            ProdutoView produtoView = new ProdutoView(produtoService,categoriaService, grupoService);
+        view.clicarUsuarioAction(e -> {
+            UsuarioView usuarioView = new UsuarioView(usuarioService, cargoRepository, usuarioRepository);
+            usuarioView.setVisible(true);
+        });
+        view.clicarProdutoAction(e -> {
+            ProdutoView produtoView = new ProdutoView(produtoService, categoriaService, grupoService);
             produtoView.setVisible(true);
         });
         view.clicarEstoqueAction(e -> {
-            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioLogado);
+            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioFinal);
             estoquesView.setVisible(true);
         });
-//        view.clicarUsuarioAction(e  -> new Thread(() -> usuariosController.index()).start());
 
 
 //        do{

@@ -17,10 +17,10 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findByLogin(login);
 
         if (usuario == null) {
-            throw new RuntimeException("Usuário não encontrado");
+            return null;
         }
         if(!usuario.getSenha().equals(senha)) {
-            throw new RuntimeException("Senha inválida");
+            return null;
         }
         return usuario;
     }

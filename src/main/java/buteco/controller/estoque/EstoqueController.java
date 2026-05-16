@@ -2,6 +2,7 @@ package buteco.controller.estoque;
 
 import buteco.enums.EStatus;
 import buteco.model.produto.Produto;
+import buteco.model.pessoa.Usuario;
 import buteco.repositories.ConversoesRepository;
 import buteco.repositories.EstoqueRepository;
 import buteco.repositories.ProdutoRepository;
@@ -23,6 +24,7 @@ public class EstoqueController {
     private MovimentacoesEstoqueService movimentacoesEstoqueService;
     private ConversoesRepository conversoesRepository;
     private ProdutoService produtoService;
+    private Usuario usuarioLogado;
 
     public EstoqueController(Scanner sc, ErroEntrada errorEntrada, EstoqueRepository estoqueRepository,
                              ProdutoRepository produtoRepository, EstoqueService estoqueService,
@@ -96,11 +98,11 @@ public class EstoqueController {
                 }
 
                 System.out.println(tipo);
-                switch (tipo) {
-                    case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde);
-                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde, true);
-                    case 3 -> movimentacoesEstoqueService.cadastrarSaidacComInsumos(produto, qtde);
-                }
+//                switch (tipo) {
+//                    case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde, usuarioLogado);
+//                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde, true, usuarioLogado);
+//                    case 3 -> movimentacoesEstoqueService.cadastrarSaidacComInsumos(produto, qtde, usuarioLogado);
+//                }
                 System.out.println("Cadastro realizado com sucesso!");
                 tentativas = 0;
             } catch (Exception e) {

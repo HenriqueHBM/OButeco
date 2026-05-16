@@ -27,8 +27,24 @@ public class UsuarioRepository {
                 .orElse(null);
     }
 
-    public Usuario findById(Long id){
+    public Usuario findById(Long id) {
         return em.find(Usuario.class, id);
+    }
+
+    public java.util.List<Usuario> findAll() {
+        return em.createQuery("Select u From Usuario u", Usuario.class).getResultList();
+    }
+
+    public void update(Usuario usuario) {
+        em.getTransaction().begin();
+        em.merge(usuario);
+        em.getTransaction().commit();
+    }
+
+    public void delete(Usuario usuario) {
+        em.getTransaction().begin();
+        em.remove(em.contains(usuario) ? usuario : em.merge(usuario));
+        em.getTransaction().commit();
     }
 
 }
