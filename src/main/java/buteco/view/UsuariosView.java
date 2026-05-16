@@ -21,7 +21,6 @@ public class UsuariosView {
     }
 
     public void exibirUsuario() {
-
         var usuarios = usuarioRepository.findAll();
 
         if (usuarios.isEmpty()) {
@@ -30,7 +29,6 @@ public class UsuariosView {
         }
 
         System.out.println("==== USUARIOS ====");
-
         usuarios.forEach(u -> System.out.println(
                 "ID: " + u.getId() +
                 " | Nome: " + u.getNome() +

@@ -30,7 +30,7 @@ public class EstoqueController {
                              ProdutoRepository produtoRepository, EstoqueService estoqueService,
                              MovimentacoesEstoqueService movimentacoesEstoqueService,
                              ConversoesRepository conversoesRepository,
-                             ProdutoService produtoService, Usuario usuarioLogado
+                             ProdutoService produtoService
     ){
 
         this.sc = sc;
@@ -40,7 +40,6 @@ public class EstoqueController {
         this.estoqueService = estoqueService;
         this.movimentacoesEstoqueService = movimentacoesEstoqueService;
         this.produtoService = produtoService;
-        this.usuarioLogado = usuarioLogado;
     }
 
     public void index(){
@@ -99,11 +98,11 @@ public class EstoqueController {
                 }
 
                 System.out.println(tipo);
-                switch (tipo) {
-                    case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde, usuarioLogado);
-                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde, true, usuarioLogado);
-                    case 3 -> movimentacoesEstoqueService.cadastrarSaidacComInsumos(produto, qtde, usuarioLogado);
-                }
+//                switch (tipo) {
+//                    case 1 -> movimentacoesEstoqueService.cadastrarEntrada(idProduto, qtde, usuarioLogado);
+//                    case 2 -> movimentacoesEstoqueService.cadastrarSaida(idProduto, qtde, true, usuarioLogado);
+//                    case 3 -> movimentacoesEstoqueService.cadastrarSaidacComInsumos(produto, qtde, usuarioLogado);
+//                }
                 System.out.println("Cadastro realizado com sucesso!");
                 tentativas = 0;
             } catch (Exception e) {

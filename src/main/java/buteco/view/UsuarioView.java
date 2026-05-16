@@ -41,6 +41,7 @@ public class UsuarioView extends JFrame {
         jButton1.addActionListener(e -> cadastrarUsuario());
         jButton2.addActionListener(e -> editarUsuario());
         jButton3.addActionListener(e -> deletarUsuario());
+        jButton4.addActionListener(e -> dispose());
 
         jTable2.getSelectionModel().addListSelectionListener(e -> preencherCampos());
     }
@@ -72,9 +73,7 @@ public class UsuarioView extends JFrame {
         model.setRowCount(0);
 
         for (Usuario u : usuarioRepository.findAll()) {
-
-            model.addRow(new Object[]{u.getId(),u.getNome(), u.getLogin(), u.getCargo().getNome()});
-
+            model.addRow(new Object[]{u.getId(), u.getNome(), u.getLogin(), u.getCargo().getNome()});
         }
     }
 
@@ -107,11 +106,9 @@ public class UsuarioView extends JFrame {
         Long idUsuario = (Long) jTable2.getValueAt(linha, 0);
 
         Usuario usuario = usuarioRepository.findById(idUsuario);
-
         usuario.setNome(txtNome.getText());
         usuario.setLogin(txtLogin.getText());
         usuario.setSenha(txtSenha.getText());
-
         usuarioRepository.update(usuario);
 
         carregarTabela();
