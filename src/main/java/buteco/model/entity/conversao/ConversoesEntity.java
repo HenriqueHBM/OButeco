@@ -2,7 +2,7 @@ package buteco.model.entity.conversao;
 import jakarta.persistence.*;
 @Entity
 @Table(name="conversoes")
-public class Conversoes {
+public class ConversoesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,11 +13,11 @@ public class Conversoes {
     @Column(name = "nomenclatura")
     private String nomenclatura;
 
-    public Conversoes(){
+    public ConversoesEntity(){
 
     }
 
-    public Conversoes(Long id, String nome, String nomenclatura){
+    public ConversoesEntity(Long id, String nome, String nomenclatura){
         this.id = id;
         this.nome = nome;
         this.nomenclatura = nomenclatura;
