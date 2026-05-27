@@ -7,9 +7,53 @@
     <list default="true" id="a97d491e-140c-4392-b28b-b221092adf9a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/buteco/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/MovimentacoesEstoqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/service/MovimentacoesEstoqueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/ProdutoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/ProdutoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/controller/estoque/EstoqueController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/controller/estoque/EstoquesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/controller/estoque/EstoquesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/controller/produtos/ProdutosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/controller/produtos/ProdutosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/controller/usuarios/UsuariosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/controller/usuarios/UsuariosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/enums/EStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/enums/EStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/enums/ETipoProduto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/enums/ETipoProduto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/conversao/Conversoes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/conversao/Conversoes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/estoque/Estoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/estoque/Estoque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/estoque/MovimentacoesEstoque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/estoque/MovimentacoesEstoque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/pessoa/Cargo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/pessoa/Cargo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/pessoa/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/pessoa/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/produto/Categoria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/produto/Categoria.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/produto/Grupo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/produto/Grupo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/produto/InsumosProduto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/produto/InsumosProduto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/produto/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/entity/produto/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/model/restaurante/Restaurante.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/CargoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/pessoa/CargoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/CategoriaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/produto/CategoriaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/ConversoesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/estoque/ConversoesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/CustomizerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/CustomizerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/EstoqueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/estoque/EstoqueRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/GrupoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/produto/GrupoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/InsumosProdutoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/produto/InsumosProdutoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/MovimentacoesEstoqueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/estoque/MovimentacoesEstoqueRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/ProdutoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/produto/ProdutoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/repositories/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/repositories/pessoa/UsuarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/CategoriaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/CategoriaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/EstoqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/EstoqueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/GrupoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/GrupoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/InsumosProdutoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/InsumosProdutoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/MovimentacoesEstoqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/MovimentacoesEstoqueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/PessoaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/PessoaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/ProdutoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/ProdutoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/UsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/entradas/ConversoesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/entradas/ConversoesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/entradas/ErroEntrada.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/entradas/ErroEntrada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/service/entradas/VerificaEntradaProduto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/model/service/entradas/VerificaEntradaProduto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/EstoqueView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/estoque/EstoquesView.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/EstoquesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/estoque/EstoquesView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/pessoa/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/ProdutoView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/produto/ProdutoView.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/ProdutoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/produto/ProdutoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/ProdutosView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/UsuarioView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/buteco/view/pessoa/UsuarioView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/buteco/view/UsuariosView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,26 +63,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Jonas-Lacerda"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Jonas-Lacerda&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/HenriqueHBM/OButeco.git",
-    "accountId": "69f6f92a-920d-47f2-9076-e434ac8ccaaa"
+    "url": "https://github.com/HenriqueHBM/OButeco",
+    "accountId": "c4c455f8-6508-48c0-bb9d-0e6d6504a3c0"
   }
 }]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="3DmEgRgny0UKgVbszpI6mfu1MQM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -51,14 +95,59 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "dev__jonas",
-    "kotlin-language-version-configured": "true"
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/var/www/html/UniAmerica/Projetos/OButeco/src/main/java/buteco/model",
+    "nodejs_package_manager_path": "npm"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/buteco/model" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/buteco/view/produto" />
+      <recent name="$PROJECT_DIR$/src/main/java/buteco/view/estoque" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="buteco.Main" />
+      <module name="OButeco_" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="buteco.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="OButeco" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="OButeco" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.24374.151" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.24374.151" />
       </set>
     </attachedChunks>
   </component>
@@ -71,5 +160,8 @@
       <updated>1778878957862</updated>
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
