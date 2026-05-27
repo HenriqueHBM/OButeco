@@ -51,10 +51,11 @@ public class ProdutoView extends javax.swing.JFrame {
     private InsumosProdutoService insumosProdutoService;
     private Produto produtoSelecionado;
 
-    private List<JTextField[]> linhasInsumo = new ArrayList<>();
+//    private List<JTextField[]> linhasInsumo = new ArrayList<>();
+    private List<Object[]> linhasInsumo = new ArrayList<>();
 
-
-    public ProdutoView(ProdutoService produtoService, CategoriaService categoriaService, GrupoService grupoService) {
+    public ProdutoView(ProdutoService produtoService, CategoriaService categoriaService, GrupoService grupoService, InsumosProdutoService insumosProdutoService) {
+        this.insumosProdutoService = insumosProdutoService;
         this.produtoService = produtoService;
         this.categoriaService = categoriaService;
         this.grupoService = grupoService;
@@ -119,7 +120,6 @@ public class ProdutoView extends javax.swing.JFrame {
         lbGrupo = new javax.swing.JLabel();
         selectStatus = new javax.swing.JComboBox<>();
         lbInsumo = new javax.swing.JLabel();
-        txtInsumo = new javax.swing.JTextField();
         lbInsumoQtde = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObservacao = new javax.swing.JTextArea();
@@ -138,6 +138,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnAdcInsumos = new javax.swing.JButton();
         addMaisInsumos = new javax.swing.JPanel();
         txtInsumosQtde = new javax.swing.JTextField();
+        selectInsumo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,8 +217,6 @@ public class ProdutoView extends javax.swing.JFrame {
         lbInsumo.setBackground(new java.awt.Color(0, 0, 0));
         lbInsumo.setForeground(new java.awt.Color(255, 255, 255));
         lbInsumo.setText("Insumo");
-
-        txtInsumo.addActionListener(this::txtInsumoActionPerformed);
 
         lbInsumoQtde.setBackground(new java.awt.Color(0, 0, 0));
         lbInsumoQtde.setForeground(new java.awt.Color(255, 255, 255));
@@ -375,11 +374,11 @@ public class ProdutoView extends javax.swing.JFrame {
                                 .addGap(1, 1, 1)
                                 .addComponent(lbInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtInsumo)
+                                .addComponent(selectInsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbInsumoQtde)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtInsumosQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtInsumosQtde)
                                 .addGap(12, 12, 12)
                                 .addComponent(btnAdcInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -437,9 +436,9 @@ public class ProdutoView extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdcInsumos)
                     .addComponent(txtInsumosQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbInsumo)
-                    .addComponent(lbInsumoQtde))
+                    .addComponent(lbInsumoQtde)
+                    .addComponent(selectInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addMaisInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -484,9 +483,9 @@ public class ProdutoView extends javax.swing.JFrame {
     private void ocultarCamposInsumos()
     {
         lbInsumo.setVisible(false);
-        txtInsumo.setVisible(false);
         lbInsumoQtde.setVisible(false);
         txtInsumosQtde.setVisible(false);
+        selectInsumo.setVisible(false);
         btnAdcInsumos.setVisible(false);
         addMaisInsumos.setVisible(false);
     }
@@ -494,7 +493,7 @@ public class ProdutoView extends javax.swing.JFrame {
     private void mostrarCamposInsumos()
     {
         lbInsumo.setVisible(true);
-        txtInsumo.setVisible(true);
+        selectInsumo.setVisible(true);
         lbInsumoQtde.setVisible(true);
         txtInsumosQtde.setVisible(true);
         btnAdcInsumos.setVisible(true);
@@ -527,6 +526,7 @@ public class ProdutoView extends javax.swing.JFrame {
                     p.getObservacao()
             });
         }
+        carregarSelectInsumos();
     }
 
     private void carregarInfoProduto(Long id)
@@ -553,16 +553,23 @@ public class ProdutoView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbInsumos.getModel();
         model.setRowCount(0); //zera a tabela
 
-        Produto produto = produtoService.findById(id);
+        Produto produto = produtoService.findByIdComInsumos(id); // aqui
 
-        for(InsumosProduto insumo: produto.getInsumos()){
+        for (InsumosProduto insumo : produto.getInsumos()) {
             model.addRow(new Object[]{
                     insumo.getId(),
                     insumo.getInsumo().getNome(),
                     insumo.getQtde()
-
             });
         }
+    }
+
+    private void carregarSelectInsumos() {
+        selectInsumo.removeAllItems();
+        produtoService.findAllProdutos().stream()
+                .filter(p -> p.getGrupo().getGrupo().equals("INSUMO")
+                        || p.getGrupo().getGrupo().equals("SERVICO") || p.getGrupo().getGrupo().equals("INGREDIENTE"))
+                .forEach(p -> selectInsumo.addItem(p.getNome()));
     }
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -581,10 +588,6 @@ public class ProdutoView extends javax.swing.JFrame {
     private void selectStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectStatusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_selectStatusActionPerformed
-
-    private void txtInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInsumoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtInsumoActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt)
     {
@@ -619,11 +622,13 @@ public class ProdutoView extends javax.swing.JFrame {
 
             produtoService.salvarProduto(produto); //salva o produto
             if ("PRODUTO COM INSUMOS".equals(nomeCategoria)) { //caso for do tipo com insumo
-                salvarInsumo(produto, txtInsumo.getText().trim(), Double.parseDouble(txtInsumosQtde.getText())); //pega a info da linha fixa
+                salvarInsumo(produto, (String) selectInsumo.getSelectedItem(), Double.parseDouble(txtInsumosQtde.getText())); //pega a info da linha fixa
 
-                for (JTextField[] linha : linhasInsumo) { //percorre as demais linhas para ver se tem mais insumos
-                    if (!linha[0].getText().isBlank()) {
-                        salvarInsumo(produto, linha[0].getText().trim(), Double.parseDouble(linha[1].getText()));
+                for (Object[] linha : linhasInsumo) {
+                    JComboBox<String> combo = (JComboBox<String>) linha[0];
+                    JTextField qtde = (JTextField) linha[1];
+                    if (combo.getSelectedItem() != null) {
+                        salvarInsumo(produto, (String) combo.getSelectedItem(), Double.parseDouble(qtde.getText()));
                     }
                 }
             }
@@ -691,6 +696,7 @@ public class ProdutoView extends javax.swing.JFrame {
             produtoSelecionado = null;
             limparCampos();
             carregarDados();
+
         }catch (Exception e){
             JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -702,8 +708,14 @@ public class ProdutoView extends javax.swing.JFrame {
         JPanel linha = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         linha.setBackground(new java.awt.Color(28, 28, 30));
 
-        JTextField campoInsumo = new JTextField(25);
-        JTextField campoQtde   = new JTextField(25);
+        JComboBox<String> comboInsumo = new JComboBox<>();
+        produtoService.findAllProdutos().stream()
+                .filter(p -> p.getGrupo().getGrupo().equals("INSUMO")
+                        || p.getGrupo().getGrupo().equals("SERVICO")
+                        || p.getGrupo().getGrupo().equals("INGREDIENTE"))
+                .forEach(p -> comboInsumo.addItem(p.getNome()));
+
+        JTextField campoQtde = new JTextField(8);
 
         JLabel lbI = new JLabel("Insumo:");
         JLabel lbQ = new JLabel("Qtde:");
@@ -711,11 +723,11 @@ public class ProdutoView extends javax.swing.JFrame {
         lbQ.setForeground(java.awt.Color.WHITE);
 
         linha.add(lbI);
-        linha.add(campoInsumo);
+        linha.add(comboInsumo);
         linha.add(lbQ);
         linha.add(campoQtde);
 
-        linhasInsumo.add(new JTextField[]{campoInsumo, campoQtde});
+        linhasInsumo.add(new Object[]{comboInsumo, campoQtde});
 
         addMaisInsumos.add(linha);
         addMaisInsumos.revalidate();
@@ -747,7 +759,7 @@ public class ProdutoView extends javax.swing.JFrame {
         if ("PRODUTO COM INSUMOS".equals(selectCategoria.getSelectedItem())) {
 
             //valdia os primeiros campos
-            if (txtInsumo.getText().isBlank()) {
+            if (selectInsumo.getSelectedItem() == null) {
                 errors.add("Informe ao menos um insumo.");
             }
             if (txtInsumosQtde.getText().isBlank()) {
@@ -763,15 +775,13 @@ public class ProdutoView extends javax.swing.JFrame {
 
             // caso usado o btn de mais(+), ai percorre as linhas criadas e valida um por um
             for (int i = 0; i < linhasInsumo.size(); i++) {
-                String nome = linhasInsumo.get(i)[0].getText();
-                String qtde = linhasInsumo.get(i)[1].getText();
-                int num = i + 2; // começa na linha 2
+                JComboBox<String> combo = (JComboBox<String>) linhasInsumo.get(i)[0];
+                JTextField qtdeField = (JTextField) linhasInsumo.get(i)[1];
+                String qtde = qtdeField.getText();
+                int num = i + 2;
 
-                if (nome.isBlank() && !qtde.isBlank()) {
-                    errors.add("Linha " + num + ": nome do insumo não informado.");
-                }
-                if (!nome.isBlank() && qtde.isBlank()) {
-                    errors.add("Linha " + num + ": quantidade não informada para \"" + nome + "\".");
+                if (combo.getSelectedItem() != null && qtde.isBlank()) {
+                    errors.add("Linha " + num + ": quantidade não informada.");
                 }
                 if (!qtde.isBlank()) {
                     try {
@@ -792,7 +802,7 @@ public class ProdutoView extends javax.swing.JFrame {
         txtProduto.setText("");
         txtValorUnit.setText("");
         txtObservacao.setText("");
-        txtInsumo.setText("");
+        selectInsumo.setSelectedIndex(0);
         txtInsumosQtde.setText("");
         linhasInsumo.clear();
         addMaisInsumos.removeAll();
@@ -855,10 +865,10 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JLabel lbValUnit;
     private javax.swing.JComboBox<String> selectCategoria;
     private javax.swing.JComboBox<String> selectGrupo;
+    private javax.swing.JComboBox<String> selectInsumo;
     private javax.swing.JComboBox<String> selectStatus;
     private javax.swing.JTable tbInsumos;
     private javax.swing.JTable tbProdutos;
-    private javax.swing.JTextField txtInsumo;
     private javax.swing.JTextField txtInsumosQtde;
     private javax.swing.JTextArea txtObservacao;
     private javax.swing.JTextField txtProduto;
