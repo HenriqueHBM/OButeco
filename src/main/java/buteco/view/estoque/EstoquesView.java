@@ -7,7 +7,7 @@ package buteco.view.estoque;
 import buteco.controller.estoque.EstoquesController;
 import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.enums.EStatus;
-import buteco.model.entity.estoque.Estoque;
+import buteco.model.entity.estoque.EstoqueEntity;
 import buteco.model.entity.estoque.MovimentacoesEstoque;
 import buteco.model.entity.pessoa.Usuario;
 import buteco.model.entity.produto.Produto;
@@ -102,7 +102,7 @@ public class EstoquesView extends javax.swing.JFrame {
         var listaEstoques = estoquesController.getEstoque();
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbEstoque.getModel();
         model.setRowCount(0); //comeca do primeiro e zera se tiver outra informacao perdida
-        for (Estoque e : listaEstoques) {
+        for (EstoqueEntity e : listaEstoques) {
             model.addRow(new Object[]{
                 e.getId(),
                 e.getProduto() != null ? e.getProduto().getNome() : "-",

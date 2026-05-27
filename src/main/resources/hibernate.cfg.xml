@@ -37,7 +37,7 @@
         <mapping class="buteco.model.entity.produto.Grupo" />
 
         <!-- Estoque -->
-        <mapping class="buteco.model.entity.estoque.Estoque" />
+        <mapping class="buteco.model.entity.estoque.EstoqueEntity" />
         <mapping class="buteco.model.entity.estoque.MovimentacoesEstoque" />
 
         <!-- Usuario -->

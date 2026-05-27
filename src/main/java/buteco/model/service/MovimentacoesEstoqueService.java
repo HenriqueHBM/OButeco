@@ -1,7 +1,7 @@
 package buteco.model.service;
 
 import buteco.model.entity.conversao.ConversoesEntity;
-import buteco.model.entity.estoque.Estoque;
+import buteco.model.entity.estoque.EstoqueEntity;
 import buteco.model.entity.estoque.MovimentacoesEstoque;
 import buteco.model.entity.pessoa.Usuario;
 import buteco.model.entity.produto.Produto;
@@ -45,21 +45,21 @@ public class MovimentacoesEstoqueService {
 
     //--------------Funcoes Sendo usadas --------------
     public void cadastrarEntradaSwing(Long idProduto, double qtde, Long idConversaoEntrada, double fatorConversao, String local, Usuario usuario, String observacao) {
-        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
+        EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
 
         //estoque nao encontrado? Cria um novo e atualiza o estoque com novo id
-        if(estoque == null) {
-            estoque = new Estoque();
+        if(estoqueEntity == null) {
+            estoqueEntity = new EstoqueEntity();
             Produto produto = produtoRepository.findById(idProduto);
             ConversoesEntity conversoesEntity = conversoesRepository.findById(idConversaoEntrada);
 
-            estoque.setProduto(produto);
-            estoque.setConversoes(conversoesEntity);
-            estoque.setLocal(local);
-            estoque.setQntdEstoque(0);
-            estoqueRepository.create(estoque);
+            estoqueEntity.setProduto(produto);
+            estoqueEntity.setConversoes(conversoesEntity);
+            estoqueEntity.setLocal(local);
+            estoqueEntity.setQntdEstoque(0);
+            estoqueRepository.create(estoqueEntity);
 
-            estoque = estoqueRepository.findByProdutoId(idProduto);
+            estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
         }
 
         ConversoesEntity conversaoEntrada = conversoesRepository.findById(idConversaoEntrada);
@@ -68,7 +68,7 @@ public class MovimentacoesEstoqueService {
         }
 
         double qtdeNova;
-        if (idConversaoEntrada.equals(estoque.getConversoes().getId())){
+        if (idConversaoEntrada.equals(estoqueEntity.getConversoes().getId())){
             qtdeNova = qtde;
         } else {
             if (fatorConversao <= 0 ) {
@@ -77,17 +77,17 @@ public class MovimentacoesEstoqueService {
             qtdeNova = fatorConversao;
         }
 
-        estoque.setQntdEstoque(estoque.getQntdEstoque() + qtdeNova);
-        estoqueRepository.update(estoque);
+        estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() + qtdeNova);
+        estoqueRepository.update(estoqueEntity);
 
         Produto produto = produtoRepository.findById(idProduto);
 
         MovimentacoesEstoque mov = new MovimentacoesEstoque();
         mov.setProduto(produto);
-        if (idConversaoEntrada.equals(estoque.getConversoes().getId())) {
+        if (idConversaoEntrada.equals(estoqueEntity.getConversoes().getId())) {
             mov.setConversoes(conversaoEntrada);
         } else {
-            mov.setConversoes(estoque.getConversoes());
+            mov.setConversoes(estoqueEntity.getConversoes());
         }
         mov.setQuantidade(qtdeNova);
         mov.setDataMovimentacao(Instant.now());
@@ -96,15 +96,15 @@ public class MovimentacoesEstoqueService {
 
         mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
         mov.setTipo("ENTRADA");
-        mov.setEstoque(estoque);
+        mov.setEstoque(estoqueEntity);
 
         movimentacoesEstoqueRepository.create(mov);
     }
 
     public void cadastrarSaidaSwing(Long idProduto, double qtde, Long idConversaoSaida, double fatorConversao, Usuario usuario,String observacao) {
-        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
+        EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
 
-        if(estoque == null) {
+        if(estoqueEntity == null) {
             throw new RuntimeException("Estoque nao encontrado para esse produto!");
         }
 
@@ -114,7 +114,7 @@ public class MovimentacoesEstoqueService {
         }
 
         double qtdeNova;
-        if(idConversaoSaida.equals(estoque.getConversoes().getId())) {
+        if(idConversaoSaida.equals(estoqueEntity.getConversoes().getId())) {
             qtdeNova = qtde;
         } else {
             if (fatorConversao <= 0) {
@@ -123,21 +123,21 @@ public class MovimentacoesEstoqueService {
             qtdeNova = fatorConversao;
         }
 
-        if (qtdeNova > estoque.getQntdEstoque()) {
-            throw new RuntimeException("Quantidade insuficiente no estoque! Disponivel: " + estoque.getQntdEstoque());
+        if (qtdeNova > estoqueEntity.getQntdEstoque()) {
+            throw new RuntimeException("Quantidade insuficiente no estoque! Disponivel: " + estoqueEntity.getQntdEstoque());
         }
 
-        estoque.setQntdEstoque(estoque.getQntdEstoque() - qtdeNova);
-        estoqueRepository.update(estoque);
+        estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() - qtdeNova);
+        estoqueRepository.update(estoqueEntity);
 
         Produto produto = produtoRepository.findById(idProduto);
 
         MovimentacoesEstoque mov = new MovimentacoesEstoque();
         mov.setProduto(produto);
-        if (idConversaoSaida.equals(estoque.getConversoes().getId())) {
+        if (idConversaoSaida.equals(estoqueEntity.getConversoes().getId())) {
             mov.setConversoes(conversaoSaida);
         } else {
-            mov.setConversoes(estoque.getConversoes());
+            mov.setConversoes(estoqueEntity.getConversoes());
         }
         mov.setQuantidade(qtdeNova);
         mov.setDataMovimentacao(Instant.now());
@@ -147,7 +147,7 @@ public class MovimentacoesEstoqueService {
         mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
 
         mov.setTipo("SAIDA");
-        mov.setEstoque(estoque);
+        mov.setEstoque(estoqueEntity);
         movimentacoesEstoqueRepository.create(mov);
     }
 
@@ -157,19 +157,19 @@ public class MovimentacoesEstoqueService {
             throw new RuntimeException("Movimentacao nao encontrada!");
         }
 
-        Estoque estoque = mov.getEstoque();
-        if (estoque == null) {
+        EstoqueEntity estoqueEntity = mov.getEstoque();
+        if (estoqueEntity == null) {
             throw new RuntimeException("Estoque da movimentacao nao encontrado!");
         }
 
         //reverter o estoque
         if(mov.getTipo().equals("ENTRADA")) {
-            estoque.setQntdEstoque(estoque.getQntdEstoque() - mov.getQuantidade());
+            estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() - mov.getQuantidade());
         } else if (mov.getTipo().equals("SAIDA")) {
-            estoque.setQntdEstoque(estoque.getQntdEstoque() + mov.getQuantidade());
+            estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() + mov.getQuantidade());
         }
 
-        estoqueRepository.update(estoque);
+        estoqueRepository.update(estoqueEntity);
         movimentacoesEstoqueRepository.delete(mov);
     }
 
@@ -177,24 +177,24 @@ public class MovimentacoesEstoqueService {
         MovimentacoesEstoque mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
         if (mov == null) throw new RuntimeException("Movimentação não encontrada!");
 
-        Estoque estoqueAntigo = mov.getEstoque();
-        if (estoqueAntigo == null) throw new RuntimeException("Estoque da movimentação não encontrado!");
+        EstoqueEntity estoqueEntityAntigo = mov.getEstoque();
+        if (estoqueEntityAntigo == null) throw new RuntimeException("Estoque da movimentação não encontrado!");
 
         // reverte no estoque antigo
         if (mov.getTipo().equals("ENTRADA")) {
-            estoqueAntigo.setQntdEstoque(estoqueAntigo.getQntdEstoque() - mov.getQuantidade());
+            estoqueEntityAntigo.setQntdEstoque(estoqueEntityAntigo.getQntdEstoque() - mov.getQuantidade());
         } else if (mov.getTipo().equals("SAIDA")) {
-            estoqueAntigo.setQntdEstoque(estoqueAntigo.getQntdEstoque() + mov.getQuantidade());
+            estoqueEntityAntigo.setQntdEstoque(estoqueEntityAntigo.getQntdEstoque() + mov.getQuantidade());
         }
-        estoqueRepository.update(estoqueAntigo);
+        estoqueRepository.update(estoqueEntityAntigo);
 
         // busca o estoque do novo produto
-        Estoque estoqueNovo = estoqueRepository.findByProdutoId(novoProduto.getId());
-        if (estoqueNovo == null) throw new RuntimeException("Estoque nao encontrado para o novo produto!");
+        EstoqueEntity estoqueEntityNovo = estoqueRepository.findByProdutoId(novoProduto.getId());
+        if (estoqueEntityNovo == null) throw new RuntimeException("Estoque nao encontrado para o novo produto!");
 
         // calcula nova quantidade
         double qtdeNova;
-        if (idNovaConversao.equals(estoqueNovo.getConversoes().getId())) {
+        if (idNovaConversao.equals(estoqueEntityNovo.getConversoes().getId())) {
             qtdeNova = novaQtde;
         } else {
             if (fatorConversao <= 0) throw new RuntimeException("Fator de conversão inválido!");
@@ -203,22 +203,22 @@ public class MovimentacoesEstoqueService {
 
         // aplica no estoque novo
         if (mov.getTipo().equals("ENTRADA")) {
-            estoqueNovo.setQntdEstoque(estoqueNovo.getQntdEstoque() + qtdeNova);
+            estoqueEntityNovo.setQntdEstoque(estoqueEntityNovo.getQntdEstoque() + qtdeNova);
         } else if (mov.getTipo().equals("SAIDA")) {
-            if (qtdeNova > estoqueNovo.getQntdEstoque()) {
-                throw new RuntimeException("Quantidade insuficiente no estoque! Disponível: " + estoqueNovo.getQntdEstoque());
+            if (qtdeNova > estoqueEntityNovo.getQntdEstoque()) {
+                throw new RuntimeException("Quantidade insuficiente no estoque! Disponível: " + estoqueEntityNovo.getQntdEstoque());
             }
-            estoqueNovo.setQntdEstoque(estoqueNovo.getQntdEstoque() - qtdeNova);
+            estoqueEntityNovo.setQntdEstoque(estoqueEntityNovo.getQntdEstoque() - qtdeNova);
         }
-        estoqueRepository.update(estoqueNovo);
+        estoqueRepository.update(estoqueEntityNovo);
 
         // unidade salva sempre é a do estoque novo
-        ConversoesEntity novaConversao = idNovaConversao.equals(estoqueNovo.getConversoes().getId())
+        ConversoesEntity novaConversao = idNovaConversao.equals(estoqueEntityNovo.getConversoes().getId())
                 ? conversoesRepository.findById(idNovaConversao)
-                : estoqueNovo.getConversoes();
+                : estoqueEntityNovo.getConversoes();
 
         mov.setProduto(novoProduto);
-        mov.setEstoque(estoqueNovo);
+        mov.setEstoque(estoqueEntityNovo);
         mov.setQuantidade(qtdeNova);
         mov.setConversoes(novaConversao);
         if (observacao != null && !observacao.trim().isEmpty()) {
@@ -238,13 +238,13 @@ public class MovimentacoesEstoqueService {
         for (int index = 1; index <= qtde; index++) {
             produto.getInsumos().forEach(element -> {
                 if (!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")) {
-                    Estoque estoque = estoqueRepository.findByProdutoId(element.getInsumo().getId());
-                    if (estoque == null) {
+                    EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(element.getInsumo().getId());
+                    if (estoqueEntity == null) {
                         throw new RuntimeException("Estoque nao encontrado para: " + element.getInsumo().getNome());
                     }
-                    if (element.getQtde() > estoque.getQntdEstoque()) {
+                    if (element.getQtde() > estoqueEntity.getQntdEstoque()) {
                         throw new RuntimeException("Quantidade insuficiente para: " + element.getInsumo().getNome()
-                                + " | Disponivel: " + estoque.getQntdEstoque());
+                                + " | Disponivel: " + estoqueEntity.getQntdEstoque());
                     }
                 }
             });
@@ -252,15 +252,15 @@ public class MovimentacoesEstoqueService {
             // da baixa nos insumos
             produto.getInsumos().forEach(element -> {
                 if (!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")) {
-                    Estoque estoque = estoqueRepository.findByProdutoId(element.getInsumo().getId());
-                    estoque.setQntdEstoque(estoque.getQntdEstoque() - element.getQtde());
-                    estoqueRepository.update(estoque);
+                    EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(element.getInsumo().getId());
+                    estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() - element.getQtde());
+                    estoqueRepository.update(estoqueEntity);
                 }
             });
 
             // registra movimentacao do produto final
-            Estoque estoqueProdfinal = estoqueRepository.findByProdutoId(produto.getId());
-            if (estoqueProdfinal == null) {
+            EstoqueEntity estoqueEntityProdfinal = estoqueRepository.findByProdutoId(produto.getId());
+            if (estoqueEntityProdfinal == null) {
                 throw new RuntimeException("Estoque nao encontrado para o produto final: " + produto.getNome());
             }
 
@@ -268,8 +268,8 @@ public class MovimentacoesEstoqueService {
             mov.setProduto(produto);
             mov.setQuantidade(1);
             mov.setTipo("SAIDA");
-            mov.setConversoes(estoqueProdfinal.getConversoes());
-            mov.setEstoque(estoqueProdfinal);
+            mov.setConversoes(estoqueEntityProdfinal.getConversoes());
+            mov.setEstoque(estoqueEntityProdfinal);
             mov.setDataMovimentacao(Instant.now());
             mov.setUsuario(usuario);
             mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
@@ -285,20 +285,20 @@ public class MovimentacoesEstoqueService {
 
     //metodo obsoleto
     public void confereEstoque(Long idProduto){
-        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
-        if (estoque == null) {
+        EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
+        if (estoqueEntity == null) {
             System.out.println("Estoque inexistente para esse produto, cadastre um novo:");
             estoqueService.criarNovoEstoque(idProduto); //caso o estoque para o produto nao exista ele deve criar um novo
         }
     }
 
     public void cadastrarEntrada(Long idProduto, double qtde){
-        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
-        if (estoque == null){
+        EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
+        if (estoqueEntity == null){
             throw new RuntimeException("Estoque nao encontrado para esse COD.");
         }
 
-        System.out.println("Unidade no estoque: " + estoque.getConversoes().getNome()); //mostra para o usuario qual a unidade cadastrada no estoque
+        System.out.println("Unidade no estoque: " + estoqueEntity.getConversoes().getNome()); //mostra para o usuario qual a unidade cadastrada no estoque
         var medidas = conversoesRepository.findAllConversoes();
         medidas.stream().forEach(System.out::println); //lista unidades de conversao
         Long idConversoes = erroEntrada.trataEntradaLong("Insira o codigo de unidade que voce esta usando: ");
@@ -309,19 +309,19 @@ public class MovimentacoesEstoqueService {
         }
 
         double qtdeNova;
-        if(idConversoes.equals(estoque.getConversoes().getId())){ //.equals necessario para comparar os valores, == nao funciona para Long por ser objeto
+        if(idConversoes.equals(estoqueEntity.getConversoes().getId())){ //.equals necessario para comparar os valores, == nao funciona para Long por ser objeto
             qtdeNova = qtde; //caso medidas sejam iguais nao faz conversao
         } else {
             System.out.println("Unidade diferente do estoque!");
             double conversaoEquivalente = erroEntrada.trataEntradaDouble //pede referencia da conversao de medida para o usuario
                             ("Quanto vale 1 " + conversoesRepository.findById(idConversoes).getNome() //ex: 1un de queijo valem 500g
-                                    + " em " + estoque.getConversoes().getNome() + "?\n");
+                                    + " em " + estoqueEntity.getConversoes().getNome() + "?\n");
             qtdeNova = qtde * conversaoEquivalente;
-            System.out.printf("Convertido: %.2f %s\n", qtdeNova, estoque.getConversoes().getNomenclatura());
+            System.out.printf("Convertido: %.2f %s\n", qtdeNova, estoqueEntity.getConversoes().getNomenclatura());
         }
 
-        estoque.setQntdEstoque(estoque.getQntdEstoque() + qtdeNova);
-        estoqueRepository.update(estoque);
+        estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() + qtdeNova);
+        estoqueRepository.update(estoqueEntity);
 
         Produto produto = produtoRepository.findById(idProduto);
 
@@ -330,39 +330,39 @@ public class MovimentacoesEstoqueService {
         mov.setQuantidade(qtde);
         mov.setTipo("ENTRADA");
         mov.setConversoes(conversaoEntrada);
-        mov.setEstoque(estoque);
+        mov.setEstoque(estoqueEntity);
         mov.setDataMovimentacao(Instant.now());
 
         movimentacoesEstoqueRepository.create(mov);
     }
 
     public void cadastrarSaida(Long idProduto, double qtde, boolean cria_mov){
-        Estoque estoque = estoqueRepository.findByProdutoId(idProduto);
-        if (estoque == null){
+        EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
+        if (estoqueEntity == null){
             throw new RuntimeException("Estoque nao encontrado para esse COD.");
         }
-        if (qtde > estoque.getQntdEstoque()){
+        if (qtde > estoqueEntity.getQntdEstoque()){
             throw new RuntimeException("Quantidade insuficiente no estoque, tente novamente!");
         }
 
-        estoque.setQntdEstoque(estoque.getQntdEstoque() - qtde);
-        estoqueRepository.update(estoque);
+        estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() - qtde);
+        estoqueRepository.update(estoqueEntity);
 
         Produto produto = produtoRepository.findById(idProduto);
 
         if(cria_mov == true){
-            this.movimentacaoEstoque(produto, estoque, qtde);
+            this.movimentacaoEstoque(produto, estoqueEntity, qtde);
         }
 
     }
 
-    public void movimentacaoEstoque(Produto produto, Estoque estoque, double qtde){
+    public void movimentacaoEstoque(Produto produto, EstoqueEntity estoqueEntity, double qtde){
         MovimentacoesEstoque mov = new MovimentacoesEstoque();
         mov.setProduto(produto);
         mov.setQuantidade(qtde);
         mov.setTipo("SAIDA");
-        mov.setConversoes(estoque.getConversoes());
-        mov.setEstoque(estoque);
+        mov.setConversoes(estoqueEntity.getConversoes());
+        mov.setEstoque(estoqueEntity);
         mov.setDataMovimentacao(Instant.now());
 
         movimentacoesEstoqueRepository.create(mov);
@@ -406,12 +406,12 @@ public class MovimentacoesEstoqueService {
         for (int index = 1; index <= qtde;  index++){
             produto.getInsumos().forEach(element -> {
                 if(!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")){ // se nao for um servico
-                    Estoque estoque = estoqueRepository.findByProdutoId(element.getInsumo().getId());
-                    if (estoque == null){
+                    EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(element.getInsumo().getId());
+                    if (estoqueEntity == null){
                         throw new RuntimeException("Estoque nao encontrado para esse produto: "+ element.getInsumo().getNome());
                     }
-                    if (element.getQtde() > estoque.getQntdEstoque()){
-                        throw new RuntimeException("Quantidade insuficiente no estoque: "+ element.getInsumo().getNome()+", Quantidade: " + estoque.getQntdEstoque());
+                    if (element.getQtde() > estoqueEntity.getQntdEstoque()){
+                        throw new RuntimeException("Quantidade insuficiente no estoque: "+ element.getInsumo().getNome()+", Quantidade: " + estoqueEntity.getQntdEstoque());
                     }
                 }
             });
@@ -423,8 +423,8 @@ public class MovimentacoesEstoqueService {
             });
 
 
-            Estoque estoque = produto.getEstoques().get(0);
-            this.movimentacaoEstoque(produto, estoque, 1);
+            EstoqueEntity estoqueEntity = produto.getEstoques().get(0);
+            this.movimentacaoEstoque(produto, estoqueEntity, 1);
         }
     }
 

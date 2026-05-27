@@ -18,7 +18,7 @@ public class MovimentacoesEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_estoque", nullable = false)
-    private Estoque estoque;
+    private EstoqueEntity estoqueEntity;
 
     @Column(name = "tipo", nullable = false)
     private String tipo;
@@ -54,9 +54,9 @@ public class MovimentacoesEstoque {
     public MovimentacoesEstoque() {
     }
 
-    public MovimentacoesEstoque(Long id, Estoque estoque, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, Produto produto) {
+    public MovimentacoesEstoque(Long id, EstoqueEntity estoqueEntity, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, Produto produto) {
         this.id = id;
-        this.estoque = estoque;
+        this.estoqueEntity = estoqueEntity;
         this.tipo = tipo;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
@@ -76,12 +76,12 @@ public class MovimentacoesEstoque {
         this.id = id;
     }
 
-    public Estoque getEstoque() {
-        return estoque;
+    public EstoqueEntity getEstoque() {
+        return estoqueEntity;
     }
 
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
+    public void setEstoque(EstoqueEntity estoqueEntity) {
+        this.estoqueEntity = estoqueEntity;
     }
 
     public String getTipo() {
@@ -157,7 +157,7 @@ public class MovimentacoesEstoque {
     public String toString() {
         return "MovimentacoesEstoque{" +
                 "id=" + id +
-                ", estoque=" + estoque +
+                ", estoque=" + estoqueEntity +
                 ", tipo='" + tipo + '\'' +
                 ", quantidade=" + quantidade +
                 ", valorUnitario=" + valorUnitario +

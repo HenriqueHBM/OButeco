@@ -10,7 +10,7 @@
 
     @Entity
     @Table(name = "estoques")
-    public class Estoque {
+    public class EstoqueEntity {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,10 +38,10 @@
         @Column(name = "updated_at")
         private Instant dataAtualizado;
 
-        public Estoque() {
+        public EstoqueEntity() {
         }
 
-        public Estoque(Long id, Produto produto, ConversoesEntity conversoesEntity, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
+        public EstoqueEntity(Long id, Produto produto, ConversoesEntity conversoesEntity, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
             this.id = id;
             this.produto = produto;
             this.qntdEstoque = qntdEstoque;

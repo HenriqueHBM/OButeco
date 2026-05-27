@@ -1,7 +1,7 @@
 package buteco.controller.estoque;
 
 import buteco.model.entity.conversao.ConversoesEntity;
-import buteco.model.entity.estoque.Estoque;
+import buteco.model.entity.estoque.EstoqueEntity;
 import buteco.model.entity.estoque.MovimentacoesEstoque;
 import buteco.model.entity.pessoa.Usuario;
 import buteco.model.entity.produto.Produto;
@@ -34,7 +34,7 @@ public class EstoquesController {
 
     public List<ConversoesEntity> getConversoes(){ return conversoesService.findAllConversoes(); }
 
-    public List<Estoque> getEstoque(){ return estoqueService.findAllEstoques();}
+    public List<EstoqueEntity> getEstoque(){ return estoqueService.findAllEstoques();}
 
     public List<MovimentacoesEstoque> getMovimentacoes(){ return movimentacoesEstoqueService.findAllMovimentacoes();}
 
