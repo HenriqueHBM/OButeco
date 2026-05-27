@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 @Table(name = "cargos")
-public class Cargo {
+public class CargoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,9 @@ public class Cargo {
     @Column(name = "cargo")
     private String nome;
 
-    public Cargo() {}
+    public CargoEntity() {}
 
-    public Cargo(Long id, String nome){
+    public CargoEntity(Long id, String nome){
         this.id = id;
         this.nome = nome;
     }

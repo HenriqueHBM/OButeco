@@ -1,7 +1,7 @@
 package buteco.model.entity.estoque;
 
 import buteco.model.entity.conversao.ConversoesEntity;
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.entity.produto.Produto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "movimentacoes_estoques")
-public class MovimentacoesEstoque {
+public class MovimentacoesEstoqueEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class MovimentacoesEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_usuario", nullable = false)
-    private Usuario usuario;
+    private UsuarioEntity usuarioEntity;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_conversao",nullable = false)
@@ -51,17 +51,17 @@ public class MovimentacoesEstoque {
     @JoinColumn(name = "fk_id_produto")
     private Produto produto;
 
-    public MovimentacoesEstoque() {
+    public MovimentacoesEstoqueEntity() {
     }
 
-    public MovimentacoesEstoque(Long id, EstoqueEntity estoqueEntity, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, Produto produto) {
+    public MovimentacoesEstoqueEntity(Long id, EstoqueEntity estoqueEntity, String tipo, double quantidade, double valorUnitario, double valorTotal, UsuarioEntity usuarioEntity, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, Produto produto) {
         this.id = id;
         this.estoqueEntity = estoqueEntity;
         this.tipo = tipo;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
-        this.usuario = usuario;
+        this.usuarioEntity = usuarioEntity;
         this.conversoesEntity = conversoesEntity;
         this.dataMovimentacao = dataMovimentacao;
         this.observacao = observacao;
@@ -116,12 +116,12 @@ public class MovimentacoesEstoque {
         this.valorTotal = valorTotal;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public UsuarioEntity getUsuario() {
+        return usuarioEntity;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(UsuarioEntity usuarioEntity) {
+        this.usuarioEntity = usuarioEntity;
     }
 
     public ConversoesEntity getConversoes() {

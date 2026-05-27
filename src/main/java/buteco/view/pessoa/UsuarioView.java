@@ -4,8 +4,8 @@
  */
 package buteco.view.pessoa;
 
-import buteco.model.entity.pessoa.Cargo;
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.pessoa.CargoEntity;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.repositories.pessoa.CargoRepository;
 import buteco.model.repositories.pessoa.UsuarioRepository;
 import buteco.model.service.UsuarioService;
@@ -45,19 +45,19 @@ public class UsuarioView extends JFrame {
 
     private void cadastrarUsuario() {
 
-        Usuario usuario = new Usuario();
+        UsuarioEntity usuarioEntity = new UsuarioEntity();
 
-        usuario.setNome(txtNome.getText());
-        usuario.setLogin(txtLogin.getText());
-        usuario.setSenha(txtSenha.getText());
+        usuarioEntity.setNome(txtNome.getText());
+        usuarioEntity.setLogin(txtLogin.getText());
+        usuarioEntity.setSenha(txtSenha.getText());
 
-        Cargo cargo = cargoRepository.findById(
+        CargoEntity cargoEntity = cargoRepository.findById(
                 Long.parseLong(jTextField4.getText())
         );
 
-        usuario.setCargo(cargo);
+        usuarioEntity.setCargo(cargoEntity);
 
-        usuarioRepository.create(usuario);
+        usuarioRepository.create(usuarioEntity);
 
         carregarTabela();
 
@@ -69,7 +69,7 @@ public class UsuarioView extends JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
 
-        for (Usuario u : usuarioRepository.findAll()) {
+        for (UsuarioEntity u : usuarioRepository.findAll()) {
             model.addRow(new Object[]{u.getId(), u.getNome(), u.getLogin(), u.getCargo().getNome()});
         }
     }
@@ -102,11 +102,11 @@ public class UsuarioView extends JFrame {
 
         Long idUsuario = (Long) jTable2.getValueAt(linha, 0);
 
-        Usuario usuario = usuarioRepository.findById(idUsuario);
-        usuario.setNome(txtNome.getText());
-        usuario.setLogin(txtLogin.getText());
-        usuario.setSenha(txtSenha.getText());
-        usuarioRepository.update(usuario);
+        UsuarioEntity usuarioEntity = usuarioRepository.findById(idUsuario);
+        usuarioEntity.setNome(txtNome.getText());
+        usuarioEntity.setLogin(txtLogin.getText());
+        usuarioEntity.setSenha(txtSenha.getText());
+        usuarioRepository.update(usuarioEntity);
 
         carregarTabela();
 
@@ -123,8 +123,8 @@ public class UsuarioView extends JFrame {
         }
 
         Long idUsuario = (Long) jTable2.getValueAt(linha, 0);
-        Usuario usuario = usuarioRepository.findById(idUsuario);
-        usuarioRepository.delete(usuario);
+        UsuarioEntity usuarioEntity = usuarioRepository.findById(idUsuario);
+        usuarioRepository.delete(usuarioEntity);
         carregarTabela();
     }
 

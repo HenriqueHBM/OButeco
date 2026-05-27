@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table (name = "usuarios")
-public class Usuario {
+public class UsuarioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,16 +24,16 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_cargo")
-    private Cargo cargo;
+    private CargoEntity cargoEntity;
 
-    public Usuario() {}
+    public UsuarioEntity() {}
 
-    public Usuario(Long id, String nome, String login, String senha, Cargo cargo) {
+    public UsuarioEntity(Long id, String nome, String login, String senha, CargoEntity cargoEntity) {
         this.id = id;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
-        this.cargo = cargo;
+        this.cargoEntity = cargoEntity;
     }
 
 
@@ -53,8 +53,8 @@ public class Usuario {
 
     public void setSenha(String senha) { this.senha = senha; }
 
-    public Cargo getCargo() { return cargo; }
+    public CargoEntity getCargo() { return cargoEntity; }
 
-    public void setCargo(Cargo cargo) { this.cargo = cargo; }
+    public void setCargo(CargoEntity cargoEntity) { this.cargoEntity = cargoEntity; }
 
 }

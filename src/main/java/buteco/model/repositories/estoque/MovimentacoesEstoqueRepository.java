@@ -1,6 +1,6 @@
 package buteco.model.repositories.estoque;
 
-import buteco.model.entity.estoque.MovimentacoesEstoque;
+import buteco.model.entity.estoque.MovimentacoesEstoqueEntity;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -12,29 +12,29 @@ public class MovimentacoesEstoqueRepository {
         this.em = em;
     }
 
-    public MovimentacoesEstoque findById(Long id){
-        return em.find(MovimentacoesEstoque.class, id);
+    public MovimentacoesEstoqueEntity findById(Long id){
+        return em.find(MovimentacoesEstoqueEntity.class, id);
     }
 
-    public List<MovimentacoesEstoque> findAll() {
-        return em.createQuery("select m from MovimentacoesEstoque m order by m.id asc", MovimentacoesEstoque.class).getResultList();
+    public List<MovimentacoesEstoqueEntity> findAll() {
+        return em.createQuery("select m from MovimentacoesEstoque m order by m.id asc", MovimentacoesEstoqueEntity.class).getResultList();
     }
 
-    public void create(MovimentacoesEstoque movimentacoesEstoque){
+    public void create(MovimentacoesEstoqueEntity movimentacoesEstoqueEntity){
         em.getTransaction().begin();
-        em.persist(movimentacoesEstoque);
+        em.persist(movimentacoesEstoqueEntity);
         em.getTransaction().commit();
     }
 
-    public void update(MovimentacoesEstoque movimentacoesEstoque){
+    public void update(MovimentacoesEstoqueEntity movimentacoesEstoqueEntity){
         em.getTransaction().begin();
-        em.merge(movimentacoesEstoque);
+        em.merge(movimentacoesEstoqueEntity);
         em.getTransaction().commit();
     }
 
-    public void delete(MovimentacoesEstoque movimentacoesEstoque){
+    public void delete(MovimentacoesEstoqueEntity movimentacoesEstoqueEntity){
         em.getTransaction().begin();
-        em.remove(em.contains(movimentacoesEstoque) ? movimentacoesEstoque : em.merge(movimentacoesEstoque));
+        em.remove(em.contains(movimentacoesEstoqueEntity) ? movimentacoesEstoqueEntity : em.merge(movimentacoesEstoqueEntity));
         em.getTransaction().commit();
     }
 

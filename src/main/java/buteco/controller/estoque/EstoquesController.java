@@ -2,8 +2,8 @@ package buteco.controller.estoque;
 
 import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.entity.estoque.EstoqueEntity;
-import buteco.model.entity.estoque.MovimentacoesEstoque;
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.estoque.MovimentacoesEstoqueEntity;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.entity.produto.Produto;
 import buteco.model.service.EstoqueService;
 import buteco.model.service.MovimentacoesEstoqueService;
@@ -36,7 +36,7 @@ public class EstoquesController {
 
     public List<EstoqueEntity> getEstoque(){ return estoqueService.findAllEstoques();}
 
-    public List<MovimentacoesEstoque> getMovimentacoes(){ return movimentacoesEstoqueService.findAllMovimentacoes();}
+    public List<MovimentacoesEstoqueEntity> getMovimentacoes(){ return movimentacoesEstoqueService.findAllMovimentacoes();}
 
     public String getObservacaoMovimentacao(Long idMovimentacao) {
         return movimentacoesEstoqueService.getObservacao(idMovimentacao);
@@ -49,7 +49,7 @@ public class EstoquesController {
 // Metodos para os botoes
 
     public void cadastrarEntrada(Produto produto, double qtde, Long idConversaoEntrada,
-                                 double fatorConversao, String local, Usuario usuario, String observacao) {
+                                 double fatorConversao, String local, UsuarioEntity usuarioEntity, String observacao) {
         if (produto.getCategoria().getCategoria().equals("SERVICO")) {
             throw new RuntimeException("Produto do tipo SERVICO nao tem estoque!");
         }
@@ -59,20 +59,20 @@ public class EstoquesController {
         }
 
         movimentacoesEstoqueService.cadastrarEntradaSwing(
-                produto.getId(), qtde, idConversaoEntrada, fatorConversao, local, usuario, observacao);
+                produto.getId(), qtde, idConversaoEntrada, fatorConversao, local, usuarioEntity, observacao);
     }
 
-    public void cadastarSaida(Produto produto, double qtde, Long idConversaoSaida, double fatorConversao, Usuario usuario, String observacao) {
+    public void cadastarSaida(Produto produto, double qtde, Long idConversaoSaida, double fatorConversao, UsuarioEntity usuarioEntity, String observacao) {
         if (produto.getCategoria().getCategoria().equals("SERVICO")) {
             throw new RuntimeException("Produto do tipo SERVIÇO não tem estoque!");
         }
 
         if (produto.getCategoria().getCategoria().equals("PRODUTO COM INSUMOS")) {
-            movimentacoesEstoqueService.cadastrarSaidaComInsumosSwing(produto, qtde, usuario, observacao);
+            movimentacoesEstoqueService.cadastrarSaidaComInsumosSwing(produto, qtde, usuarioEntity, observacao);
             return;
         }
 
-        movimentacoesEstoqueService.cadastrarSaidaSwing(produto.getId(), qtde, idConversaoSaida, fatorConversao, usuario, observacao);
+        movimentacoesEstoqueService.cadastrarSaidaSwing(produto.getId(), qtde, idConversaoSaida, fatorConversao, usuarioEntity, observacao);
     }
 
     public void excluirMovimentacao(Long idMovimentacao) {

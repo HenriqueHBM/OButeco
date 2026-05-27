@@ -2,8 +2,8 @@ package buteco.model.service;
 
 import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.entity.estoque.EstoqueEntity;
-import buteco.model.entity.estoque.MovimentacoesEstoque;
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.estoque.MovimentacoesEstoqueEntity;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.entity.produto.Produto;
 import buteco.model.repositories.estoque.ConversoesRepository;
 import buteco.model.repositories.estoque.EstoqueRepository;
@@ -38,13 +38,13 @@ public class MovimentacoesEstoqueService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public List<MovimentacoesEstoque> findAllMovimentacoes(){
+    public List<MovimentacoesEstoqueEntity> findAllMovimentacoes(){
         return movimentacoesEstoqueRepository.findAll();
     }
 
 
     //--------------Funcoes Sendo usadas --------------
-    public void cadastrarEntradaSwing(Long idProduto, double qtde, Long idConversaoEntrada, double fatorConversao, String local, Usuario usuario, String observacao) {
+    public void cadastrarEntradaSwing(Long idProduto, double qtde, Long idConversaoEntrada, double fatorConversao, String local, UsuarioEntity usuarioEntity, String observacao) {
         EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
 
         //estoque nao encontrado? Cria um novo e atualiza o estoque com novo id
@@ -82,7 +82,7 @@ public class MovimentacoesEstoqueService {
 
         Produto produto = produtoRepository.findById(idProduto);
 
-        MovimentacoesEstoque mov = new MovimentacoesEstoque();
+        MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
         mov.setProduto(produto);
         if (idConversaoEntrada.equals(estoqueEntity.getConversoes().getId())) {
             mov.setConversoes(conversaoEntrada);
@@ -92,7 +92,7 @@ public class MovimentacoesEstoqueService {
         mov.setQuantidade(qtdeNova);
         mov.setDataMovimentacao(Instant.now());
 
-        mov.setUsuario(usuario);
+        mov.setUsuario(usuarioEntity);
 
         mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
         mov.setTipo("ENTRADA");
@@ -101,7 +101,7 @@ public class MovimentacoesEstoqueService {
         movimentacoesEstoqueRepository.create(mov);
     }
 
-    public void cadastrarSaidaSwing(Long idProduto, double qtde, Long idConversaoSaida, double fatorConversao, Usuario usuario,String observacao) {
+    public void cadastrarSaidaSwing(Long idProduto, double qtde, Long idConversaoSaida, double fatorConversao, UsuarioEntity usuarioEntity, String observacao) {
         EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(idProduto);
 
         if(estoqueEntity == null) {
@@ -132,7 +132,7 @@ public class MovimentacoesEstoqueService {
 
         Produto produto = produtoRepository.findById(idProduto);
 
-        MovimentacoesEstoque mov = new MovimentacoesEstoque();
+        MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
         mov.setProduto(produto);
         if (idConversaoSaida.equals(estoqueEntity.getConversoes().getId())) {
             mov.setConversoes(conversaoSaida);
@@ -142,7 +142,7 @@ public class MovimentacoesEstoqueService {
         mov.setQuantidade(qtdeNova);
         mov.setDataMovimentacao(Instant.now());
 
-        mov.setUsuario(usuario);
+        mov.setUsuario(usuarioEntity);
 
         mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
 
@@ -152,7 +152,7 @@ public class MovimentacoesEstoqueService {
     }
 
     public void excluirMovimentacao(Long idMovimentacao) {
-        MovimentacoesEstoque mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
+        MovimentacoesEstoqueEntity mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
         if (mov == null) {
             throw new RuntimeException("Movimentacao nao encontrada!");
         }
@@ -174,7 +174,7 @@ public class MovimentacoesEstoqueService {
     }
 
     public void editarMovimentacao(Long idMovimentacao, Produto novoProduto, double novaQtde, Long idNovaConversao, double fatorConversao, String observacao) {
-        MovimentacoesEstoque mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
+        MovimentacoesEstoqueEntity mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
         if (mov == null) throw new RuntimeException("Movimentação não encontrada!");
 
         EstoqueEntity estoqueEntityAntigo = mov.getEstoque();
@@ -228,12 +228,12 @@ public class MovimentacoesEstoqueService {
     }
 
     public String getObservacao(Long idMovimentacao) {
-        MovimentacoesEstoque mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
+        MovimentacoesEstoqueEntity mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
         if (mov == null) return null;
         return mov.getObservacao();
     }
 
-    public void cadastrarSaidaComInsumosSwing(Produto produto, double qtde, Usuario usuario, String observacao) {
+    public void cadastrarSaidaComInsumosSwing(Produto produto, double qtde, UsuarioEntity usuarioEntity, String observacao) {
         // valida todos os insumos primeiro
         for (int index = 1; index <= qtde; index++) {
             produto.getInsumos().forEach(element -> {
@@ -264,14 +264,14 @@ public class MovimentacoesEstoqueService {
                 throw new RuntimeException("Estoque nao encontrado para o produto final: " + produto.getNome());
             }
 
-            MovimentacoesEstoque mov = new MovimentacoesEstoque();
+            MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
             mov.setProduto(produto);
             mov.setQuantidade(1);
             mov.setTipo("SAIDA");
             mov.setConversoes(estoqueEntityProdfinal.getConversoes());
             mov.setEstoque(estoqueEntityProdfinal);
             mov.setDataMovimentacao(Instant.now());
-            mov.setUsuario(usuario);
+            mov.setUsuario(usuarioEntity);
             mov.setObservacao(observacao != null && !observacao.trim().isEmpty() ? observacao : null);
 
             movimentacoesEstoqueRepository.create(mov);
@@ -325,7 +325,7 @@ public class MovimentacoesEstoqueService {
 
         Produto produto = produtoRepository.findById(idProduto);
 
-        MovimentacoesEstoque mov = new MovimentacoesEstoque();
+        MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
         mov.setProduto(produto);
         mov.setQuantidade(qtde);
         mov.setTipo("ENTRADA");
@@ -357,7 +357,7 @@ public class MovimentacoesEstoqueService {
     }
 
     public void movimentacaoEstoque(Produto produto, EstoqueEntity estoqueEntity, double qtde){
-        MovimentacoesEstoque mov = new MovimentacoesEstoque();
+        MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
         mov.setProduto(produto);
         mov.setQuantidade(qtde);
         mov.setTipo("SAIDA");
@@ -381,7 +381,7 @@ public class MovimentacoesEstoqueService {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-        for (MovimentacoesEstoque m : lista){
+        for (MovimentacoesEstoqueEntity m : lista){
 
             if (m.getProduto() == null){
                 continue;

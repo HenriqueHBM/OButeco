@@ -6,10 +6,10 @@ package buteco.view.estoque;
 
 import buteco.controller.estoque.EstoquesController;
 import buteco.model.entity.conversao.ConversoesEntity;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.enums.EStatus;
 import buteco.model.entity.estoque.EstoqueEntity;
-import buteco.model.entity.estoque.MovimentacoesEstoque;
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.estoque.MovimentacoesEstoqueEntity;
 import buteco.model.entity.produto.Produto;
 
 import javax.swing.*;
@@ -29,16 +29,16 @@ public class EstoquesView extends javax.swing.JFrame {
     private final EstoquesController estoquesController;
     private List<Produto> listaProdutos;
     private List<ConversoesEntity> listaConversoes;
-    private final Usuario usuarioLogado;
+    private final UsuarioEntity usuarioEntityLogado;
     private List<Produto> produtosExibidos = new ArrayList<>();
 
 
     /**
      * Creates new form EstoquesView
      */
-    public EstoquesView(EstoquesController estoquesController, Usuario usuarioLogado) {
+    public EstoquesView(EstoquesController estoquesController, UsuarioEntity usuarioEntityLogado) {
         this.estoquesController = estoquesController;
-        this.usuarioLogado = usuarioLogado;
+        this.usuarioEntityLogado = usuarioEntityLogado;
 
         initComponents();
 
@@ -118,7 +118,7 @@ public class EstoquesView extends javax.swing.JFrame {
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbMovimentacoes.getModel();
         model.setRowCount(0);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.of("UTC"));
-        for (MovimentacoesEstoque m : listaMovimentacoes) {
+        for (MovimentacoesEstoqueEntity m : listaMovimentacoes) {
             if (m.getProduto() == null) continue;
             String data = m.getDataMovimentacao() != null ?
                     fmt.format(m.getDataMovimentacao()) : "-";
@@ -546,7 +546,7 @@ public class EstoquesView extends javax.swing.JFrame {
 
             String observacao = txtAreaObservacao.getText().trim();
 
-            estoquesController.cadastrarEntrada(produto, qtde, unidadeEntrada.getId(), fator, local, usuarioLogado, observacao);
+            estoquesController.cadastrarEntrada(produto, qtde, unidadeEntrada.getId(), fator, local, usuarioEntityLogado, observacao);
 
             JOptionPane.showMessageDialog(this, "Entrada cadastrada com sucesso!");
 
@@ -597,7 +597,7 @@ public class EstoquesView extends javax.swing.JFrame {
 
             String observacao = txtAreaObservacao.getText().trim();
 
-            estoquesController.cadastarSaida(produto, qtde, unidadeSaida.getId(), fator, usuarioLogado, observacao);
+            estoquesController.cadastarSaida(produto, qtde, unidadeSaida.getId(), fator, usuarioEntityLogado, observacao);
 
             JOptionPane.showMessageDialog(this, "Saída cadastrada com sucesso!");
             carregarTabelaEstoque();

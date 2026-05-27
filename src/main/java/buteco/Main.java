@@ -2,7 +2,7 @@ package buteco;
 
 import buteco.config.FlyWayconfig;
 import buteco.controller.estoque.EstoquesController;
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.repositories.*;
 import buteco.model.repositories.estoque.ConversoesRepository;
 import buteco.model.repositories.estoque.EstoqueRepository;
@@ -63,7 +63,7 @@ public class Main {
         //
 
         ErroEntrada errorEntrada = new ErroEntrada(sc);
-        Usuario usuarioLogado = new Usuario();
+        UsuarioEntity usuarioEntityLogado = new UsuarioEntity();
 
         //Services
         EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, errorEntrada);
@@ -93,7 +93,7 @@ public class Main {
             } catch (InterruptedException e) { e.printStackTrace(); }
         }
 
-        final Usuario usuarioFinal = loginView.getUsuarioLogado();
+        final UsuarioEntity usuarioEntityFinal = loginView.getUsuarioLogado();
 
         Colors colors = new Colors();
         Cards cards = new Cards(colors);
@@ -108,7 +108,7 @@ public class Main {
             produtoView.setVisible(true);
         });
         view.clicarEstoqueAction(e -> {
-            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioFinal);
+            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioEntityFinal);
             estoquesView.setVisible(true);
         });
 

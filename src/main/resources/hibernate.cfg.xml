@@ -38,11 +38,11 @@
 
         <!-- Estoque -->
         <mapping class="buteco.model.entity.estoque.EstoqueEntity" />
-        <mapping class="buteco.model.entity.estoque.MovimentacoesEstoque" />
+        <mapping class="buteco.model.entity.estoque.MovimentacoesEstoqueEntity" />
 
         <!-- Usuario -->
-        <mapping class="buteco.model.entity.pessoa.Usuario" />
-        <mapping class="buteco.model.entity.pessoa.Cargo" />
+        <mapping class="buteco.model.entity.pessoa.UsuarioEntity" />
+        <mapping class="buteco.model.entity.pessoa.CargoEntity" />
 
         <!-- Fim Produto -->
     </session-factory>

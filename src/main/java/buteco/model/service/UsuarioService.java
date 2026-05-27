@@ -1,7 +1,7 @@
 package buteco.model.service;
 
-import buteco.model.entity.pessoa.Cargo;
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.pessoa.CargoEntity;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.repositories.pessoa.UsuarioRepository;
 
 public class UsuarioService {
@@ -12,20 +12,20 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario login(String login, String senha) {
-        Usuario usuario = usuarioRepository.findByLogin(login);
+    public UsuarioEntity login(String login, String senha) {
+        UsuarioEntity usuarioEntity = usuarioRepository.findByLogin(login);
 
-        if (usuario == null) {
+        if (usuarioEntity == null) {
             return null;
         }
-        if(!usuario.getSenha().equals(senha)) {
+        if(!usuarioEntity.getSenha().equals(senha)) {
             return null;
         }
-        return usuario;
+        return usuarioEntity;
     }
 
-    public void cadastrar(String nome, String login, String senha, Cargo cargo) {
-        Usuario u = new Usuario(null, nome, login, senha, cargo);
+    public void cadastrar(String nome, String login, String senha, CargoEntity cargoEntity) {
+        UsuarioEntity u = new UsuarioEntity(null, nome, login, senha, cargoEntity);
         usuarioRepository.create(u);
     }
 }
