@@ -1,14 +1,14 @@
 package buteco.controller.estoque;
 
-import buteco.model.conversao.Conversoes;
-import buteco.model.estoque.Estoque;
-import buteco.model.estoque.MovimentacoesEstoque;
-import buteco.model.pessoa.Usuario;
-import buteco.model.produto.Produto;
-import buteco.service.EstoqueService;
-import buteco.service.MovimentacoesEstoqueService;
-import buteco.service.ProdutoService;
-import buteco.service.entradas.ConversoesService;
+import buteco.model.entity.conversao.Conversoes;
+import buteco.model.entity.estoque.Estoque;
+import buteco.model.entity.estoque.MovimentacoesEstoque;
+import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.produto.Produto;
+import buteco.model.service.EstoqueService;
+import buteco.model.service.MovimentacoesEstoqueService;
+import buteco.model.service.ProdutoService;
+import buteco.model.service.entradas.ConversoesService;
 
 import java.util.List;
 

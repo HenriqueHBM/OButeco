@@ -1,19 +1,27 @@
 package buteco;
 
 import buteco.config.FlyWayconfig;
-import buteco.controller.estoque.EstoqueController;
 import buteco.controller.estoque.EstoquesController;
-import buteco.controller.produtos.ProdutosController;
-import buteco.controller.usuarios.UsuariosController;
-import buteco.model.produto.*;
-import buteco.model.pessoa.Usuario;
-import buteco.repositories.*;
-import buteco.service.*;
-import buteco.service.entradas.ConversoesService;
-import buteco.service.entradas.ErroEntrada;
+import buteco.model.entity.pessoa.Usuario;
+import buteco.model.repositories.*;
+import buteco.model.repositories.estoque.ConversoesRepository;
+import buteco.model.repositories.estoque.EstoqueRepository;
+import buteco.model.repositories.estoque.MovimentacoesEstoqueRepository;
+import buteco.model.repositories.pessoa.CargoRepository;
+import buteco.model.repositories.pessoa.UsuarioRepository;
+import buteco.model.repositories.produto.CategoriaRepository;
+import buteco.model.repositories.produto.GrupoRepository;
+import buteco.model.repositories.produto.InsumosProdutoRepository;
+import buteco.model.repositories.produto.ProdutoRepository;
+import buteco.model.service.*;
+import buteco.model.service.entradas.ConversoesService;
+import buteco.model.service.entradas.ErroEntrada;
 import buteco.view.*;
 import buteco.view.components.Cards;
 import buteco.view.components.Colors;
+import buteco.view.estoque.EstoquesView;
+import buteco.view.pessoa.LoginView;
+import buteco.view.produto.ProdutoView;
 import jakarta.persistence.EntityManager;
 
 import java.util.Locale;
@@ -71,7 +79,7 @@ public class Main {
 ////      Declarando os controllers
 //        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
 //        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
-        UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
+//        UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
         EstoquesController estoquesController = new EstoquesController(produtoService, conversoesService, estoqueService, movimentacoesEstoqueService);
 
         LoginView loginView = new LoginView(usuarioService);
@@ -91,10 +99,10 @@ public class Main {
         Cards cards = new Cards(colors);
         MainView view = new MainView(colors, cards);
 
-        view.clicarUsuarioAction(e -> {
-            UsuarioView usuarioView = new UsuarioView(usuarioService, cargoRepository, usuarioRepository);
-            usuarioView.setVisible(true);
-        });
+//        view.clicarUsuarioAction(e -> {
+//            UsuarioView usuarioView = new UsuarioView(usuarioService, cargoRepository, usuarioRepository);
+//            usuarioView.setVisible(true);
+//        });
         view.clicarProdutoAction(e -> {
             ProdutoView produtoView = new ProdutoView(produtoService, categoriaService, grupoService);
             produtoView.setVisible(true);
