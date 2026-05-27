@@ -104,7 +104,7 @@ public class Main {
 //            usuarioView.setVisible(true);
 //        });
         view.clicarProdutoAction(e -> {
-            ProdutoView produtoView = new ProdutoView(produtoService, categoriaService, grupoService);
+            ProdutoView produtoView = new ProdutoView(produtoService, categoriaService, grupoService, insumosProdutoService);
             produtoView.setVisible(true);
         });
         view.clicarEstoqueAction(e -> {
