@@ -1,6 +1,6 @@
 package buteco.model.repositories.produto;
 
-import buteco.model.entity.produto.Categoria;
+import buteco.model.entity.produto.CategoriaEntity;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -12,17 +12,17 @@ public class CategoriaRepository {
         this.em = em;
     }
 
-    public Categoria findById(Long id){
-        return em.find(Categoria.class, id);
+    public CategoriaEntity findById(Long id){
+        return em.find(CategoriaEntity.class, id);
     }
 
-    public void create(Categoria produto){
+    public void create(CategoriaEntity produto){
         em.getTransaction().begin();
         em.persist(produto);
         em.getTransaction().commit();
     }
 
-    public List<Categoria> findAll(){
-        return em.createQuery("select c from Categoria c", Categoria.class).getResultList();
+    public List<CategoriaEntity> findAll(){
+        return em.createQuery("select c from Categoria c", CategoriaEntity.class).getResultList();
     }
 }

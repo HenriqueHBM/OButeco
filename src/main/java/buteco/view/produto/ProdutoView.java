@@ -5,7 +5,7 @@
 package buteco.view.produto;
 
 import buteco.model.enums.EStatus;
-import buteco.model.entity.produto.Categoria;
+import buteco.model.entity.produto.CategoriaEntity;
 import buteco.model.entity.produto.Grupo;
 import buteco.model.entity.produto.InsumosProduto;
 import buteco.model.entity.produto.Produto;
@@ -46,7 +46,7 @@ public class ProdutoView extends javax.swing.JFrame {
     private ProdutoService produtoService;
     private CategoriaService categoriaService;
     private GrupoService grupoService;
-    private List<Categoria> categorias;
+    private List<CategoriaEntity> categoriaEntities;
     private List<Grupo> grupos;
     private InsumosProdutoService insumosProdutoService;
     private Produto produtoSelecionado;
@@ -502,11 +502,11 @@ public class ProdutoView extends javax.swing.JFrame {
 
     private void carregarDados()
     {
-        categorias = categoriaService.findAllCategoria();
+        categoriaEntities = categoriaService.findAllCategoria();
         grupos = grupoService.findAllGrupo();
 
         selectCategoria.removeAllItems();
-        for (Categoria c : categorias) selectCategoria.addItem(c.getCategoria());
+        for (CategoriaEntity c : categoriaEntities) selectCategoria.addItem(c.getCategoria());
 
         selectGrupo.removeAllItems();
         for (Grupo g : grupos) selectGrupo.addItem(g.getGrupo());
@@ -601,7 +601,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
         try {
             String nomeCategoria = (String) selectCategoria.getSelectedItem();
-            Categoria categoria = categorias.stream()
+            CategoriaEntity categoriaEntity = categoriaEntities.stream()
                     .filter(c -> c.getCategoria().equals(nomeCategoria))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
@@ -617,7 +617,7 @@ public class ProdutoView extends javax.swing.JFrame {
             produto.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
             produto.setObservacao(txtObservacao.getText());
             produto.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO); //tem que fazer isso, pois na hora que criei a tabela usei enum ;-;
-            produto.setCategoria(categoria);
+            produto.setCategoria(categoriaEntity);
             produto.setGrupo(grupo);
 
             produtoService.salvarProduto(produto); //salva o produto
@@ -676,7 +676,7 @@ public class ProdutoView extends javax.swing.JFrame {
             produtoSelecionado.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO);
 
             String nomeCategoria = (String) selectCategoria.getSelectedItem();
-            Categoria categoria = categorias.stream()
+            CategoriaEntity categoriaEntity = categoriaEntities.stream()
                     .filter(c -> c.getCategoria().equals(nomeCategoria))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
@@ -687,7 +687,7 @@ public class ProdutoView extends javax.swing.JFrame {
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
 
-            produtoSelecionado.setCategoria(categoria);
+            produtoSelecionado.setCategoria(categoriaEntity);
             produtoSelecionado.setGrupo(grupo);
 
             produtoService.atualizarProduto(produtoSelecionado);

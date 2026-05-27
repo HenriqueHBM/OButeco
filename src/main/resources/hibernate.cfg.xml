@@ -31,7 +31,7 @@
 
         <!-- Produto -->
         <mapping class="buteco.model.entity.produto.Produto" />
-        <mapping class="buteco.model.entity.produto.Categoria" />
+        <mapping class="buteco.model.entity.produto.CategoriaEntity" />
         <mapping class="buteco.model.entity.conversao.ConversoesEntity" />
         <mapping class="buteco.model.entity.produto.InsumosProduto" />
         <mapping class="buteco.model.entity.produto.Grupo" />

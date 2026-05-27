@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "categorias")
-public class Categoria {
+public class CategoriaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String categoria;
 
-    public Categoria(){
+    public CategoriaEntity(){
     }
 
-    public Categoria(Long id, String categoria){
+    public CategoriaEntity(Long id, String categoria){
         this.id = id;
         this.categoria = categoria;
     }

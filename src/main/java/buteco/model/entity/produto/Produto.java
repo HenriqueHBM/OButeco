@@ -28,7 +28,7 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_categoria")
-    private Categoria categoria;
+    private CategoriaEntity categoriaEntity;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_grupo")
@@ -69,10 +69,10 @@ public class Produto {
 
     }
 
-    public Produto(Long id, String nome, Categoria categoria, double precoVenda, Grupo grupo) {
+    public Produto(Long id, String nome, CategoriaEntity categoriaEntity, double precoVenda, Grupo grupo) {
         this.id = id;
         this.nome = nome;
-        this.categoria = categoria;
+        this.categoriaEntity = categoriaEntity;
         this.precoVenda = precoVenda;
         this.grupo = grupo;
     }
@@ -101,12 +101,12 @@ public class Produto {
         this.status = status;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public CategoriaEntity getCategoria() {
+        return categoriaEntity;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoria(CategoriaEntity categoriaEntity) {
+        this.categoriaEntity = categoriaEntity;
     }
 
     public Instant getDataCriacao() {
@@ -164,7 +164,7 @@ public class Produto {
         return "Produto{" +
                 "id="+id+
                 ", nome="+nome+
-                ", categoria="+categoria.getCategoria()+
+                ", categoria="+ categoriaEntity.getCategoria()+
                 ", preco_venda="+precoVenda+
 //                "conversao="+conversao.get
         "}";
