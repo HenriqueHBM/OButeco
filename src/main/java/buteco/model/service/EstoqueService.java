@@ -1,6 +1,6 @@
 package buteco.model.service;
 
-import buteco.model.entity.conversao.Conversoes;
+import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.entity.estoque.Estoque;
 import buteco.model.entity.produto.Produto;
 import buteco.model.repositories.estoque.ConversoesRepository;
@@ -46,13 +46,13 @@ public class EstoqueService {
         Produto produto = produtoRepository.findById(idProduto);
 
         Long idConversao = erroEntrada.trataEntradaLong("Insira o codigo da unidade de medida: ");
-        Conversoes conversoes = conversoesRepository.findById(idConversao);
+        ConversoesEntity conversoesEntity = conversoesRepository.findById(idConversao);
 
         String localizacao = erroEntrada.trataEntradaString("Insira a localizacao do produto no estoque: ");
 
         estoque.setProduto(produto);
         estoque.setQntdEstoque(0);
-        estoque.setConversoes(conversoes);
+        estoque.setConversoes(conversoesEntity);
         estoque.setLocal(localizacao);
 
         estoqueRepository.create(estoque);
@@ -61,8 +61,8 @@ public class EstoqueService {
     public void createSimpleEstoque(Produto prod){
         Estoque estoque = new Estoque();
         estoque.setProduto(prod);
-        Conversoes conversoes = conversoesRepository.findById(3L); // 3 = (unidade)
-        estoque.setConversoes(conversoes);
+        ConversoesEntity conversoesEntity = conversoesRepository.findById(3L); // 3 = (unidade)
+        estoque.setConversoes(conversoesEntity);
 
         estoqueRepository.create(estoque);
     }

@@ -1,6 +1,6 @@
     package buteco.model.entity.estoque;
 
-    import buteco.model.entity.conversao.Conversoes;
+    import buteco.model.entity.conversao.ConversoesEntity;
     import buteco.model.entity.produto.Produto;
     import jakarta.persistence.*;
     import org.hibernate.annotations.CreationTimestamp;
@@ -25,7 +25,7 @@
 
         @ManyToOne
         @JoinColumn(name = "fk_id_conversao", nullable = false)
-        private Conversoes conversoes;
+        private ConversoesEntity conversoesEntity;
 
         @Column(name = "local", nullable = true)
         private String local;
@@ -41,11 +41,11 @@
         public Estoque() {
         }
 
-        public Estoque(Long id, Produto produto, Conversoes conversoes, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
+        public Estoque(Long id, Produto produto, ConversoesEntity conversoesEntity, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
             this.id = id;
             this.produto = produto;
             this.qntdEstoque = qntdEstoque;
-            this.conversoes = conversoes;
+            this.conversoesEntity = conversoesEntity;
             this.local = local;
             this.dataCriacao = dataCriacao;
             this.dataAtualizado = dataAtualizado;
@@ -75,12 +75,12 @@
             this.qntdEstoque = qntdEstoque;
         }
 
-        public Conversoes getConversoes() {
-            return conversoes;
+        public ConversoesEntity getConversoes() {
+            return conversoesEntity;
         }
 
-        public void setConversoes(Conversoes conversoes) {
-            this.conversoes = conversoes;
+        public void setConversoes(ConversoesEntity conversoesEntity) {
+            this.conversoesEntity = conversoesEntity;
         }
 
         public String getLocal() {
@@ -113,7 +113,7 @@
                     "id=" + id +
                     ", produto=" + produto +
                     ", qntdEstoque=" + qntdEstoque +
-                    ", conversoes=" + conversoes +
+                    ", conversoes=" + conversoesEntity +
                     ", local='" + local + '\'' +
                     ", dataCriacao=" + dataCriacao +
                     ", dataAtualizado=" + dataAtualizado +

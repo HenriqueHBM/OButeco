@@ -5,8 +5,8 @@
 package buteco.view.estoque;
 
 import buteco.controller.estoque.EstoquesController;
+import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.enums.EStatus;
-import buteco.model.entity.conversao.Conversoes;
 import buteco.model.entity.estoque.Estoque;
 import buteco.model.entity.estoque.MovimentacoesEstoque;
 import buteco.model.entity.pessoa.Usuario;
@@ -28,7 +28,7 @@ public class EstoquesView extends javax.swing.JFrame {
 
     private final EstoquesController estoquesController;
     private List<Produto> listaProdutos;
-    private List<Conversoes> listaConversoes;
+    private List<ConversoesEntity> listaConversoes;
     private final Usuario usuarioLogado;
     private List<Produto> produtosExibidos = new ArrayList<>();
 
@@ -92,7 +92,7 @@ public class EstoquesView extends javax.swing.JFrame {
         selectUnidade.removeAllItems();
         selectUnEntrada.removeAllItems();
 
-        for(Conversoes c : listaConversoes) {
+        for(ConversoesEntity c : listaConversoes) {
             selectUnidade.addItem(c.getNomenclatura());
             selectUnEntrada.addItem(c.getNomenclatura());
         }
@@ -514,7 +514,7 @@ public class EstoquesView extends javax.swing.JFrame {
             }
 
             Produto produto = produtosExibidos.get(indexProduto);
-            Conversoes unidadeEntrada = listaConversoes.get(indexUnEntrada);
+            ConversoesEntity unidadeEntrada = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if(qtdeStr.isEmpty()) {
@@ -571,7 +571,7 @@ public class EstoquesView extends javax.swing.JFrame {
             }
 
             Produto produto = produtosExibidos.get(indexProduto);
-            Conversoes unidadeSaida = listaConversoes.get(indexUnEntrada);
+            ConversoesEntity unidadeSaida = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if (qtdeStr.isEmpty()) {
@@ -697,7 +697,7 @@ public class EstoquesView extends javax.swing.JFrame {
             int indexUnEntrada = selectUnEntrada.getSelectedIndex();
 
             Produto produto = produtosExibidos.get(indexProduto);
-            Conversoes unidade = listaConversoes.get(indexUnEntrada);
+            ConversoesEntity unidade = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if (qtdeStr.isEmpty()) {

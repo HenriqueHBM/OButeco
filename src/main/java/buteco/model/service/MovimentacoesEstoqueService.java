@@ -1,6 +1,6 @@
 package buteco.model.service;
 
-import buteco.model.entity.conversao.Conversoes;
+import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.entity.estoque.Estoque;
 import buteco.model.entity.estoque.MovimentacoesEstoque;
 import buteco.model.entity.pessoa.Usuario;
@@ -51,10 +51,10 @@ public class MovimentacoesEstoqueService {
         if(estoque == null) {
             estoque = new Estoque();
             Produto produto = produtoRepository.findById(idProduto);
-            Conversoes conversoes = conversoesRepository.findById(idConversaoEntrada);
+            ConversoesEntity conversoesEntity = conversoesRepository.findById(idConversaoEntrada);
 
             estoque.setProduto(produto);
-            estoque.setConversoes(conversoes);
+            estoque.setConversoes(conversoesEntity);
             estoque.setLocal(local);
             estoque.setQntdEstoque(0);
             estoqueRepository.create(estoque);
@@ -62,7 +62,7 @@ public class MovimentacoesEstoqueService {
             estoque = estoqueRepository.findByProdutoId(idProduto);
         }
 
-        Conversoes conversaoEntrada = conversoesRepository.findById(idConversaoEntrada);
+        ConversoesEntity conversaoEntrada = conversoesRepository.findById(idConversaoEntrada);
         if (conversaoEntrada == null) {
             throw new RuntimeException("Unidade de conversao nao encontrada");
         }
@@ -108,7 +108,7 @@ public class MovimentacoesEstoqueService {
             throw new RuntimeException("Estoque nao encontrado para esse produto!");
         }
 
-        Conversoes conversaoSaida = conversoesRepository.findById(idConversaoSaida);
+        ConversoesEntity conversaoSaida = conversoesRepository.findById(idConversaoSaida);
         if (conversaoSaida == null) {
             throw new RuntimeException("Unidade de conversao nao encontrada!");
         }
@@ -213,7 +213,7 @@ public class MovimentacoesEstoqueService {
         estoqueRepository.update(estoqueNovo);
 
         // unidade salva sempre é a do estoque novo
-        Conversoes novaConversao = idNovaConversao.equals(estoqueNovo.getConversoes().getId())
+        ConversoesEntity novaConversao = idNovaConversao.equals(estoqueNovo.getConversoes().getId())
                 ? conversoesRepository.findById(idNovaConversao)
                 : estoqueNovo.getConversoes();
 
@@ -303,7 +303,7 @@ public class MovimentacoesEstoqueService {
         medidas.stream().forEach(System.out::println); //lista unidades de conversao
         Long idConversoes = erroEntrada.trataEntradaLong("Insira o codigo de unidade que voce esta usando: ");
 
-        Conversoes conversaoEntrada = conversoesRepository.findById(idConversoes);
+        ConversoesEntity conversaoEntrada = conversoesRepository.findById(idConversoes);
         if(conversaoEntrada == null){
             throw new RuntimeException("Unidade de conversao nao encontrada");
         }

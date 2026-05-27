@@ -1,7 +1,7 @@
 package buteco.model.entity.estoque;
 
+import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.entity.pessoa.Usuario;
-import buteco.model.entity.conversao.Conversoes;
 import buteco.model.entity.produto.Produto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,7 +38,7 @@ public class MovimentacoesEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_conversao",nullable = false)
-    private Conversoes conversoes;
+    private ConversoesEntity conversoesEntity;
 
     @CreationTimestamp
     @Column(name = "data_movimentacao")
@@ -54,7 +54,7 @@ public class MovimentacoesEstoque {
     public MovimentacoesEstoque() {
     }
 
-    public MovimentacoesEstoque(Long id, Estoque estoque, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, Conversoes conversoes, Instant dataMovimentacao, String observacao, Produto produto) {
+    public MovimentacoesEstoque(Long id, Estoque estoque, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, Produto produto) {
         this.id = id;
         this.estoque = estoque;
         this.tipo = tipo;
@@ -62,7 +62,7 @@ public class MovimentacoesEstoque {
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
         this.usuario = usuario;
-        this.conversoes = conversoes;
+        this.conversoesEntity = conversoesEntity;
         this.dataMovimentacao = dataMovimentacao;
         this.observacao = observacao;
         this.produto = produto;
@@ -124,12 +124,12 @@ public class MovimentacoesEstoque {
         this.usuario = usuario;
     }
 
-    public Conversoes getConversoes() {
-        return conversoes;
+    public ConversoesEntity getConversoes() {
+        return conversoesEntity;
     }
 
-    public void setConversoes(Conversoes conversoes) {
-        this.conversoes = conversoes;
+    public void setConversoes(ConversoesEntity conversoesEntity) {
+        this.conversoesEntity = conversoesEntity;
     }
 
     public Instant getDataMovimentacao() {
@@ -163,7 +163,7 @@ public class MovimentacoesEstoque {
                 ", valorUnitario=" + valorUnitario +
                 ", valorTotal=" + valorTotal +
                // ", usuario=" + usuario +
-                ", conversoes=" + conversoes +
+                ", conversoes=" + conversoesEntity +
                 ", dataMovimentacao=" + dataMovimentacao +
                 ", observacao='" + observacao + '\'' +
                 '}';
