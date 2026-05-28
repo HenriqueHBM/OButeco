@@ -1,6 +1,6 @@
 package buteco.model.service;
 
-import buteco.model.entity.produto.Categoria;
+import buteco.model.entity.produto.CategoriaEntity;
 import buteco.model.repositories.produto.CategoriaRepository;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public class CategoriaService {
 
     public CategoriaService(CategoriaRepository categoriaRepository) { this.categoriaRepository = categoriaRepository; }
 
-    public List<Categoria> findAllCategoria(){
+    public List<CategoriaEntity> findAllCategoria(){
         var categoria = categoriaRepository.findAll();
         if(categoria.isEmpty()){
             throw new RuntimeException("Lista ausente");
@@ -18,7 +18,7 @@ public class CategoriaService {
         return categoria;
     }
 
-    public Categoria findById(Long id){
+    public CategoriaEntity findById(Long id){
 
         if(categoriaRepository.findById(id) == null ){
              throw new IllegalArgumentException("Valor Nao encontrado");

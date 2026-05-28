@@ -4,7 +4,7 @@
  */
 package buteco.view.pessoa;
 
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.service.UsuarioService;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ import javax.swing.*;
 public class LoginView extends JFrame {
 
     private UsuarioService usuarioService;
-    private Usuario usuarioLogado;
+    private UsuarioEntity usuarioEntityLogado;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginView.class.getName());
 
@@ -38,9 +38,9 @@ public class LoginView extends JFrame {
         String senha = new String(psfSenha.getPassword());
 
         try {
-            usuarioLogado = usuarioService.login(login, senha);
+            usuarioEntityLogado = usuarioService.login(login, senha);
 
-            JOptionPane.showMessageDialog(this, "Bem Vindo " + usuarioLogado.getNome());
+            JOptionPane.showMessageDialog(this, "Bem Vindo " + usuarioEntityLogado.getNome());
 
             dispose();
 
@@ -49,8 +49,8 @@ public class LoginView extends JFrame {
         }
     }
 
-    public Usuario getUsuarioLogado() {
-        return usuarioLogado;
+    public UsuarioEntity getUsuarioLogado() {
+        return usuarioEntityLogado;
     }
 
     /**

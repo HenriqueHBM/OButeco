@@ -1,6 +1,6 @@
 package buteco.model.repositories.pessoa;
 
-import buteco.model.entity.pessoa.Cargo;
+import buteco.model.entity.pessoa.CargoEntity;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -10,18 +10,18 @@ public class CargoRepository {
 
     public CargoRepository(EntityManager em) { this.em = em; }
 
-    public Cargo findById(Long id){
-        return em.find(Cargo.class, id);
+    public CargoEntity findById(Long id){
+        return em.find(CargoEntity.class, id);
     }
 
-    public void create(Cargo cargo) {
+    public void create(CargoEntity cargoEntity) {
         em.getTransaction().begin();
-        em.persist(cargo);
+        em.persist(cargoEntity);
         em.getTransaction().commit();
     }
 
-    public List<Cargo> findAll(){
-        return em.createQuery("Select c From Cargo c", Cargo.class)
+    public List<CargoEntity> findAll(){
+        return em.createQuery("Select c From Cargo c", CargoEntity.class)
                 .getResultList();
     }
 }

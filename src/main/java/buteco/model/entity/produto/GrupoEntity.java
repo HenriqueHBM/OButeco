@@ -4,18 +4,18 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "grupos")
-public class Grupo {
+public class GrupoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String grupo;
 
-    public Grupo(){
+    public GrupoEntity(){
 
     }
 
-    public Grupo(Long id, String grupo){
+    public GrupoEntity(Long id, String grupo){
         this.id = id;
         this.grupo = grupo;
     }

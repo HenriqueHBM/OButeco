@@ -1,6 +1,6 @@
 package buteco.model.entity.produto;
 import buteco.model.enums.EStatus;
-import buteco.model.entity.estoque.Estoque;
+import buteco.model.entity.estoque.EstoqueEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "produtos") //  entidade com nome padrão, tabela mapeada separadamente
-public class Produto {
+public class ProdutoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto incremental
@@ -28,15 +28,16 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_categoria")
-    private Categoria categoria;
+    private CategoriaEntity categoriaEntity;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_grupo")
-    private Grupo grupo;
+    private GrupoEntity grupoEntity;
 
     //um prod tem varios insumos | mapped by essa relacao nao e a dona, quem manda é o produto | cascade tudo que fizer com o produto, faco com os insumos
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<InsumosProduto> insumos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    private List<InsumosProdutoEntity> insumos = new ArrayList<>();
 
 
     @CreationTimestamp //data de criacao do produto
@@ -53,8 +54,9 @@ public class Produto {
     @Column(name = "observacao", nullable = true)
     private String observacao;
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<Estoque> estoques = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    private List<EstoqueEntity> estoqueEntities = new ArrayList<>();
 
 //    @ManyToMany
 //    @JoinTable(
@@ -65,16 +67,16 @@ public class Produto {
 //    private List<Produto> ingredientesProdutos;
 
 
-    public Produto(){
+    public ProdutoEntity(){
 
     }
 
-    public Produto(Long id, String nome, Categoria categoria, double precoVenda, Grupo grupo) {
+    public ProdutoEntity(Long id, String nome, CategoriaEntity categoriaEntity, double precoVenda, GrupoEntity grupoEntity) {
         this.id = id;
         this.nome = nome;
-        this.categoria = categoria;
+        this.categoriaEntity = categoriaEntity;
         this.precoVenda = precoVenda;
-        this.grupo = grupo;
+        this.grupoEntity = grupoEntity;
     }
 
     public Long getId() {
@@ -101,12 +103,12 @@ public class Produto {
         this.status = status;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public CategoriaEntity getCategoria() {
+        return categoriaEntity;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoria(CategoriaEntity categoriaEntity) {
+        this.categoriaEntity = categoriaEntity;
     }
 
     public Instant getDataCriacao() {
@@ -141,22 +143,22 @@ public class Produto {
         this.observacao = observacao;
     }
 
-    public List<InsumosProduto> getInsumos(){return insumos;}
+    public List<InsumosProdutoEntity> getInsumos(){return insumos;}
 
-    public void setInsumos(List<InsumosProduto> insumos) {
+    public void setInsumos(List<InsumosProdutoEntity> insumos) {
         this.insumos = insumos;
     }
 
-    public Grupo getGrupo() { return grupo; }
+    public GrupoEntity getGrupo() { return grupoEntity; }
 
-    public void setGrupo(Grupo grupo) { this.grupo = grupo; }
+    public void setGrupo(GrupoEntity grupoEntity) { this.grupoEntity = grupoEntity; }
 
-    public List<Estoque> getEstoques() {
-        return estoques;
+    public List<EstoqueEntity> getEstoques() {
+        return estoqueEntities;
     }
 
-    public void setEstoques(List<Estoque> estoques) {
-        this.estoques = estoques;
+    public void setEstoques(List<EstoqueEntity> estoqueEntities) {
+        this.estoqueEntities = estoqueEntities;
     }
 
     @Override
@@ -164,7 +166,7 @@ public class Produto {
         return "Produto{" +
                 "id="+id+
                 ", nome="+nome+
-                ", categoria="+categoria.getCategoria()+
+                ", categoria="+ categoriaEntity.getCategoria()+
                 ", preco_venda="+precoVenda+
 //                "conversao="+conversao.get
         "}";

@@ -1,6 +1,6 @@
 package buteco.model.service;
 
-import buteco.model.entity.produto.Produto;
+import buteco.model.entity.produto.ProdutoEntity;
 import buteco.model.repositories.produto.ProdutoRepository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public List<Produto> findAllProdutos()
+    public List<ProdutoEntity> findAllProdutos()
     {
         var produtos = produtoRepository.findAll();
         if(produtos.isEmpty()){
@@ -21,11 +21,11 @@ public class ProdutoService {
         return produtos;
     }
 
-    public void salvarProduto(Produto produto){
-        produtoRepository.create(produto);
+    public void salvarProduto(ProdutoEntity produtoEntity){
+        produtoRepository.create(produtoEntity);
     }
 
-    public Produto findById(Long id){
+    public ProdutoEntity findById(Long id){
 
         if(produtoRepository.findById(id) == null ){
             throw new IllegalArgumentException("Valor Nao encontrado");
@@ -33,15 +33,15 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
-    public void excluirProduto(Produto prod){
+    public void excluirProduto(ProdutoEntity prod){
         produtoRepository.excluirProduto(prod);
     }
 
-    public void atualizarProduto(Produto produto) {
-        produtoRepository.atualizarProduto(produto);
+    public void atualizarProduto(ProdutoEntity produtoEntity) {
+        produtoRepository.atualizarProduto(produtoEntity);
     }
 
-    public Produto findByIdComInsumos(Long id) {
+    public ProdutoEntity findByIdComInsumos(Long id) {
         return produtoRepository.findByIdComInsumos(id);
     }
 }

@@ -4,11 +4,8 @@
  */
 package buteco.view.produto;
 
+import buteco.model.entity.produto.*;
 import buteco.model.enums.EStatus;
-import buteco.model.entity.produto.Categoria;
-import buteco.model.entity.produto.Grupo;
-import buteco.model.entity.produto.InsumosProduto;
-import buteco.model.entity.produto.Produto;
 import buteco.model.service.CategoriaService;
 import buteco.model.service.GrupoService;
 import buteco.model.service.InsumosProdutoService;
@@ -46,10 +43,10 @@ public class ProdutoView extends javax.swing.JFrame {
     private ProdutoService produtoService;
     private CategoriaService categoriaService;
     private GrupoService grupoService;
-    private List<Categoria> categorias;
-    private List<Grupo> grupos;
+    private List<CategoriaEntity> categoriaEntities;
+    private List<GrupoEntity> grupoEntities;
     private InsumosProdutoService insumosProdutoService;
-    private Produto produtoSelecionado;
+    private ProdutoEntity produtoEntitySelecionado;
 
 //    private List<JTextField[]> linhasInsumo = new ArrayList<>();
     private List<Object[]> linhasInsumo = new ArrayList<>();
@@ -75,7 +72,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 int linha = tbProdutos.getSelectedRow();
                 if(linha >= 0){
                     Long id = (Long) tbProdutos.getValueAt(linha, 0);
-                    produtoSelecionado = produtoService.findById(id);
+                    produtoEntitySelecionado = produtoService.findById(id);
                     carregarInsumos(id);
                     carregarInfoProduto(id);
                 }
@@ -502,20 +499,20 @@ public class ProdutoView extends javax.swing.JFrame {
 
     private void carregarDados()
     {
-        categorias = categoriaService.findAllCategoria();
-        grupos = grupoService.findAllGrupo();
+        categoriaEntities = categoriaService.findAllCategoria();
+        grupoEntities = grupoService.findAllGrupo();
 
         selectCategoria.removeAllItems();
-        for (Categoria c : categorias) selectCategoria.addItem(c.getCategoria());
+        for (CategoriaEntity c : categoriaEntities) selectCategoria.addItem(c.getCategoria());
 
         selectGrupo.removeAllItems();
-        for (Grupo g : grupos) selectGrupo.addItem(g.getGrupo());
+        for (GrupoEntity g : grupoEntities) selectGrupo.addItem(g.getGrupo());
 
         DefaultTableModel model = (DefaultTableModel) tbProdutos.getModel();
         model.setRowCount(0); //zera a tabela
 
-        List<Produto> produtos = produtoService.findAllProdutos();
-        for(Produto p : produtos){
+        List<ProdutoEntity> produtoEntities = produtoService.findAllProdutos();
+        for(ProdutoEntity p : produtoEntities){
             model.addRow(new Object[]{
                     p.getId(),
                     p.getNome(),
@@ -531,18 +528,18 @@ public class ProdutoView extends javax.swing.JFrame {
 
     private void carregarInfoProduto(Long id)
     {
-        Produto produto = produtoService.findById(id);
+        ProdutoEntity produtoEntity = produtoService.findById(id);
 
-        txtProduto.setText(produto.getNome());
-        txtValorUnit.setText(Double.toString(produto.getPrecoVenda()));
-        txtObservacao.setText(produto.getObservacao());
+        txtProduto.setText(produtoEntity.getNome());
+        txtValorUnit.setText(Double.toString(produtoEntity.getPrecoVenda()));
+        txtObservacao.setText(produtoEntity.getObservacao());
 
         //preenchendo os select
-        selectStatus.setSelectedItem(produto.getStatus() == EStatus.ATIVO ? "Ativo" : "Inativo");
-        selectCategoria.setSelectedItem(produto.getCategoria().getCategoria());
-        selectGrupo.setSelectedItem(produto.getGrupo().getGrupo());
+        selectStatus.setSelectedItem(produtoEntity.getStatus() == EStatus.ATIVO ? "Ativo" : "Inativo");
+        selectCategoria.setSelectedItem(produtoEntity.getCategoria().getCategoria());
+        selectGrupo.setSelectedItem(produtoEntity.getGrupo().getGrupo());
 
-        if ("PRODUTO COM INSUMOS".equals(produto.getCategoria().getCategoria())) {
+        if ("PRODUTO COM INSUMOS".equals(produtoEntity.getCategoria().getCategoria())) {
             JOptionPane.showMessageDialog(this, "Desculpa, campo de Insumos nao sao editaveis", "Campos Insumos", JOptionPane.INFORMATION_MESSAGE);
             ocultarCamposInsumos();
         }
@@ -553,9 +550,9 @@ public class ProdutoView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbInsumos.getModel();
         model.setRowCount(0); //zera a tabela
 
-        Produto produto = produtoService.findByIdComInsumos(id); // aqui
+        ProdutoEntity produtoEntity = produtoService.findByIdComInsumos(id); // aqui
 
-        for (InsumosProduto insumo : produto.getInsumos()) {
+        for (InsumosProdutoEntity insumo : produtoEntity.getInsumos()) {
             model.addRow(new Object[]{
                     insumo.getId(),
                     insumo.getInsumo().getNome(),
@@ -601,34 +598,34 @@ public class ProdutoView extends javax.swing.JFrame {
 
         try {
             String nomeCategoria = (String) selectCategoria.getSelectedItem();
-            Categoria categoria = categorias.stream()
+            CategoriaEntity categoriaEntity = categoriaEntities.stream()
                     .filter(c -> c.getCategoria().equals(nomeCategoria))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
             String nomeGrupo = (String) selectGrupo.getSelectedItem();
-            Grupo grupo = grupos.stream()
+            GrupoEntity grupoEntity = grupoEntities.stream()
                     .filter(g -> g.getGrupo().equals(nomeGrupo))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
 
-            Produto produto = new Produto();
-            produto.setNome(txtProduto.getText());
-            produto.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
-            produto.setObservacao(txtObservacao.getText());
-            produto.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO); //tem que fazer isso, pois na hora que criei a tabela usei enum ;-;
-            produto.setCategoria(categoria);
-            produto.setGrupo(grupo);
+            ProdutoEntity produtoEntity = new ProdutoEntity();
+            produtoEntity.setNome(txtProduto.getText());
+            produtoEntity.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
+            produtoEntity.setObservacao(txtObservacao.getText());
+            produtoEntity.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO); //tem que fazer isso, pois na hora que criei a tabela usei enum ;-;
+            produtoEntity.setCategoria(categoriaEntity);
+            produtoEntity.setGrupo(grupoEntity);
 
-            produtoService.salvarProduto(produto); //salva o produto
+            produtoService.salvarProduto(produtoEntity); //salva o produto
             if ("PRODUTO COM INSUMOS".equals(nomeCategoria)) { //caso for do tipo com insumo
-                salvarInsumo(produto, (String) selectInsumo.getSelectedItem(), Double.parseDouble(txtInsumosQtde.getText())); //pega a info da linha fixa
+                salvarInsumo(produtoEntity, (String) selectInsumo.getSelectedItem(), Double.parseDouble(txtInsumosQtde.getText())); //pega a info da linha fixa
 
                 for (Object[] linha : linhasInsumo) {
                     JComboBox<String> combo = (JComboBox<String>) linha[0];
                     JTextField qtde = (JTextField) linha[1];
                     if (combo.getSelectedItem() != null) {
-                        salvarInsumo(produto, (String) combo.getSelectedItem(), Double.parseDouble(qtde.getText()));
+                        salvarInsumo(produtoEntity, (String) combo.getSelectedItem(), Double.parseDouble(qtde.getText()));
                     }
                 }
             }
@@ -642,13 +639,13 @@ public class ProdutoView extends javax.swing.JFrame {
         
     }                                            
 
-    private void salvarInsumo(Produto produto, String nomeInsumo, double qtde) {
-        Produto insumo = produtoService.findAllProdutos().stream()
+    private void salvarInsumo(ProdutoEntity produtoEntity, String nomeInsumo, double qtde) {
+        ProdutoEntity insumo = produtoService.findAllProdutos().stream()
                 .filter(p -> p.getNome().equalsIgnoreCase(nomeInsumo))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Insumo \"" + nomeInsumo + "\" não encontrado"));
 
-        insumosProdutoService.salvarInsumo(new InsumosProduto(produto, insumo, qtde));
+        insumosProdutoService.salvarInsumo(new InsumosProdutoEntity(produtoEntity, insumo, qtde));
     }
 
     private void txtInsumosQtdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInsumosQtdeActionPerformed
@@ -657,7 +654,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)
     {
-        if (produtoSelecionado == null) {
+        if (produtoEntitySelecionado == null) {
             JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.", "Nenhum produto selecionado", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -670,30 +667,30 @@ public class ProdutoView extends javax.swing.JFrame {
 
         try {
             // Atualiza os campos no objeto já existente
-            produtoSelecionado.setNome(txtProduto.getText().trim());
-            produtoSelecionado.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
-            produtoSelecionado.setObservacao(txtObservacao.getText().trim());
-            produtoSelecionado.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO);
+            produtoEntitySelecionado.setNome(txtProduto.getText().trim());
+            produtoEntitySelecionado.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
+            produtoEntitySelecionado.setObservacao(txtObservacao.getText().trim());
+            produtoEntitySelecionado.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO);
 
             String nomeCategoria = (String) selectCategoria.getSelectedItem();
-            Categoria categoria = categorias.stream()
+            CategoriaEntity categoriaEntity = categoriaEntities.stream()
                     .filter(c -> c.getCategoria().equals(nomeCategoria))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
             String nomeGrupo = (String) selectGrupo.getSelectedItem();
-            Grupo grupo = grupos.stream()
+            GrupoEntity grupoEntity = grupoEntities.stream()
                     .filter(g -> g.getGrupo().equals(nomeGrupo))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
 
-            produtoSelecionado.setCategoria(categoria);
-            produtoSelecionado.setGrupo(grupo);
+            produtoEntitySelecionado.setCategoria(categoriaEntity);
+            produtoEntitySelecionado.setGrupo(grupoEntity);
 
-            produtoService.atualizarProduto(produtoSelecionado);
+            produtoService.atualizarProduto(produtoEntitySelecionado);
 
             JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            produtoSelecionado = null;
+            produtoEntitySelecionado = null;
             limparCampos();
             carregarDados();
 

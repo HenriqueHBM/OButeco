@@ -4,27 +4,27 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "insumos_produtos")
-public class InsumosProduto {
+public class InsumosProdutoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_id_produto")
-    private Produto produto; //referencia do mappedBy na class Produto
+    private ProdutoEntity produtoEntity; //referencia do mappedBy na class Produto
 
     @ManyToOne
     @JoinColumn(name = "fk_insumos_produto")
-    private Produto insumo;
+    private ProdutoEntity insumo;
 
     @Column(name = "qtde")
     private double qtde;
 
-    public InsumosProduto(){
+    public InsumosProdutoEntity(){
 
     };
-    public InsumosProduto(Produto produto, Produto insumo, double qtde) {
-        this.produto = produto;
+    public InsumosProdutoEntity(ProdutoEntity produtoEntity, ProdutoEntity insumo, double qtde) {
+        this.produtoEntity = produtoEntity;
         this.insumo = insumo;
         this.qtde = qtde;
     }
@@ -37,19 +37,19 @@ public class InsumosProduto {
         this.id = id;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public ProdutoEntity getProduto() {
+        return produtoEntity;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setProduto(ProdutoEntity produtoEntity) {
+        this.produtoEntity = produtoEntity;
     }
 
-    public Produto getInsumo() {
+    public ProdutoEntity getInsumo() {
         return insumo;
     }
 
-    public void setInsumo(Produto insumo) {
+    public void setInsumo(ProdutoEntity insumo) {
         this.insumo = insumo;
     }
 

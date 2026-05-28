@@ -1,6 +1,6 @@
 package buteco.model.repositories.estoque;
 
-import buteco.model.entity.conversao.Conversoes;
+import buteco.model.entity.conversao.ConversoesEntity;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -11,17 +11,17 @@ public class ConversoesRepository {
         this.em = em;
     }
 
-    public Conversoes findById(Long id){
-        return em.find(Conversoes.class, id);
+    public ConversoesEntity findById(Long id){
+        return em.find(ConversoesEntity.class, id);
     }
 
-    public List<Conversoes> findAllConversoes() {
-        return em.createQuery("select c from Conversoes c", Conversoes.class).getResultList();
+    public List<ConversoesEntity> findAllConversoes() {
+        return em.createQuery("select c from Conversoes c", ConversoesEntity.class).getResultList();
     }
 
-    public void create(Conversoes conversoes){
+    public void create(ConversoesEntity conversoesEntity){
         em.getTransaction().begin();
-        em.persist(conversoes);
+        em.persist(conversoesEntity);
         em.getTransaction().commit();
     }
 }

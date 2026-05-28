@@ -1,7 +1,7 @@
     package buteco.model.entity.estoque;
 
-    import buteco.model.entity.conversao.Conversoes;
-    import buteco.model.entity.produto.Produto;
+    import buteco.model.entity.conversao.ConversoesEntity;
+    import buteco.model.entity.produto.ProdutoEntity;
     import jakarta.persistence.*;
     import org.hibernate.annotations.CreationTimestamp;
     import org.hibernate.annotations.UpdateTimestamp;
@@ -10,7 +10,7 @@
 
     @Entity
     @Table(name = "estoques")
-    public class Estoque {
+    public class EstoqueEntity {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,14 +18,14 @@
 
         @ManyToOne
         @JoinColumn(name = "fk_id_produto", nullable = false)
-        private Produto produto;
+        private ProdutoEntity produtoEntity;
 
         @Column(name = "qtde_estoque", nullable = true)
         private double qntdEstoque;
 
         @ManyToOne
         @JoinColumn(name = "fk_id_conversao", nullable = false)
-        private Conversoes conversoes;
+        private ConversoesEntity conversoesEntity;
 
         @Column(name = "local", nullable = true)
         private String local;
@@ -38,14 +38,14 @@
         @Column(name = "updated_at")
         private Instant dataAtualizado;
 
-        public Estoque() {
+        public EstoqueEntity() {
         }
 
-        public Estoque(Long id, Produto produto, Conversoes conversoes, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
+        public EstoqueEntity(Long id, ProdutoEntity produtoEntity, ConversoesEntity conversoesEntity, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
             this.id = id;
-            this.produto = produto;
+            this.produtoEntity = produtoEntity;
             this.qntdEstoque = qntdEstoque;
-            this.conversoes = conversoes;
+            this.conversoesEntity = conversoesEntity;
             this.local = local;
             this.dataCriacao = dataCriacao;
             this.dataAtualizado = dataAtualizado;
@@ -59,12 +59,12 @@
             this.id = id;
         }
 
-        public Produto getProduto() {
-            return produto;
+        public ProdutoEntity getProduto() {
+            return produtoEntity;
         }
 
-        public void setProduto(Produto produto) {
-            this.produto = produto;
+        public void setProduto(ProdutoEntity produtoEntity) {
+            this.produtoEntity = produtoEntity;
         }
 
         public double getQntdEstoque() {
@@ -75,12 +75,12 @@
             this.qntdEstoque = qntdEstoque;
         }
 
-        public Conversoes getConversoes() {
-            return conversoes;
+        public ConversoesEntity getConversoes() {
+            return conversoesEntity;
         }
 
-        public void setConversoes(Conversoes conversoes) {
-            this.conversoes = conversoes;
+        public void setConversoes(ConversoesEntity conversoesEntity) {
+            this.conversoesEntity = conversoesEntity;
         }
 
         public String getLocal() {
@@ -111,9 +111,9 @@
         public String toString() {
             return "Estoque{" +
                     "id=" + id +
-                    ", produto=" + produto +
+                    ", produto=" + produtoEntity +
                     ", qntdEstoque=" + qntdEstoque +
-                    ", conversoes=" + conversoes +
+                    ", conversoes=" + conversoesEntity +
                     ", local='" + local + '\'' +
                     ", dataCriacao=" + dataCriacao +
                     ", dataAtualizado=" + dataAtualizado +

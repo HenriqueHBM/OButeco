@@ -1,6 +1,6 @@
 package buteco.model.repositories.pessoa;
 
-import buteco.model.entity.pessoa.Usuario;
+import buteco.model.entity.pessoa.UsuarioEntity;
 import jakarta.persistence.EntityManager;
 
 public class UsuarioRepository {
@@ -8,16 +8,16 @@ public class UsuarioRepository {
 
     public UsuarioRepository(EntityManager em) { this.em = em; }
 
-    public void create(Usuario usuario) {
+    public void create(UsuarioEntity usuarioEntity) {
         em.getTransaction().begin();
-        em.persist(usuario);
+        em.persist(usuarioEntity);
         em.getTransaction().commit();
     }
 
-    public Usuario findByLogin(String login) {
+    public UsuarioEntity findByLogin(String login) {
         return em.createQuery(
                         "Select u From Usuario u Where u.login = :login",
-                        Usuario.class
+                        UsuarioEntity.class
                 )
                 .setParameter("login", login)
                 .getResultStream()
@@ -25,23 +25,23 @@ public class UsuarioRepository {
                 .orElse(null);
     }
 
-    public Usuario findById(Long id) {
-        return em.find(Usuario.class, id);
+    public UsuarioEntity findById(Long id) {
+        return em.find(UsuarioEntity.class, id);
     }
 
-    public java.util.List<Usuario> findAll() {
-        return em.createQuery("Select u From Usuario u", Usuario.class).getResultList();
+    public java.util.List<UsuarioEntity> findAll() {
+        return em.createQuery("Select u From Usuario u", UsuarioEntity.class).getResultList();
     }
 
-    public void update(Usuario usuario) {
+    public void update(UsuarioEntity usuarioEntity) {
         em.getTransaction().begin();
-        em.merge(usuario);
+        em.merge(usuarioEntity);
         em.getTransaction().commit();
     }
 
-    public void delete(Usuario usuario) {
+    public void delete(UsuarioEntity usuarioEntity) {
         em.getTransaction().begin();
-        em.remove(em.contains(usuario) ? usuario : em.merge(usuario));
+        em.remove(em.contains(usuarioEntity) ? usuarioEntity : em.merge(usuarioEntity));
         em.getTransaction().commit();
     }
 

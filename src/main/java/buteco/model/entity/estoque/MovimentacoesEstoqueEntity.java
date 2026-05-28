@@ -1,8 +1,8 @@
 package buteco.model.entity.estoque;
 
-import buteco.model.entity.pessoa.Usuario;
-import buteco.model.entity.conversao.Conversoes;
-import buteco.model.entity.produto.Produto;
+import buteco.model.entity.conversao.ConversoesEntity;
+import buteco.model.entity.pessoa.UsuarioEntity;
+import buteco.model.entity.produto.ProdutoEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "movimentacoes_estoques")
-public class MovimentacoesEstoque {
+public class MovimentacoesEstoqueEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class MovimentacoesEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_estoque", nullable = false)
-    private Estoque estoque;
+    private EstoqueEntity estoqueEntity;
 
     @Column(name = "tipo", nullable = false)
     private String tipo;
@@ -34,11 +34,11 @@ public class MovimentacoesEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_usuario", nullable = false)
-    private Usuario usuario;
+    private UsuarioEntity usuarioEntity;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_conversao",nullable = false)
-    private Conversoes conversoes;
+    private ConversoesEntity conversoesEntity;
 
     @CreationTimestamp
     @Column(name = "data_movimentacao")
@@ -49,23 +49,23 @@ public class MovimentacoesEstoque {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_produto")
-    private Produto produto;
+    private ProdutoEntity produtoEntity;
 
-    public MovimentacoesEstoque() {
+    public MovimentacoesEstoqueEntity() {
     }
 
-    public MovimentacoesEstoque(Long id, Estoque estoque, String tipo, double quantidade, double valorUnitario, double valorTotal, Usuario usuario, Conversoes conversoes, Instant dataMovimentacao, String observacao, Produto produto) {
+    public MovimentacoesEstoqueEntity(Long id, EstoqueEntity estoqueEntity, String tipo, double quantidade, double valorUnitario, double valorTotal, UsuarioEntity usuarioEntity, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, ProdutoEntity produtoEntity) {
         this.id = id;
-        this.estoque = estoque;
+        this.estoqueEntity = estoqueEntity;
         this.tipo = tipo;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
-        this.usuario = usuario;
-        this.conversoes = conversoes;
+        this.usuarioEntity = usuarioEntity;
+        this.conversoesEntity = conversoesEntity;
         this.dataMovimentacao = dataMovimentacao;
         this.observacao = observacao;
-        this.produto = produto;
+        this.produtoEntity = produtoEntity;
     }
 
     public Long getId() {
@@ -76,12 +76,12 @@ public class MovimentacoesEstoque {
         this.id = id;
     }
 
-    public Estoque getEstoque() {
-        return estoque;
+    public EstoqueEntity getEstoque() {
+        return estoqueEntity;
     }
 
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
+    public void setEstoque(EstoqueEntity estoqueEntity) {
+        this.estoqueEntity = estoqueEntity;
     }
 
     public String getTipo() {
@@ -116,20 +116,20 @@ public class MovimentacoesEstoque {
         this.valorTotal = valorTotal;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public UsuarioEntity getUsuario() {
+        return usuarioEntity;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(UsuarioEntity usuarioEntity) {
+        this.usuarioEntity = usuarioEntity;
     }
 
-    public Conversoes getConversoes() {
-        return conversoes;
+    public ConversoesEntity getConversoes() {
+        return conversoesEntity;
     }
 
-    public void setConversoes(Conversoes conversoes) {
-        this.conversoes = conversoes;
+    public void setConversoes(ConversoesEntity conversoesEntity) {
+        this.conversoesEntity = conversoesEntity;
     }
 
     public Instant getDataMovimentacao() {
@@ -148,22 +148,22 @@ public class MovimentacoesEstoque {
         this.observacao = observacao;
     }
 
-    public Produto getProduto() { return  produto; }
+    public ProdutoEntity getProduto() { return produtoEntity; }
 
-    public void setProduto(Produto produto) { this.produto = produto; }
+    public void setProduto(ProdutoEntity produtoEntity) { this.produtoEntity = produtoEntity; }
 
 
     @Override
     public String toString() {
         return "MovimentacoesEstoque{" +
                 "id=" + id +
-                ", estoque=" + estoque +
+                ", estoque=" + estoqueEntity +
                 ", tipo='" + tipo + '\'' +
                 ", quantidade=" + quantidade +
                 ", valorUnitario=" + valorUnitario +
                 ", valorTotal=" + valorTotal +
                // ", usuario=" + usuario +
-                ", conversoes=" + conversoes +
+                ", conversoes=" + conversoesEntity +
                 ", dataMovimentacao=" + dataMovimentacao +
                 ", observacao='" + observacao + '\'' +
                 '}';
