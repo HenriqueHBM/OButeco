@@ -4,11 +4,8 @@
  */
 package buteco.view.produto;
 
+import buteco.model.entity.produto.*;
 import buteco.model.enums.EStatus;
-import buteco.model.entity.produto.CategoriaEntity;
-import buteco.model.entity.produto.Grupo;
-import buteco.model.entity.produto.InsumosProduto;
-import buteco.model.entity.produto.Produto;
 import buteco.model.service.CategoriaService;
 import buteco.model.service.GrupoService;
 import buteco.model.service.InsumosProdutoService;
@@ -47,7 +44,7 @@ public class ProdutoView extends javax.swing.JFrame {
     private CategoriaService categoriaService;
     private GrupoService grupoService;
     private List<CategoriaEntity> categoriaEntities;
-    private List<Grupo> grupos;
+    private List<GrupoEntity> grupoEntities;
     private InsumosProdutoService insumosProdutoService;
     private Produto produtoSelecionado;
 
@@ -503,13 +500,13 @@ public class ProdutoView extends javax.swing.JFrame {
     private void carregarDados()
     {
         categoriaEntities = categoriaService.findAllCategoria();
-        grupos = grupoService.findAllGrupo();
+        grupoEntities = grupoService.findAllGrupo();
 
         selectCategoria.removeAllItems();
         for (CategoriaEntity c : categoriaEntities) selectCategoria.addItem(c.getCategoria());
 
         selectGrupo.removeAllItems();
-        for (Grupo g : grupos) selectGrupo.addItem(g.getGrupo());
+        for (GrupoEntity g : grupoEntities) selectGrupo.addItem(g.getGrupo());
 
         DefaultTableModel model = (DefaultTableModel) tbProdutos.getModel();
         model.setRowCount(0); //zera a tabela
@@ -555,7 +552,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
         Produto produto = produtoService.findByIdComInsumos(id); // aqui
 
-        for (InsumosProduto insumo : produto.getInsumos()) {
+        for (InsumosProdutoEntity insumo : produto.getInsumos()) {
             model.addRow(new Object[]{
                     insumo.getId(),
                     insumo.getInsumo().getNome(),
@@ -607,7 +604,7 @@ public class ProdutoView extends javax.swing.JFrame {
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
             String nomeGrupo = (String) selectGrupo.getSelectedItem();
-            Grupo grupo = grupos.stream()
+            GrupoEntity grupoEntity = grupoEntities.stream()
                     .filter(g -> g.getGrupo().equals(nomeGrupo))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
@@ -618,7 +615,7 @@ public class ProdutoView extends javax.swing.JFrame {
             produto.setObservacao(txtObservacao.getText());
             produto.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO); //tem que fazer isso, pois na hora que criei a tabela usei enum ;-;
             produto.setCategoria(categoriaEntity);
-            produto.setGrupo(grupo);
+            produto.setGrupo(grupoEntity);
 
             produtoService.salvarProduto(produto); //salva o produto
             if ("PRODUTO COM INSUMOS".equals(nomeCategoria)) { //caso for do tipo com insumo
@@ -648,7 +645,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Insumo \"" + nomeInsumo + "\" não encontrado"));
 
-        insumosProdutoService.salvarInsumo(new InsumosProduto(produto, insumo, qtde));
+        insumosProdutoService.salvarInsumo(new InsumosProdutoEntity(produto, insumo, qtde));
     }
 
     private void txtInsumosQtdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInsumosQtdeActionPerformed
@@ -682,13 +679,13 @@ public class ProdutoView extends javax.swing.JFrame {
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
             String nomeGrupo = (String) selectGrupo.getSelectedItem();
-            Grupo grupo = grupos.stream()
+            GrupoEntity grupoEntity = grupoEntities.stream()
                     .filter(g -> g.getGrupo().equals(nomeGrupo))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
 
             produtoSelecionado.setCategoria(categoriaEntity);
-            produtoSelecionado.setGrupo(grupo);
+            produtoSelecionado.setGrupo(grupoEntity);
 
             produtoService.atualizarProduto(produtoSelecionado);
 

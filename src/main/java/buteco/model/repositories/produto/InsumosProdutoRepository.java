@@ -1,6 +1,6 @@
 package buteco.model.repositories.produto;
 
-import buteco.model.entity.produto.InsumosProduto;
+import buteco.model.entity.produto.InsumosProdutoEntity;
 import jakarta.persistence.EntityManager;
 
 public class InsumosProdutoRepository {
@@ -8,14 +8,14 @@ public class InsumosProdutoRepository {
 
     public InsumosProdutoRepository(EntityManager em){this.em = em;}
 
-    public void create(InsumosProduto insumosProduto){
+    public void create(InsumosProdutoEntity insumosProdutoEntity){
         em.getTransaction().begin();
-        em.persist(insumosProduto);
+        em.persist(insumosProdutoEntity);
         em.getTransaction().commit();
     }
 
-    public InsumosProduto findById(Long id){
-        return em.find(InsumosProduto.class, id);
+    public InsumosProdutoEntity findById(Long id){
+        return em.find(InsumosProdutoEntity.class, id);
     }
 
     public void deletar(long id){

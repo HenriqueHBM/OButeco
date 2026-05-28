@@ -1,6 +1,6 @@
 package buteco.model.service;
 
-import buteco.model.entity.produto.Grupo;
+import buteco.model.entity.produto.GrupoEntity;
 import buteco.model.repositories.produto.GrupoRepository;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public class GrupoService {
 
     public GrupoService(GrupoRepository grupoRepository) {this.grupoRepository = grupoRepository; }
 
-    public List<Grupo> findAllGrupo(){
+    public List<GrupoEntity> findAllGrupo(){
         var grupo = grupoRepository.findAll();
         if(grupo.isEmpty()){
             throw new RuntimeException("Lista ausente");
@@ -18,7 +18,7 @@ public class GrupoService {
         return grupo;
     }
 
-    public Grupo findById (Long id){
+    public GrupoEntity findById (Long id){
         return grupoRepository.findById(id);
     }
 }

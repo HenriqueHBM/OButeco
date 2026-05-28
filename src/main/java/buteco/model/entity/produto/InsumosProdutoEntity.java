@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "insumos_produtos")
-public class InsumosProduto {
+public class InsumosProdutoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,10 +20,10 @@ public class InsumosProduto {
     @Column(name = "qtde")
     private double qtde;
 
-    public InsumosProduto(){
+    public InsumosProdutoEntity(){
 
     };
-    public InsumosProduto(Produto produto, Produto insumo, double qtde) {
+    public InsumosProdutoEntity(Produto produto, Produto insumo, double qtde) {
         this.produto = produto;
         this.insumo = insumo;
         this.qtde = qtde;

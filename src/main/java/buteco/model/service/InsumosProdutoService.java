@@ -1,6 +1,6 @@
 package buteco.model.service;
 
-import buteco.model.entity.produto.InsumosProduto;
+import buteco.model.entity.produto.InsumosProdutoEntity;
 import buteco.model.repositories.produto.InsumosProdutoRepository;
 import jakarta.transaction.Transactional;
 
@@ -16,9 +16,9 @@ public class InsumosProdutoService {
         insumosProdutoRepository.deletar(id);
     }
 
-    public void salvarInsumo(InsumosProduto insumosProduto)
+    public void salvarInsumo(InsumosProdutoEntity insumosProdutoEntity)
     {
-        insumosProdutoRepository.create(insumosProduto);
+        insumosProdutoRepository.create(insumosProdutoEntity);
     }
 //    public void salvarProduto(Produto produto){
 //        produtoRepository.create(produto);

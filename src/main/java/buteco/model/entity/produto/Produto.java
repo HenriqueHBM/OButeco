@@ -32,11 +32,11 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_grupo")
-    private Grupo grupo;
+    private GrupoEntity grupoEntity;
 
     //um prod tem varios insumos | mapped by essa relacao nao e a dona, quem manda é o produto | cascade tudo que fizer com o produto, faco com os insumos
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<InsumosProduto> insumos = new ArrayList<>();
+    private List<InsumosProdutoEntity> insumos = new ArrayList<>();
 
 
     @CreationTimestamp //data de criacao do produto
@@ -69,12 +69,12 @@ public class Produto {
 
     }
 
-    public Produto(Long id, String nome, CategoriaEntity categoriaEntity, double precoVenda, Grupo grupo) {
+    public Produto(Long id, String nome, CategoriaEntity categoriaEntity, double precoVenda, GrupoEntity grupoEntity) {
         this.id = id;
         this.nome = nome;
         this.categoriaEntity = categoriaEntity;
         this.precoVenda = precoVenda;
-        this.grupo = grupo;
+        this.grupoEntity = grupoEntity;
     }
 
     public Long getId() {
@@ -141,15 +141,15 @@ public class Produto {
         this.observacao = observacao;
     }
 
-    public List<InsumosProduto> getInsumos(){return insumos;}
+    public List<InsumosProdutoEntity> getInsumos(){return insumos;}
 
-    public void setInsumos(List<InsumosProduto> insumos) {
+    public void setInsumos(List<InsumosProdutoEntity> insumos) {
         this.insumos = insumos;
     }
 
-    public Grupo getGrupo() { return grupo; }
+    public GrupoEntity getGrupo() { return grupoEntity; }
 
-    public void setGrupo(Grupo grupo) { this.grupo = grupo; }
+    public void setGrupo(GrupoEntity grupoEntity) { this.grupoEntity = grupoEntity; }
 
     public List<EstoqueEntity> getEstoques() {
         return estoqueEntities;
