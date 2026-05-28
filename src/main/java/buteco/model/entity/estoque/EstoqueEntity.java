@@ -1,7 +1,7 @@
     package buteco.model.entity.estoque;
 
     import buteco.model.entity.conversao.ConversoesEntity;
-    import buteco.model.entity.produto.Produto;
+    import buteco.model.entity.produto.ProdutoEntity;
     import jakarta.persistence.*;
     import org.hibernate.annotations.CreationTimestamp;
     import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +18,7 @@
 
         @ManyToOne
         @JoinColumn(name = "fk_id_produto", nullable = false)
-        private Produto produto;
+        private ProdutoEntity produtoEntity;
 
         @Column(name = "qtde_estoque", nullable = true)
         private double qntdEstoque;
@@ -41,9 +41,9 @@
         public EstoqueEntity() {
         }
 
-        public EstoqueEntity(Long id, Produto produto, ConversoesEntity conversoesEntity, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
+        public EstoqueEntity(Long id, ProdutoEntity produtoEntity, ConversoesEntity conversoesEntity, double qntdEstoque, String local, Instant dataCriacao, Instant dataAtualizado) {
             this.id = id;
-            this.produto = produto;
+            this.produtoEntity = produtoEntity;
             this.qntdEstoque = qntdEstoque;
             this.conversoesEntity = conversoesEntity;
             this.local = local;
@@ -59,12 +59,12 @@
             this.id = id;
         }
 
-        public Produto getProduto() {
-            return produto;
+        public ProdutoEntity getProduto() {
+            return produtoEntity;
         }
 
-        public void setProduto(Produto produto) {
-            this.produto = produto;
+        public void setProduto(ProdutoEntity produtoEntity) {
+            this.produtoEntity = produtoEntity;
         }
 
         public double getQntdEstoque() {
@@ -111,7 +111,7 @@
         public String toString() {
             return "Estoque{" +
                     "id=" + id +
-                    ", produto=" + produto +
+                    ", produto=" + produtoEntity +
                     ", qntdEstoque=" + qntdEstoque +
                     ", conversoes=" + conversoesEntity +
                     ", local='" + local + '\'' +

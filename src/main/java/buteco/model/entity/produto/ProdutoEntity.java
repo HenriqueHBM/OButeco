@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "produtos") //  entidade com nome padrão, tabela mapeada separadamente
-public class Produto {
+public class ProdutoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto incremental
@@ -35,7 +35,8 @@ public class Produto {
     private GrupoEntity grupoEntity;
 
     //um prod tem varios insumos | mapped by essa relacao nao e a dona, quem manda é o produto | cascade tudo que fizer com o produto, faco com os insumos
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<InsumosProdutoEntity> insumos = new ArrayList<>();
 
 
@@ -53,7 +54,8 @@ public class Produto {
     @Column(name = "observacao", nullable = true)
     private String observacao;
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<EstoqueEntity> estoqueEntities = new ArrayList<>();
 
 //    @ManyToMany
@@ -65,11 +67,11 @@ public class Produto {
 //    private List<Produto> ingredientesProdutos;
 
 
-    public Produto(){
+    public ProdutoEntity(){
 
     }
 
-    public Produto(Long id, String nome, CategoriaEntity categoriaEntity, double precoVenda, GrupoEntity grupoEntity) {
+    public ProdutoEntity(Long id, String nome, CategoriaEntity categoriaEntity, double precoVenda, GrupoEntity grupoEntity) {
         this.id = id;
         this.nome = nome;
         this.categoriaEntity = categoriaEntity;

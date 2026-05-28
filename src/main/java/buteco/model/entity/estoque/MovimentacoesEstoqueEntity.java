@@ -2,7 +2,7 @@ package buteco.model.entity.estoque;
 
 import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.entity.pessoa.UsuarioEntity;
-import buteco.model.entity.produto.Produto;
+import buteco.model.entity.produto.ProdutoEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -49,12 +49,12 @@ public class MovimentacoesEstoqueEntity {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_produto")
-    private Produto produto;
+    private ProdutoEntity produtoEntity;
 
     public MovimentacoesEstoqueEntity() {
     }
 
-    public MovimentacoesEstoqueEntity(Long id, EstoqueEntity estoqueEntity, String tipo, double quantidade, double valorUnitario, double valorTotal, UsuarioEntity usuarioEntity, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, Produto produto) {
+    public MovimentacoesEstoqueEntity(Long id, EstoqueEntity estoqueEntity, String tipo, double quantidade, double valorUnitario, double valorTotal, UsuarioEntity usuarioEntity, ConversoesEntity conversoesEntity, Instant dataMovimentacao, String observacao, ProdutoEntity produtoEntity) {
         this.id = id;
         this.estoqueEntity = estoqueEntity;
         this.tipo = tipo;
@@ -65,7 +65,7 @@ public class MovimentacoesEstoqueEntity {
         this.conversoesEntity = conversoesEntity;
         this.dataMovimentacao = dataMovimentacao;
         this.observacao = observacao;
-        this.produto = produto;
+        this.produtoEntity = produtoEntity;
     }
 
     public Long getId() {
@@ -148,9 +148,9 @@ public class MovimentacoesEstoqueEntity {
         this.observacao = observacao;
     }
 
-    public Produto getProduto() { return  produto; }
+    public ProdutoEntity getProduto() { return produtoEntity; }
 
-    public void setProduto(Produto produto) { this.produto = produto; }
+    public void setProduto(ProdutoEntity produtoEntity) { this.produtoEntity = produtoEntity; }
 
 
     @Override

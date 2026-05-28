@@ -4,7 +4,7 @@ import buteco.model.entity.conversao.ConversoesEntity;
 import buteco.model.entity.estoque.EstoqueEntity;
 import buteco.model.entity.estoque.MovimentacoesEstoqueEntity;
 import buteco.model.entity.pessoa.UsuarioEntity;
-import buteco.model.entity.produto.Produto;
+import buteco.model.entity.produto.ProdutoEntity;
 import buteco.model.repositories.estoque.ConversoesRepository;
 import buteco.model.repositories.estoque.EstoqueRepository;
 import buteco.model.repositories.estoque.MovimentacoesEstoqueRepository;
@@ -50,10 +50,10 @@ public class MovimentacoesEstoqueService {
         //estoque nao encontrado? Cria um novo e atualiza o estoque com novo id
         if(estoqueEntity == null) {
             estoqueEntity = new EstoqueEntity();
-            Produto produto = produtoRepository.findById(idProduto);
+            ProdutoEntity produtoEntity = produtoRepository.findById(idProduto);
             ConversoesEntity conversoesEntity = conversoesRepository.findById(idConversaoEntrada);
 
-            estoqueEntity.setProduto(produto);
+            estoqueEntity.setProduto(produtoEntity);
             estoqueEntity.setConversoes(conversoesEntity);
             estoqueEntity.setLocal(local);
             estoqueEntity.setQntdEstoque(0);
@@ -80,10 +80,10 @@ public class MovimentacoesEstoqueService {
         estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() + qtdeNova);
         estoqueRepository.update(estoqueEntity);
 
-        Produto produto = produtoRepository.findById(idProduto);
+        ProdutoEntity produtoEntity = produtoRepository.findById(idProduto);
 
         MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
-        mov.setProduto(produto);
+        mov.setProduto(produtoEntity);
         if (idConversaoEntrada.equals(estoqueEntity.getConversoes().getId())) {
             mov.setConversoes(conversaoEntrada);
         } else {
@@ -130,10 +130,10 @@ public class MovimentacoesEstoqueService {
         estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() - qtdeNova);
         estoqueRepository.update(estoqueEntity);
 
-        Produto produto = produtoRepository.findById(idProduto);
+        ProdutoEntity produtoEntity = produtoRepository.findById(idProduto);
 
         MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
-        mov.setProduto(produto);
+        mov.setProduto(produtoEntity);
         if (idConversaoSaida.equals(estoqueEntity.getConversoes().getId())) {
             mov.setConversoes(conversaoSaida);
         } else {
@@ -173,7 +173,7 @@ public class MovimentacoesEstoqueService {
         movimentacoesEstoqueRepository.delete(mov);
     }
 
-    public void editarMovimentacao(Long idMovimentacao, Produto novoProduto, double novaQtde, Long idNovaConversao, double fatorConversao, String observacao) {
+    public void editarMovimentacao(Long idMovimentacao, ProdutoEntity novoProdutoEntity, double novaQtde, Long idNovaConversao, double fatorConversao, String observacao) {
         MovimentacoesEstoqueEntity mov = movimentacoesEstoqueRepository.findById(idMovimentacao);
         if (mov == null) throw new RuntimeException("Movimentação não encontrada!");
 
@@ -189,7 +189,7 @@ public class MovimentacoesEstoqueService {
         estoqueRepository.update(estoqueEntityAntigo);
 
         // busca o estoque do novo produto
-        EstoqueEntity estoqueEntityNovo = estoqueRepository.findByProdutoId(novoProduto.getId());
+        EstoqueEntity estoqueEntityNovo = estoqueRepository.findByProdutoId(novoProdutoEntity.getId());
         if (estoqueEntityNovo == null) throw new RuntimeException("Estoque nao encontrado para o novo produto!");
 
         // calcula nova quantidade
@@ -217,7 +217,7 @@ public class MovimentacoesEstoqueService {
                 ? conversoesRepository.findById(idNovaConversao)
                 : estoqueEntityNovo.getConversoes();
 
-        mov.setProduto(novoProduto);
+        mov.setProduto(novoProdutoEntity);
         mov.setEstoque(estoqueEntityNovo);
         mov.setQuantidade(qtdeNova);
         mov.setConversoes(novaConversao);
@@ -233,10 +233,10 @@ public class MovimentacoesEstoqueService {
         return mov.getObservacao();
     }
 
-    public void cadastrarSaidaComInsumosSwing(Produto produto, double qtde, UsuarioEntity usuarioEntity, String observacao) {
+    public void cadastrarSaidaComInsumosSwing(ProdutoEntity produtoEntity, double qtde, UsuarioEntity usuarioEntity, String observacao) {
         // valida todos os insumos primeiro
         for (int index = 1; index <= qtde; index++) {
-            produto.getInsumos().forEach(element -> {
+            produtoEntity.getInsumos().forEach(element -> {
                 if (!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")) {
                     EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(element.getInsumo().getId());
                     if (estoqueEntity == null) {
@@ -250,7 +250,7 @@ public class MovimentacoesEstoqueService {
             });
 
             // da baixa nos insumos
-            produto.getInsumos().forEach(element -> {
+            produtoEntity.getInsumos().forEach(element -> {
                 if (!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")) {
                     EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(element.getInsumo().getId());
                     estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() - element.getQtde());
@@ -259,13 +259,13 @@ public class MovimentacoesEstoqueService {
             });
 
             // registra movimentacao do produto final
-            EstoqueEntity estoqueEntityProdfinal = estoqueRepository.findByProdutoId(produto.getId());
+            EstoqueEntity estoqueEntityProdfinal = estoqueRepository.findByProdutoId(produtoEntity.getId());
             if (estoqueEntityProdfinal == null) {
-                throw new RuntimeException("Estoque nao encontrado para o produto final: " + produto.getNome());
+                throw new RuntimeException("Estoque nao encontrado para o produto final: " + produtoEntity.getNome());
             }
 
             MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
-            mov.setProduto(produto);
+            mov.setProduto(produtoEntity);
             mov.setQuantidade(1);
             mov.setTipo("SAIDA");
             mov.setConversoes(estoqueEntityProdfinal.getConversoes());
@@ -323,10 +323,10 @@ public class MovimentacoesEstoqueService {
         estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() + qtdeNova);
         estoqueRepository.update(estoqueEntity);
 
-        Produto produto = produtoRepository.findById(idProduto);
+        ProdutoEntity produtoEntity = produtoRepository.findById(idProduto);
 
         MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
-        mov.setProduto(produto);
+        mov.setProduto(produtoEntity);
         mov.setQuantidade(qtde);
         mov.setTipo("ENTRADA");
         mov.setConversoes(conversaoEntrada);
@@ -348,17 +348,17 @@ public class MovimentacoesEstoqueService {
         estoqueEntity.setQntdEstoque(estoqueEntity.getQntdEstoque() - qtde);
         estoqueRepository.update(estoqueEntity);
 
-        Produto produto = produtoRepository.findById(idProduto);
+        ProdutoEntity produtoEntity = produtoRepository.findById(idProduto);
 
         if(cria_mov == true){
-            this.movimentacaoEstoque(produto, estoqueEntity, qtde);
+            this.movimentacaoEstoque(produtoEntity, estoqueEntity, qtde);
         }
 
     }
 
-    public void movimentacaoEstoque(Produto produto, EstoqueEntity estoqueEntity, double qtde){
+    public void movimentacaoEstoque(ProdutoEntity produtoEntity, EstoqueEntity estoqueEntity, double qtde){
         MovimentacoesEstoqueEntity mov = new MovimentacoesEstoqueEntity();
-        mov.setProduto(produto);
+        mov.setProduto(produtoEntity);
         mov.setQuantidade(qtde);
         mov.setTipo("SAIDA");
         mov.setConversoes(estoqueEntity.getConversoes());
@@ -401,10 +401,10 @@ public class MovimentacoesEstoqueService {
 
     }
 
-    public void cadastrarSaidacComInsumos(Produto produto, double qtde){
+    public void cadastrarSaidacComInsumos(ProdutoEntity produtoEntity, double qtde){
         //passa uma vez no foreach para validar os insumos
         for (int index = 1; index <= qtde;  index++){
-            produto.getInsumos().forEach(element -> {
+            produtoEntity.getInsumos().forEach(element -> {
                 if(!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")){ // se nao for um servico
                     EstoqueEntity estoqueEntity = estoqueRepository.findByProdutoId(element.getInsumo().getId());
                     if (estoqueEntity == null){
@@ -416,15 +416,15 @@ public class MovimentacoesEstoqueService {
                 }
             });
 
-            produto.getInsumos().forEach(element -> {
+            produtoEntity.getInsumos().forEach(element -> {
                 if(!element.getInsumo().getCategoria().getCategoria().equals("SERVICO")){
                     this.cadastrarSaida(element.getInsumo().getId(), element.getQtde(), false);
                 }
             });
 
 
-            EstoqueEntity estoqueEntity = produto.getEstoques().get(0);
-            this.movimentacaoEstoque(produto, estoqueEntity, 1);
+            EstoqueEntity estoqueEntity = produtoEntity.getEstoques().get(0);
+            this.movimentacaoEstoque(produtoEntity, estoqueEntity, 1);
         }
     }
 
