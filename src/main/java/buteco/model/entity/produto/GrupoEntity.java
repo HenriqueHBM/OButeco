@@ -35,6 +35,6 @@ public class GrupoEntity {
 
     @Override
     public String toString(){
-        return "[" + id + "] - " + grupo;
+        return grupo;
     }
 }
