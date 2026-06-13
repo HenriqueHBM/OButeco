@@ -2,6 +2,8 @@ package buteco;
 
 import buteco.config.FlyWayconfig;
 import buteco.controller.estoque.EstoquesController;
+import buteco.controller.produtos.ProdutosControllerInterface;
+import buteco.controller.produtos.impl.ProdutosControllerImpl;
 import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.repositories.*;
 import buteco.model.repositories.estoque.ConversoesRepository;
@@ -82,18 +84,18 @@ public class Main {
 //        UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
         EstoquesController estoquesController = new EstoquesController(produtoService, conversoesService, estoqueService, movimentacoesEstoqueService);
 
-        LoginView loginView = new LoginView(usuarioService);
+//        LoginView loginView = new LoginView(usuarioService);
+//
+//        loginView.setLocationRelativeTo(null);
+//        loginView.setVisible(true);
+//        while (loginView.getUsuarioLogado() == null) {
+//
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) { e.printStackTrace(); }
+//        }
 
-        loginView.setLocationRelativeTo(null);
-        loginView.setVisible(true);
-        while (loginView.getUsuarioLogado() == null) {
-
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) { e.printStackTrace(); }
-        }
-
-        final UsuarioEntity usuarioEntityFinal = loginView.getUsuarioLogado();
+//        final UsuarioEntity usuarioEntityFinal = loginView.getUsuarioLogado();
 
         Colors colors = new Colors();
         Cards cards = new Cards(colors);
@@ -103,14 +105,17 @@ public class Main {
 //            UsuarioView usuarioView = new UsuarioView(usuarioService, cargoRepository, usuarioRepository);
 //            usuarioView.setVisible(true);
 //        });
+
+        ProdutosControllerInterface produtosController =
+                new ProdutosControllerImpl(produtoService, categoriaService, grupoService, insumosProdutoService);
         view.clicarProdutoAction(e -> {
-            ProdutoView produtoView = new ProdutoView(produtoService, categoriaService, grupoService, insumosProdutoService);
+            ProdutoView produtoView = new ProdutoView(produtoService, insumosProdutoService, produtosController);
             produtoView.setVisible(true);
         });
-        view.clicarEstoqueAction(e -> {
-            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioEntityFinal);
-            estoquesView.setVisible(true);
-        });
+//        view.clicarEstoqueAction(e -> {
+//            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioEntityFinal);
+//            estoquesView.setVisible(true);
+//        });
 
 
 //        do{

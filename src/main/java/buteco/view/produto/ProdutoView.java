@@ -4,6 +4,13 @@
  */
 package buteco.view.produto;
 
+import buteco.controller.produtos.ProdutosControllerInterface;
+import buteco.controller.produtos.dto.CadProdutosResponse;
+import buteco.controller.produtos.dto.ProdutoSelectResponse;
+import buteco.controller.produtos.dto.ProdutosResponse;
+import buteco.controller.produtos.dto.categoria.CategoriasResponse;
+import buteco.controller.produtos.dto.grupo.GruposResponse;
+import buteco.controller.produtos.impl.ProdutosControllerImpl;
 import buteco.model.entity.produto.*;
 import buteco.model.enums.EStatus;
 import buteco.model.service.CategoriaService;
@@ -17,45 +24,30 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author henrique
- */
-//public ProdutoService produtoService;
-//public CategoriaService categoriaService;
-//public GrupoService grupoService;
-//
-//public ProdutoView(ProdutoService produtoService, CategoriaService categoriaService, GrupoService grupoService)
-//{
-//    this.produtoService = produtoService;
-//    this.categoriaService = categoriaService;
-//    this.grupoService = grupoService;
-//    initComponents();
-//    carregarDados();
-//}
 public class ProdutoView extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProdutoView.class.getName());
 
-    /**
-     * Creates new form ProdutoView
-     */
     private ProdutoService produtoService;
-    private CategoriaService categoriaService;
-    private GrupoService grupoService;
     private List<CategoriaEntity> categoriaEntities;
     private List<GrupoEntity> grupoEntities;
     private InsumosProdutoService insumosProdutoService;
     private ProdutoEntity produtoEntitySelecionado;
+    private ProdutosControllerInterface produtoController;
+    private List<CategoriasResponse> categoriaResponse;
+    private List<GruposResponse> gruposResponse;
 
 //    private List<JTextField[]> linhasInsumo = new ArrayList<>();
     private List<Object[]> linhasInsumo = new ArrayList<>();
 
-    public ProdutoView(ProdutoService produtoService, CategoriaService categoriaService, GrupoService grupoService, InsumosProdutoService insumosProdutoService) {
+//    public ProdutoView(){};
+
+    public ProdutoView(
+            ProdutoService produtoService,
+            InsumosProdutoService insumosProdutoService,
+            ProdutosControllerInterface produtoController
+    ) {
         this.insumosProdutoService = insumosProdutoService;
         this.produtoService = produtoService;
-        this.categoriaService = categoriaService;
-        this.grupoService = grupoService;
+        this.produtoController = produtoController;
         initComponents();
         carregarDados();
 
@@ -63,33 +55,33 @@ public class ProdutoView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         addMaisInsumos.setLayout(new BoxLayout(addMaisInsumos, BoxLayout.Y_AXIS));
-
-
-
-        //listar selecao dos insumos ao apertar -----------------------------------------------------------------------
-        tbProdutos.getSelectionModel().addListSelectionListener( e ->{
-            if(!e.getValueIsAdjusting()){
-                int linha = tbProdutos.getSelectedRow();
-                if(linha >= 0){
-                    Long id = (Long) tbProdutos.getValueAt(linha, 0);
-                    produtoEntitySelecionado = produtoService.findById(id);
-                    carregarInsumos(id);
-                    carregarInfoProduto(id);
-                }
-            }
-        });
-        // ----------------------------------------------------------------------------------------------------------
-
-        //esconder/mostrar linha de insumos -------------------------------------------------------------------------
-        ocultarCamposInsumos();
-        selectCategoria.addActionListener( e -> {
-            String select = (String) selectCategoria.getSelectedItem();
-            if("PRODUTO COM INSUMOS".equals(select)){
-                mostrarCamposInsumos();
-            }else{
-                ocultarCamposInsumos();
-            }
-        });
+//
+//
+//
+//        //listar selecao dos insumos ao apertar -----------------------------------------------------------------------
+//        tbProdutos.getSelectionModel().addListSelectionListener( e ->{
+//            if(!e.getValueIsAdjusting()){
+//                int linha = tbProdutos.getSelectedRow();
+//                if(linha >= 0){
+//                    Long id = (Long) tbProdutos.getValueAt(linha, 0);
+//                    produtoEntitySelecionado = produtoService.findById(id);
+//                    carregarInsumos(id);
+//                    carregarInfoProduto(id);
+//                }
+//            }
+//        });
+//        // ----------------------------------------------------------------------------------------------------------
+//
+//        //esconder/mostrar linha de insumos -------------------------------------------------------------------------
+//        ocultarCamposInsumos();
+//        selectCategoria.addActionListener( e -> {
+//            String select = (String) selectCategoria.getSelectedItem();
+//            if("PRODUTO COM INSUMOS".equals(select)){
+//                mostrarCamposInsumos();
+//            }else{
+//                ocultarCamposInsumos();
+//            }
+//        });
 
         // ----------------------------------------------------------------------------------------------------------
     }
@@ -150,7 +142,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnVoltar.setBorder(null);
         btnVoltar.setBorderPainted(false);
         btnVoltar.setContentAreaFilled(false);
-        btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnVoltar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         btnVoltar.setDefaultCapable(false);
         btnVoltar.setRolloverEnabled(false);
@@ -302,10 +294,6 @@ public class ProdutoView extends javax.swing.JFrame {
         lbCategoria.setBackground(new java.awt.Color(0, 0, 0));
         lbCategoria.setForeground(new java.awt.Color(255, 255, 255));
         lbCategoria.setText("Categoria");
-
-        selectCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NORMAL", "PRODUTO COM INSUMOS", "INSUMO", "SERVICO" }));
-
-        selectGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BEBIDA", "SERVICO", "INGREDIENTE", "COMIDA", "INSUMO" }));
 
         btnAdcInsumos.setBackground(new java.awt.Color(51, 51, 51));
         btnAdcInsumos.setForeground(new java.awt.Color(255, 255, 0));
@@ -497,35 +485,50 @@ public class ProdutoView extends javax.swing.JFrame {
         addMaisInsumos.setVisible(true);
     }
 
+    //Aqui ------------------------------------------------------------------
     private void carregarDados()
     {
-        categoriaEntities = categoriaService.findAllCategoria();
-        grupoEntities = grupoService.findAllGrupo();
+        //pega do controler as response
+        categoriaResponse = produtoController.listarCategorias();
+        gruposResponse = produtoController.listarGrupos();
 
+        //limpa o que tinha
         selectCategoria.removeAllItems();
-        for (CategoriaEntity c : categoriaEntities) selectCategoria.addItem(c.getCategoria());
-
         selectGrupo.removeAllItems();
-        for (GrupoEntity g : grupoEntities) selectGrupo.addItem(g.getGrupo());
+
+        //carrega nos select as response
+        for (CategoriasResponse c : categoriaResponse) selectCategoria.addItem(c);
+        for(GruposResponse g : gruposResponse) selectGrupo.addItem(g);
 
         DefaultTableModel model = (DefaultTableModel) tbProdutos.getModel();
         model.setRowCount(0); //zera a tabela
 
-        List<ProdutoEntity> produtoEntities = produtoService.findAllProdutos();
-        for(ProdutoEntity p : produtoEntities){
+        List<ProdutosResponse> produtos = produtoController.listarProdutos();
+        for(ProdutosResponse p : produtos){
             model.addRow(new Object[]{
-                    p.getId(),
-                    p.getNome(),
-                    p.getPrecoVenda(),
-                    p.getStatus(),
-                    p.getCategoria(),
-                    p.getGrupo().getGrupo(),
-                    p.getObservacao()
+                p.id(),
+                p.nome(),
+                p.precoVenda(),
+                p.status(),
+                p.categoria(),
+                p.grupo(),
+                p.observacao()
             });
         }
+
         carregarSelectInsumos();
     }
 
+    private void carregarSelectInsumos() {
+        selectInsumo.removeAllItems();
+        produtoController.listarProdutosInsumos()
+                .stream()
+                .forEach(p ->
+                        selectInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
+                );
+    }
+
+    //Aqui ------------------------------------------------------------------
     private void carregarInfoProduto(Long id)
     {
         ProdutoEntity produtoEntity = produtoService.findById(id);
@@ -545,6 +548,7 @@ public class ProdutoView extends javax.swing.JFrame {
         }
     }
 
+    //Aqui ------------------------------------------------------------------
     private void carregarInsumos(Long id)
     {
         DefaultTableModel model = (DefaultTableModel) tbInsumos.getModel();
@@ -559,14 +563,6 @@ public class ProdutoView extends javax.swing.JFrame {
                     insumo.getQtde()
             });
         }
-    }
-
-    private void carregarSelectInsumos() {
-        selectInsumo.removeAllItems();
-        produtoService.findAllProdutos().stream()
-                .filter(p -> p.getGrupo().getGrupo().equals("INSUMO")
-                        || p.getGrupo().getGrupo().equals("SERVICO") || p.getGrupo().getGrupo().equals("INGREDIENTE"))
-                .forEach(p -> selectInsumo.addItem(p.getNome()));
     }
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -597,38 +593,30 @@ public class ProdutoView extends javax.swing.JFrame {
         }
 
         try {
-            String nomeCategoria = (String) selectCategoria.getSelectedItem();
-            CategoriaEntity categoriaEntity = categoriaEntities.stream()
-                    .filter(c -> c.getCategoria().equals(nomeCategoria))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+            CategoriasResponse categoria = (CategoriasResponse) selectCategoria.getSelectedItem();
+            GruposResponse grupo = (GruposResponse) selectGrupo.getSelectedItem();
 
-            String nomeGrupo = (String) selectGrupo.getSelectedItem();
-            GrupoEntity grupoEntity = grupoEntities.stream()
-                    .filter(g -> g.getGrupo().equals(nomeGrupo))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
+            ProdutoSelectResponse produto = produtoController.cadastrarProduto(
+                txtProduto.getText(),
+                Double.parseDouble(txtValorUnit.getText()),
+                categoria.id(),
+                grupo.id(),
+                txtObservacao.getText()
+            );
 
-            ProdutoEntity produtoEntity = new ProdutoEntity();
-            produtoEntity.setNome(txtProduto.getText());
-            produtoEntity.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
-            produtoEntity.setObservacao(txtObservacao.getText());
-            produtoEntity.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO); //tem que fazer isso, pois na hora que criei a tabela usei enum ;-;
-            produtoEntity.setCategoria(categoriaEntity);
-            produtoEntity.setGrupo(grupoEntity);
-
-            produtoService.salvarProduto(produtoEntity); //salva o produto
-            if ("PRODUTO COM INSUMOS".equals(nomeCategoria)) { //caso for do tipo com insumo
-                salvarInsumo(produtoEntity, (String) selectInsumo.getSelectedItem(), Double.parseDouble(txtInsumosQtde.getText())); //pega a info da linha fixa
-
+            if ("PRODUTO COM INSUMOS".equals(categoria.categoria())) { //caso for do tipo com insumo
+                ProdutoSelectResponse firstInsumo = (ProdutoSelectResponse) selectInsumo.getSelectedItem();
+                produtoController.cadastrarInsumo(produto.id(),Double.parseDouble(txtInsumosQtde.getText()), firstInsumo.id());
                 for (Object[] linha : linhasInsumo) {
                     JComboBox<String> combo = (JComboBox<String>) linha[0];
                     JTextField qtde = (JTextField) linha[1];
                     if (combo.getSelectedItem() != null) {
-                        salvarInsumo(produtoEntity, (String) combo.getSelectedItem(), Double.parseDouble(qtde.getText()));
+                        ProdutoSelectResponse insumo = (ProdutoSelectResponse) combo.getSelectedItem();
+                        produtoController.cadastrarInsumo(produto.id(),Double.parseDouble(qtde.getText()), insumo.id());
                     }
                 }
             }
+
             //mesagem de sucesso
             JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limparCampos(); //limpa os campos
@@ -637,8 +625,9 @@ public class ProdutoView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Erro ao salvar: "+e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         
-    }                                            
+    }
 
+    //Aqui ------------------------------------------------------------------
     private void salvarInsumo(ProdutoEntity produtoEntity, String nomeInsumo, double qtde) {
         ProdutoEntity insumo = produtoService.findAllProdutos().stream()
                 .filter(p -> p.getNome().equalsIgnoreCase(nomeInsumo))
@@ -652,6 +641,8 @@ public class ProdutoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtInsumosQtdeActionPerformed
 
+
+    //Aqui ------------------------------------------------------------------
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)
     {
         if (produtoEntitySelecionado == null) {
@@ -699,18 +690,20 @@ public class ProdutoView extends javax.swing.JFrame {
         }
     }
 
+    //Aqui ------------------------------------------------------------------
     private void btnAdcInsumosActionPerformed(java.awt.event.ActionEvent evt)
     {
         // TODO add your handling code here:
+//        JOptionPane.showMessageDialog(this, "Erro ao atualizar: " );
         JPanel linha = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         linha.setBackground(new java.awt.Color(28, 28, 30));
 
-        JComboBox<String> comboInsumo = new JComboBox<>();
-        produtoService.findAllProdutos().stream()
-                .filter(p -> p.getGrupo().getGrupo().equals("INSUMO")
-                        || p.getGrupo().getGrupo().equals("SERVICO")
-                        || p.getGrupo().getGrupo().equals("INGREDIENTE"))
-                .forEach(p -> comboInsumo.addItem(p.getNome()));
+        JComboBox<ProdutoSelectResponse> comboInsumo = new JComboBox<>();
+
+        produtoController.listarProdutosInsumos()
+            .forEach(p ->
+                    comboInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
+            );
 
         JTextField campoQtde = new JTextField(8);
 
@@ -729,8 +722,9 @@ public class ProdutoView extends javax.swing.JFrame {
         addMaisInsumos.add(linha);
         addMaisInsumos.revalidate();
         addMaisInsumos.repaint();
-    }                                             
+    }
 
+    //Aqui ------------------------------------------------------------------
     private List<String> rules()
     {
         List<String> errors = new ArrayList<>();
@@ -805,35 +799,32 @@ public class ProdutoView extends javax.swing.JFrame {
         addMaisInsumos.removeAll();
         addMaisInsumos.revalidate();
         addMaisInsumos.repaint();
-//        ocultarCamposInsumo();
         selectCategoria.setSelectedIndex(0);
         selectGrupo.setSelectedIndex(0);
         selectStatus.setSelectedIndex(0);
 
     }
-        /**
-         * @param args the command line arguments
-         */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(() -> new ProdutoView().setVisible(true));
+    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+////            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+////        java.awt.EventQueue.invokeLater(() -> new ProdutoView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -860,9 +851,9 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JLabel lbSubTituloProdutos;
     private javax.swing.JLabel lbTitulo;
     private javax.swing.JLabel lbValUnit;
-    private javax.swing.JComboBox<String> selectCategoria;
-    private javax.swing.JComboBox<String> selectGrupo;
-    private javax.swing.JComboBox<String> selectInsumo;
+    private javax.swing.JComboBox<CategoriasResponse> selectCategoria;
+    private javax.swing.JComboBox<GruposResponse> selectGrupo;
+    private javax.swing.JComboBox<ProdutoSelectResponse> selectInsumo;
     private javax.swing.JComboBox<String> selectStatus;
     private javax.swing.JTable tbInsumos;
     private javax.swing.JTable tbProdutos;

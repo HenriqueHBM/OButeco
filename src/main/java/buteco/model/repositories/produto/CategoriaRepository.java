@@ -23,6 +23,6 @@ public class CategoriaRepository {
     }
 
     public List<CategoriaEntity> findAll(){
-        return em.createQuery("select c from Categoria c", CategoriaEntity.class).getResultList();
+        return em.createQuery("select c from CategoriaEntity c", CategoriaEntity.class).getResultList();
     }
 }

@@ -37,6 +37,6 @@ public class CategoriaEntity {
 
     @Override
     public String toString(){
-        return "[" + id + "] - " + categoria;
+        return categoria;
     }
 }

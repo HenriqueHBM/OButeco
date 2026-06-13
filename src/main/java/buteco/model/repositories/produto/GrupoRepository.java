@@ -19,6 +19,6 @@ public class GrupoRepository {
     }
 
     public List<GrupoEntity>findAll(){
-        return em.createQuery("select c from Grupo c", GrupoEntity.class).getResultList();
+        return em.createQuery("select c from GrupoEntity c", GrupoEntity.class).getResultList();
     }
 }
