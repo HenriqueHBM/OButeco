@@ -11,6 +11,7 @@ import buteco.model.entity.produto.CategoriaEntity;
 import buteco.model.entity.produto.GrupoEntity;
 import buteco.model.entity.produto.InsumosProdutoEntity;
 import buteco.model.entity.produto.ProdutoEntity;
+import buteco.model.enums.EStatus;
 import buteco.model.service.CategoriaService;
 import buteco.model.service.GrupoService;
 import buteco.model.service.InsumosProdutoService;
@@ -139,5 +140,42 @@ public class ProdutosControllerImpl implements ProdutosControllerInterface{
         insumoService.salvarInsumo(insumosProduto);
 
         return new CadInsumosProdutoResponse(id_produto,qtde,id_insumo);
+    }
+
+    //editar
+    //nele temos nome, preco venda, observacao e status categoria grupo
+    public ProdutoSelectResponse editarProduto(
+            Long id_produto,
+            String nome,
+            Double preco_venda,
+            String status,
+            Long fk_id_categoria,
+            Long fk_id_grupo,
+            String observacao)
+    {
+        ProdutoEntity produto = produtoService.findById(id_produto);
+
+        //busca a categoria
+        CategoriaEntity categoriaEntity = categoriaService.findById(fk_id_categoria);
+
+        //busca o grupo
+        GrupoEntity grupoEntity = grupoService.findById(fk_id_grupo);
+
+        produto.setNome(nome);
+        produto.setPrecoVenda(preco_venda);
+        produto.setObservacao(observacao);
+        produto.setCategoria(categoriaEntity);
+        produto.setGrupo(grupoEntity);
+        produto.setStatus(
+                "Ativo".equals(status)
+                        ? EStatus.ATIVO
+                        : EStatus.INATIVO
+        );
+        produtoService.atualizarProduto(produto);
+
+        return new ProdutoSelectResponse(
+                produto.getId(),
+                produto.getNome()
+        );
     }
 }

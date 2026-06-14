@@ -47,6 +47,15 @@ public interface ProdutosControllerInterface {
         String grupo
     );
 
+    ProdutoSelectResponse editarProduto(
+            Long id_produto,
+            String nome,
+            Double preco_venda,
+            String status,
+            Long fk_id_categoria,
+            Long fk_id_grupo,
+            String observacao
+    );
     List<ProdutosResponse> listarProdutos();
     List<CategoriasResponse> listarCategorias();
     List<GruposResponse> listarGrupos();
