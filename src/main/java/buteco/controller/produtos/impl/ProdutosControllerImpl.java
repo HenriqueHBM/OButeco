@@ -1,10 +1,7 @@
 package buteco.controller.produtos.impl;
 
 import buteco.controller.produtos.ProdutosControllerInterface;
-import buteco.controller.produtos.dto.CadInsumosProdutoResponse;
-import buteco.controller.produtos.dto.CadProdutosResponse;
-import buteco.controller.produtos.dto.ProdutoSelectResponse;
-import buteco.controller.produtos.dto.ProdutosResponse;
+import buteco.controller.produtos.dto.*;
 import buteco.controller.produtos.dto.categoria.CategoriasResponse;
 import buteco.controller.produtos.dto.grupo.GruposResponse;
 import buteco.model.entity.produto.CategoriaEntity;
@@ -49,6 +46,7 @@ public class ProdutosControllerImpl implements ProdutosControllerInterface{
     ){
         return new ProdutosResponse(id, nome, precoVenda, status, categoria, grupo, observacao);
     }
+//    public
     public ProdutoSelectResponse selectProduto(Long id, String nome){return new ProdutoSelectResponse(id, nome);};
 
     public CategoriasResponse listaCategorias(Long id, String categoria){
@@ -59,7 +57,16 @@ public class ProdutosControllerImpl implements ProdutosControllerInterface{
         return new GruposResponse(id, grupo);
     }
 
-    //Listagem das Coisas para Usar em select/tabelas
+    public InsumosProdutoResponse insumosProdutoResponse(
+            Long id_produto,
+            Long id,
+            String nome,
+            double qtde
+    ){
+
+        return new InsumosProdutoResponse(id_produto, id, nome, qtde);
+    }
+    //Listagem das Coisas para Usar em select/tabelas-----------------------------------------
     public List<ProdutosResponse> listarProdutos(){
         return produtoService.findAllProdutos()
                 .stream()
@@ -89,7 +96,7 @@ public class ProdutosControllerImpl implements ProdutosControllerInterface{
                 .toList();
     }
 
-    public List<ProdutoSelectResponse> listarProdutosInsumos(){
+    public List<ProdutoSelectResponse> listarInsumos(){
         return produtoService.findAllProdutos()
                 .stream()
                 .filter(p ->
@@ -99,6 +106,41 @@ public class ProdutosControllerImpl implements ProdutosControllerInterface{
                 )
                 .map(p-> this.selectProduto(p.getId(), p.getNome()))
                 .toList();
+    }
+
+    public List<InsumosProdutoResponse> listarProdutosInsumos(Long id_produto){
+
+        return insumoService.findAllInsumosProduto(id_produto)
+                .stream()
+                .map(i -> this.insumosProdutoResponse(
+                        i.getProduto().getId(),
+                        i.getId(),
+                        i.getInsumo().getNome(),
+                        i.getQtde()
+                ))
+                .toList();
+    }
+    //find -----------------------------------------------------------------------
+    public EditProdutoResponse findProduto(Long id){
+        ProdutoEntity produto = produtoService.findById(id);
+        return new EditProdutoResponse(produto.getId(),
+                produto.getNome(),
+                produto.getPrecoVenda(),
+                produto.getStatus().toString(),
+                produto.getCategoria().getId(),
+                produto.getGrupo().getId(),
+                produto.getObservacao()
+        );
+    }
+
+    public CategoriasResponse findCategoria(Long id){
+        CategoriaEntity cat = categoriaService.findById(id);
+        return new CategoriasResponse(cat.getId(), cat.getCategoria());
+    }
+
+    public GruposResponse findGrupo(Long id){
+        GrupoEntity gp = grupoService.findById(id);
+        return new GruposResponse(gp.getId(), gp.getGrupo());
     }
 
     //Cadastro

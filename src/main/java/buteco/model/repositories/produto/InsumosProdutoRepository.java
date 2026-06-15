@@ -3,6 +3,8 @@ package buteco.model.repositories.produto;
 import buteco.model.entity.produto.InsumosProdutoEntity;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 public class InsumosProdutoRepository {
     private EntityManager em;
 
@@ -23,5 +25,14 @@ public class InsumosProdutoRepository {
         if(insumo != null){
             em.remove(insumo);
         }
+    }
+
+    public List<InsumosProdutoEntity> findAllInsumosProdutos(Long id_produto){
+        return em.createQuery("select i from InsumosProdutoEntity i where i.produtoEntity.id = :id_produto",
+                InsumosProdutoEntity.class)
+                .setParameter("id_produto", id_produto)
+                .getResultStream()
+                .toList();
+
     }
 }
