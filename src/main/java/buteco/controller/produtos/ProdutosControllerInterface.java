@@ -1,9 +1,6 @@
 package buteco.controller.produtos;
 
-import buteco.controller.produtos.dto.CadInsumosProdutoResponse;
-import buteco.controller.produtos.dto.CadProdutosResponse;
-import buteco.controller.produtos.dto.ProdutoSelectResponse;
-import buteco.controller.produtos.dto.ProdutosResponse;
+import buteco.controller.produtos.dto.*;
 import buteco.controller.produtos.dto.categoria.CategoriasResponse;
 import buteco.controller.produtos.dto.grupo.GruposResponse;
 
@@ -35,6 +32,13 @@ public interface ProdutosControllerInterface {
         String observacao
     );
 
+    InsumosProdutoResponse insumosProdutoResponse(
+            Long id_produto,
+            Long id,
+            String nome,
+            double qtde
+    );
+
     ProdutoSelectResponse selectProduto(Long id, String nome);
 
     CategoriasResponse listaCategorias(
@@ -47,8 +51,23 @@ public interface ProdutosControllerInterface {
         String grupo
     );
 
+    ProdutoSelectResponse editarProduto(
+            Long id_produto,
+            String nome,
+            Double preco_venda,
+            String status,
+            Long fk_id_categoria,
+            Long fk_id_grupo,
+            String observacao
+    );
+
+    EditProdutoResponse findProduto(Long id);
+    CategoriasResponse findCategoria(Long id);
+    GruposResponse findGrupo(Long id);
+
     List<ProdutosResponse> listarProdutos();
     List<CategoriasResponse> listarCategorias();
     List<GruposResponse> listarGrupos();
-    List<ProdutoSelectResponse> listarProdutosInsumos();
+    List<ProdutoSelectResponse> listarInsumos();
+    List<InsumosProdutoResponse> listarProdutosInsumos(Long id_produto);
 }

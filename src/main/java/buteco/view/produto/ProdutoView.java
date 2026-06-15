@@ -5,9 +5,7 @@
 package buteco.view.produto;
 
 import buteco.controller.produtos.ProdutosControllerInterface;
-import buteco.controller.produtos.dto.CadProdutosResponse;
-import buteco.controller.produtos.dto.ProdutoSelectResponse;
-import buteco.controller.produtos.dto.ProdutosResponse;
+import buteco.controller.produtos.dto.*;
 import buteco.controller.produtos.dto.categoria.CategoriasResponse;
 import buteco.controller.produtos.dto.grupo.GruposResponse;
 import buteco.controller.produtos.impl.ProdutosControllerImpl;
@@ -31,6 +29,7 @@ public class ProdutoView extends javax.swing.JFrame {
     private List<GrupoEntity> grupoEntities;
     private InsumosProdutoService insumosProdutoService;
     private ProdutoEntity produtoEntitySelecionado;
+    private EditProdutoResponse produtoResponse;
     private ProdutosControllerInterface produtoController;
     private List<CategoriasResponse> categoriaResponse;
     private List<GruposResponse> gruposResponse;
@@ -55,21 +54,21 @@ public class ProdutoView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         addMaisInsumos.setLayout(new BoxLayout(addMaisInsumos, BoxLayout.Y_AXIS));
-//
-//
-//
-//        //listar selecao dos insumos ao apertar -----------------------------------------------------------------------
-//        tbProdutos.getSelectionModel().addListSelectionListener( e ->{
-//            if(!e.getValueIsAdjusting()){
-//                int linha = tbProdutos.getSelectedRow();
-//                if(linha >= 0){
-//                    Long id = (Long) tbProdutos.getValueAt(linha, 0);
+
+        //listar selecao dos insumos ao apertar -----------------------------------------------------------------------
+        tbProdutos.getSelectionModel().addListSelectionListener( e ->{
+            if(!e.getValueIsAdjusting()){
+                int linha = tbProdutos.getSelectedRow();
+                if(linha >= 0){
+                    Long id = (Long) tbProdutos.getValueAt(linha, 0);
+
+                    produtoResponse = produtoController.findProduto(id);
 //                    produtoEntitySelecionado = produtoService.findById(id);
-//                    carregarInsumos(id);
-//                    carregarInfoProduto(id);
-//                }
-//            }
-//        });
+                    carregarInsumos(id);
+                    carregarInfoProduto(produtoResponse);
+                }
+            }
+        });
 //        // ----------------------------------------------------------------------------------------------------------
 //
 //        //esconder/mostrar linha de insumos -------------------------------------------------------------------------
@@ -108,8 +107,6 @@ public class ProdutoView extends javax.swing.JFrame {
         lbStatus = new javax.swing.JLabel();
         lbGrupo = new javax.swing.JLabel();
         selectStatus = new javax.swing.JComboBox<>();
-        lbInsumo = new javax.swing.JLabel();
-        lbInsumoQtde = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObservacao = new javax.swing.JTextArea();
         lbObs = new javax.swing.JLabel();
@@ -126,8 +123,6 @@ public class ProdutoView extends javax.swing.JFrame {
         selectGrupo = new javax.swing.JComboBox<>();
         btnAdcInsumos = new javax.swing.JButton();
         addMaisInsumos = new javax.swing.JPanel();
-        txtInsumosQtde = new javax.swing.JTextField();
-        selectInsumo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,14 +197,6 @@ public class ProdutoView extends javax.swing.JFrame {
         selectStatus.setMinimumSize(new java.awt.Dimension(64, 24));
         selectStatus.setPreferredSize(new java.awt.Dimension(64, 24));
         selectStatus.addActionListener(this::selectStatusActionPerformed);
-
-        lbInsumo.setBackground(new java.awt.Color(0, 0, 0));
-        lbInsumo.setForeground(new java.awt.Color(255, 255, 255));
-        lbInsumo.setText("Insumo");
-
-        lbInsumoQtde.setBackground(new java.awt.Color(0, 0, 0));
-        lbInsumoQtde.setForeground(new java.awt.Color(255, 255, 255));
-        lbInsumoQtde.setText("Qtde");
 
         txtObservacao.setColumns(20);
         txtObservacao.setRows(5);
@@ -315,8 +302,6 @@ public class ProdutoView extends javax.swing.JFrame {
             .addGap(0, 51, Short.MAX_VALUE)
         );
 
-        txtInsumosQtde.addActionListener(this::txtInsumosQtdeActionPerformed);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -334,7 +319,10 @@ public class ProdutoView extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(lbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbObs, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(addMaisInsumos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -352,20 +340,14 @@ public class ProdutoView extends javax.swing.JFrame {
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(lbObs, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(lbInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(selectInsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbInsumoQtde)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtInsumosQtde)
-                                .addGap(12, 12, 12)
-                                .addComponent(btnAdcInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(lbValUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtValorUnit)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -375,20 +357,17 @@ public class ProdutoView extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(404, 404, 404)
-                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(lbValUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(txtValorUnit))))
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(41, 41, 41))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbSubTituloInsumos)
-                .addGap(362, 362, 362))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbSubTituloInsumos)
+                        .addGap(362, 362, 362))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnAdcInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(318, 318, 318))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,12 +397,7 @@ public class ProdutoView extends javax.swing.JFrame {
                     .addComponent(selectCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdcInsumos)
-                    .addComponent(txtInsumosQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbInsumo)
-                    .addComponent(lbInsumoQtde)
-                    .addComponent(selectInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnAdcInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addMaisInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -467,20 +441,20 @@ public class ProdutoView extends javax.swing.JFrame {
 
     private void ocultarCamposInsumos()
     {
-        lbInsumo.setVisible(false);
-        lbInsumoQtde.setVisible(false);
-        txtInsumosQtde.setVisible(false);
-        selectInsumo.setVisible(false);
+//        lbInsumo.setVisible(false);
+//        lbInsumoQtde.setVisible(false);
+//        txtInsumosQtde.setVisible(false);
+//        selectInsumo.setVisible(false);
         btnAdcInsumos.setVisible(false);
         addMaisInsumos.setVisible(false);
     }
 
     private void mostrarCamposInsumos()
     {
-        lbInsumo.setVisible(true);
-        selectInsumo.setVisible(true);
-        lbInsumoQtde.setVisible(true);
-        txtInsumosQtde.setVisible(true);
+//        lbInsumo.setVisible(true);
+//        selectInsumo.setVisible(true);
+//        lbInsumoQtde.setVisible(true);
+//        txtInsumosQtde.setVisible(true);
         btnAdcInsumos.setVisible(true);
         addMaisInsumos.setVisible(true);
     }
@@ -520,32 +494,36 @@ public class ProdutoView extends javax.swing.JFrame {
     }
 
     private void carregarSelectInsumos() {
-        selectInsumo.removeAllItems();
-        produtoController.listarProdutosInsumos()
-                .stream()
-                .forEach(p ->
-                        selectInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
-                );
+//        selectInsumo.removeAllItems();
+//        produtoController.listarProdutosInsumos()
+//                .stream()
+//                .forEach(p ->
+//                        selectInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
+//                );
     }
 
     //Aqui ------------------------------------------------------------------
-    private void carregarInfoProduto(Long id)
+    private void carregarInfoProduto(EditProdutoResponse produto)
     {
-        ProdutoEntity produtoEntity = produtoService.findById(id);
+//        ProdutoEntity produtoEntity = produtoService.findById(id);
 
-        txtProduto.setText(produtoEntity.getNome());
-        txtValorUnit.setText(Double.toString(produtoEntity.getPrecoVenda()));
-        txtObservacao.setText(produtoEntity.getObservacao());
+        txtProduto.setText(produto.nome());
+        txtValorUnit.setText(Double.toString(produto.preco_venda()));
+        txtObservacao.setText(produto.obsevacao());
 
         //preenchendo os select
-        selectStatus.setSelectedItem(produtoEntity.getStatus() == EStatus.ATIVO ? "Ativo" : "Inativo");
-        selectCategoria.setSelectedItem(produtoEntity.getCategoria().getCategoria());
-        selectGrupo.setSelectedItem(produtoEntity.getGrupo().getGrupo());
+        selectStatus.setSelectedItem(produto.status().toString() == "ATIVO" ? "Ativo" : "Inativo");
 
-        if ("PRODUTO COM INSUMOS".equals(produtoEntity.getCategoria().getCategoria())) {
-            JOptionPane.showMessageDialog(this, "Desculpa, campo de Insumos nao sao editaveis", "Campos Insumos", JOptionPane.INFORMATION_MESSAGE);
-            ocultarCamposInsumos();
-        }
+        CategoriasResponse cat = produtoController.findCategoria(produto.fk_id_categoria());
+        selectCategoria.setSelectedItem(cat);
+
+        GruposResponse gp = produtoController.findGrupo(produto.fk_id_grupo());
+        selectGrupo.setSelectedItem(gp);
+
+//        if ("PRODUTO COM INSUMOS".equals(produtoEntity.getCategoria().getCategoria())) {
+//            JOptionPane.showMessageDialog(this, "Desculpa, campo de Insumos nao sao editaveis", "Campos Insumos", JOptionPane.INFORMATION_MESSAGE);
+//            ocultarCamposInsumos();
+//        }
     }
 
     //Aqui ------------------------------------------------------------------
@@ -554,15 +532,12 @@ public class ProdutoView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbInsumos.getModel();
         model.setRowCount(0); //zera a tabela
 
-        ProdutoEntity produtoEntity = produtoService.findByIdComInsumos(id); // aqui
-
-        for (InsumosProdutoEntity insumo : produtoEntity.getInsumos()) {
-            model.addRow(new Object[]{
-                    insumo.getId(),
-                    insumo.getInsumo().getNome(),
-                    insumo.getQtde()
-            });
-        }
+        produtoController.listarProdutosInsumos(id)
+            .forEach(i -> model.addRow(new Object[]{
+                    i.id(),
+                    i.nome(),
+                    i.qtde()
+            }));
     }
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -605,8 +580,8 @@ public class ProdutoView extends javax.swing.JFrame {
             );
 
             if ("PRODUTO COM INSUMOS".equals(categoria.categoria())) { //caso for do tipo com insumo
-                ProdutoSelectResponse firstInsumo = (ProdutoSelectResponse) selectInsumo.getSelectedItem();
-                produtoController.cadastrarInsumo(produto.id(),Double.parseDouble(txtInsumosQtde.getText()), firstInsumo.id());
+//                ProdutoSelectResponse firstInsumo = (ProdutoSelectResponse) selectInsumo.getSelectedItem();
+//                produtoController.cadastrarInsumo(produto.id(),Double.parseDouble(txtInsumosQtde.getText()), firstInsumo.id());
                 for (Object[] linha : linhasInsumo) {
                     JComboBox<String> combo = (JComboBox<String>) linha[0];
                     JTextField qtde = (JTextField) linha[1];
@@ -636,10 +611,6 @@ public class ProdutoView extends javax.swing.JFrame {
 
         insumosProdutoService.salvarInsumo(new InsumosProdutoEntity(produtoEntity, insumo, qtde));
     }
-
-    private void txtInsumosQtdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInsumosQtdeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtInsumosQtdeActionPerformed
 
 
     //Aqui ------------------------------------------------------------------
@@ -700,7 +671,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
         JComboBox<ProdutoSelectResponse> comboInsumo = new JComboBox<>();
 
-        produtoController.listarProdutosInsumos()
+        produtoController.listarInsumos()
             .forEach(p ->
                     comboInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
             );
@@ -749,21 +720,6 @@ public class ProdutoView extends javax.swing.JFrame {
         //insumo so valida de selecionado
         if ("PRODUTO COM INSUMOS".equals(selectCategoria.getSelectedItem())) {
 
-            //valdia os primeiros campos
-            if (selectInsumo.getSelectedItem() == null) {
-                errors.add("Informe ao menos um insumo.");
-            }
-            if (txtInsumosQtde.getText().isBlank()) {
-                errors.add("Informe a quantidade do insumo.");
-            } else { //mesma coisa do valor unitario
-                try {
-                    double qtde = Double.parseDouble(txtInsumosQtde.getText());
-                    if (qtde <= 0) errors.add("Quantidade do insumo deve ser maior que zero.");
-                } catch (NumberFormatException e) {
-                    errors.add("Quantidade do insumo inválida.");
-                }
-            }
-
             // caso usado o btn de mais(+), ai percorre as linhas criadas e valida um por um
             for (int i = 0; i < linhasInsumo.size(); i++) {
                 JComboBox<String> combo = (JComboBox<String>) linhasInsumo.get(i)[0];
@@ -793,8 +749,8 @@ public class ProdutoView extends javax.swing.JFrame {
         txtProduto.setText("");
         txtValorUnit.setText("");
         txtObservacao.setText("");
-        selectInsumo.setSelectedIndex(0);
-        txtInsumosQtde.setText("");
+//        selectInsumo.setSelectedIndex(0);
+//        txtInsumosQtde.setText("");
         linhasInsumo.clear();
         addMaisInsumos.removeAll();
         addMaisInsumos.revalidate();
@@ -842,8 +798,6 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbEstoque;
     private javax.swing.JLabel lbGrupo;
-    private javax.swing.JLabel lbInsumo;
-    private javax.swing.JLabel lbInsumoQtde;
     private javax.swing.JLabel lbObs;
     private javax.swing.JLabel lbProduto;
     private javax.swing.JLabel lbStatus;
@@ -853,11 +807,9 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JLabel lbValUnit;
     private javax.swing.JComboBox<CategoriasResponse> selectCategoria;
     private javax.swing.JComboBox<GruposResponse> selectGrupo;
-    private javax.swing.JComboBox<ProdutoSelectResponse> selectInsumo;
     private javax.swing.JComboBox<String> selectStatus;
     private javax.swing.JTable tbInsumos;
     private javax.swing.JTable tbProdutos;
-    private javax.swing.JTextField txtInsumosQtde;
     private javax.swing.JTextArea txtObservacao;
     private javax.swing.JTextField txtProduto;
     private javax.swing.JTextField txtValorUnit;

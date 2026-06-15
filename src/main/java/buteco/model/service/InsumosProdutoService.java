@@ -4,6 +4,8 @@ import buteco.model.entity.produto.InsumosProdutoEntity;
 import buteco.model.repositories.produto.InsumosProdutoRepository;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 public class InsumosProdutoService {
     private final InsumosProdutoRepository insumosProdutoRepository;
 
@@ -20,7 +22,12 @@ public class InsumosProdutoService {
     {
         insumosProdutoRepository.create(insumosProdutoEntity);
     }
-//    public void salvarProduto(Produto produto){
-//        produtoRepository.create(produto);
-//    }
+
+    public List<InsumosProdutoEntity> findAllInsumosProduto(Long id_produto){
+        return insumosProdutoRepository.findAllInsumosProdutos(id_produto);
+//        if(insumos.isEmpty()){
+//            throw new RuntimeException("Lista ausente");
+//        }
+//        return insumos;
+    }
 }
