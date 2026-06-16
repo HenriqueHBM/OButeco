@@ -24,28 +24,17 @@ import java.util.List;
 
 public class ProdutoView extends javax.swing.JFrame {
 
-    private ProdutoService produtoService;
-    private List<CategoriaEntity> categoriaEntities;
-    private List<GrupoEntity> grupoEntities;
-    private InsumosProdutoService insumosProdutoService;
-    private ProdutoEntity produtoEntitySelecionado;
+    private EditProdutoResponse produtoResponseSelecionado;
     private EditProdutoResponse produtoResponse;
     private ProdutosControllerInterface produtoController;
     private List<CategoriasResponse> categoriaResponse;
     private List<GruposResponse> gruposResponse;
 
-//    private List<JTextField[]> linhasInsumo = new ArrayList<>();
     private List<Object[]> linhasInsumo = new ArrayList<>();
 
-//    public ProdutoView(){};
-
     public ProdutoView(
-            ProdutoService produtoService,
-            InsumosProdutoService insumosProdutoService,
             ProdutosControllerInterface produtoController
     ) {
-        this.insumosProdutoService = insumosProdutoService;
-        this.produtoService = produtoService;
         this.produtoController = produtoController;
         initComponents();
         carregarDados();
@@ -63,7 +52,7 @@ public class ProdutoView extends javax.swing.JFrame {
                     Long id = (Long) tbProdutos.getValueAt(linha, 0);
 
                     produtoResponse = produtoController.findProduto(id);
-//                    produtoEntitySelecionado = produtoService.findById(id);
+                    produtoResponseSelecionado = produtoController.findProduto(id);
                     carregarInsumos(id);
                     carregarInfoProduto(produtoResponse);
                 }
@@ -72,17 +61,21 @@ public class ProdutoView extends javax.swing.JFrame {
 //        // ----------------------------------------------------------------------------------------------------------
 //
 //        //esconder/mostrar linha de insumos -------------------------------------------------------------------------
-//        ocultarCamposInsumos();
-//        selectCategoria.addActionListener( e -> {
-//            String select = (String) selectCategoria.getSelectedItem();
-//            if("PRODUTO COM INSUMOS".equals(select)){
-//                mostrarCamposInsumos();
-//            }else{
-//                ocultarCamposInsumos();
-//            }
-//        });
+        btnAdcInsumos.setVisible(false);
+        selectCategoria.addActionListener( e -> {
+            try{ //usando o try apenas pois estava dando erro
+                CategoriasResponse categoria = (CategoriasResponse) selectCategoria.getSelectedItem();
+                if(!categoria.categoria().isEmpty()){
+                    if("PRODUTO COM INSUMOS".equals(categoria.categoria())){
+                        btnAdcInsumos.setVisible(true);
+                    }else{
+                        btnAdcInsumos.setVisible(false);
+                    }
 
-        // ----------------------------------------------------------------------------------------------------------
+                }
+            }catch (Exception eb){
+            }
+        });
     }
 
     /**
@@ -115,9 +108,9 @@ public class ProdutoView extends javax.swing.JFrame {
         lbSubTituloProdutos = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbProdutos = new javax.swing.JTable();
-        lbSubTituloInsumos = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        PainelInsumos = new javax.swing.JScrollPane();
         tbInsumos = new javax.swing.JTable();
+        lbSubTituloInsumos = new javax.swing.JLabel();
         lbCategoria = new javax.swing.JLabel();
         selectCategoria = new javax.swing.JComboBox<>();
         selectGrupo = new javax.swing.JComboBox<>();
@@ -226,15 +219,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
         tbProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null, null, null, null},
-                {"", null, null, null, null, null, null},
-                {"", null, null, null, null, null, null},
-                {"", null, null, null, null, null, null},
-                {"", null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Produto", "Valor Unit.", "Status", "Categoria", "Grupo", "Obs"
@@ -250,17 +235,9 @@ public class ProdutoView extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tbProdutos);
 
-        lbSubTituloInsumos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        lbSubTituloInsumos.setForeground(new java.awt.Color(255, 255, 255));
-        lbSubTituloInsumos.setText("Insumos");
-
         tbInsumos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "ID", "Produto", "Qtde Usada"
@@ -276,7 +253,11 @@ public class ProdutoView extends javax.swing.JFrame {
         });
         tbInsumos.setMinimumSize(new java.awt.Dimension(75, 180));
         tbInsumos.setPreferredSize(new java.awt.Dimension(375, 180));
-        jScrollPane4.setViewportView(tbInsumos);
+        PainelInsumos.setViewportView(tbInsumos);
+
+        lbSubTituloInsumos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        lbSubTituloInsumos.setForeground(new java.awt.Color(255, 255, 255));
+        lbSubTituloInsumos.setText("Insumos");
 
         lbCategoria.setBackground(new java.awt.Color(0, 0, 0));
         lbCategoria.setForeground(new java.awt.Color(255, 255, 255));
@@ -337,7 +318,7 @@ public class ProdutoView extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(selectGrupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PainelInsumos, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -415,7 +396,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbSubTituloInsumos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PainelInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(73, 73, 73))
         );
 
@@ -438,26 +419,6 @@ public class ProdutoView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ocultarCamposInsumos()
-    {
-//        lbInsumo.setVisible(false);
-//        lbInsumoQtde.setVisible(false);
-//        txtInsumosQtde.setVisible(false);
-//        selectInsumo.setVisible(false);
-        btnAdcInsumos.setVisible(false);
-        addMaisInsumos.setVisible(false);
-    }
-
-    private void mostrarCamposInsumos()
-    {
-//        lbInsumo.setVisible(true);
-//        selectInsumo.setVisible(true);
-//        lbInsumoQtde.setVisible(true);
-//        txtInsumosQtde.setVisible(true);
-        btnAdcInsumos.setVisible(true);
-        addMaisInsumos.setVisible(true);
-    }
 
     //Aqui ------------------------------------------------------------------
     private void carregarDados()
@@ -489,24 +450,13 @@ public class ProdutoView extends javax.swing.JFrame {
                 p.observacao()
             });
         }
-
-        carregarSelectInsumos();
+        //esconde a tabela de insumos
+        PainelInsumos.setVisible(false);
+        lbSubTituloInsumos.setVisible(false);
     }
 
-    private void carregarSelectInsumos() {
-//        selectInsumo.removeAllItems();
-//        produtoController.listarProdutosInsumos()
-//                .stream()
-//                .forEach(p ->
-//                        selectInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
-//                );
-    }
-
-    //Aqui ------------------------------------------------------------------
     private void carregarInfoProduto(EditProdutoResponse produto)
     {
-//        ProdutoEntity produtoEntity = produtoService.findById(id);
-
         txtProduto.setText(produto.nome());
         txtValorUnit.setText(Double.toString(produto.preco_venda()));
         txtObservacao.setText(produto.obsevacao());
@@ -526,18 +476,25 @@ public class ProdutoView extends javax.swing.JFrame {
 //        }
     }
 
-    //Aqui ------------------------------------------------------------------
     private void carregarInsumos(Long id)
     {
         DefaultTableModel model = (DefaultTableModel) tbInsumos.getModel();
         model.setRowCount(0); //zera a tabela
 
-        produtoController.listarProdutosInsumos(id)
-            .forEach(i -> model.addRow(new Object[]{
-                    i.id(),
-                    i.nome(),
-                    i.qtde()
-            }));
+        if(produtoController.listarProdutosInsumos(id).isEmpty()){
+            PainelInsumos.setVisible(false);
+            lbSubTituloInsumos.setVisible(false);
+        }else{
+            PainelInsumos.setVisible(true);
+            lbSubTituloInsumos.setVisible(true);
+            produtoController.listarProdutosInsumos(id)
+                .forEach(i -> model.addRow(new Object[]{
+                        i.id(),
+                        i.nome(),
+                        i.qtde()
+                }));
+
+        }
     }
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -579,9 +536,8 @@ public class ProdutoView extends javax.swing.JFrame {
                 txtObservacao.getText()
             );
 
-            if ("PRODUTO COM INSUMOS".equals(categoria.categoria())) { //caso for do tipo com insumo
-//                ProdutoSelectResponse firstInsumo = (ProdutoSelectResponse) selectInsumo.getSelectedItem();
-//                produtoController.cadastrarInsumo(produto.id(),Double.parseDouble(txtInsumosQtde.getText()), firstInsumo.id());
+            //Caso tenha insumos
+            if ("PRODUTO COM INSUMOS".equals(categoria.categoria())) {
                 for (Object[] linha : linhasInsumo) {
                     JComboBox<String> combo = (JComboBox<String>) linha[0];
                     JTextField qtde = (JTextField) linha[1];
@@ -602,21 +558,9 @@ public class ProdutoView extends javax.swing.JFrame {
         
     }
 
-    //Aqui ------------------------------------------------------------------
-    private void salvarInsumo(ProdutoEntity produtoEntity, String nomeInsumo, double qtde) {
-        ProdutoEntity insumo = produtoService.findAllProdutos().stream()
-                .filter(p -> p.getNome().equalsIgnoreCase(nomeInsumo))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Insumo \"" + nomeInsumo + "\" não encontrado"));
-
-        insumosProdutoService.salvarInsumo(new InsumosProdutoEntity(produtoEntity, insumo, qtde));
-    }
-
-
-    //Aqui ------------------------------------------------------------------
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)
     {
-        if (produtoEntitySelecionado == null) {
+        if (produtoResponseSelecionado == null) {
             JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.", "Nenhum produto selecionado", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -628,31 +572,21 @@ public class ProdutoView extends javax.swing.JFrame {
         }
 
         try {
-            // Atualiza os campos no objeto já existente
-            produtoEntitySelecionado.setNome(txtProduto.getText().trim());
-            produtoEntitySelecionado.setPrecoVenda(Double.parseDouble(txtValorUnit.getText()));
-            produtoEntitySelecionado.setObservacao(txtObservacao.getText().trim());
-            produtoEntitySelecionado.setStatus("Ativo".equals(selectStatus.getSelectedItem()) ? EStatus.ATIVO : EStatus.INATIVO);
+            CategoriasResponse categoria = (CategoriasResponse) selectCategoria.getSelectedItem();
+            GruposResponse grupo = (GruposResponse) selectGrupo.getSelectedItem();
 
-            String nomeCategoria = (String) selectCategoria.getSelectedItem();
-            CategoriaEntity categoriaEntity = categoriaEntities.stream()
-                    .filter(c -> c.getCategoria().equals(nomeCategoria))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
-
-            String nomeGrupo = (String) selectGrupo.getSelectedItem();
-            GrupoEntity grupoEntity = grupoEntities.stream()
-                    .filter(g -> g.getGrupo().equals(nomeGrupo))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
-
-            produtoEntitySelecionado.setCategoria(categoriaEntity);
-            produtoEntitySelecionado.setGrupo(grupoEntity);
-
-            produtoService.atualizarProduto(produtoEntitySelecionado);
+            produtoController.editarProduto(
+                produtoResponseSelecionado.id(),
+                txtProduto.getText().trim(),
+                Double.parseDouble(txtValorUnit.getText()),
+                selectStatus.getSelectedItem().toString(),
+                categoria.id(),
+                grupo.id(),
+                txtObservacao.getText().trim()
+            );
 
             JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            produtoEntitySelecionado = null;
+            produtoResponseSelecionado = null;
             limparCampos();
             carregarDados();
 
@@ -661,32 +595,62 @@ public class ProdutoView extends javax.swing.JFrame {
         }
     }
 
-    //Aqui ------------------------------------------------------------------
     private void btnAdcInsumosActionPerformed(java.awt.event.ActionEvent evt)
     {
         // TODO add your handling code here:
-//        JOptionPane.showMessageDialog(this, "Erro ao atualizar: " );
-        JPanel linha = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        JPanel linha = new JPanel(new GridBagLayout());
         linha.setBackground(new java.awt.Color(28, 28, 30));
 
-        JComboBox<ProdutoSelectResponse> comboInsumo = new JComboBox<>();
+        //obj de config que diz para o GridBagLayout() onde e cada componente deve ficar na "grade"
+        GridBagConstraints gbc = new GridBagConstraints();
+        //espacamento externo
+        gbc.insets = new Insets(5, 6, 0, 6);
+        //alinhamento a esquerda do painel
+        gbc.anchor = GridBagConstraints.WEST;
+        //preenche toda a largura horizontal do painel
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        JLabel lbI = new JLabel("Insumo:");
+        lbI.setForeground(java.awt.Color.WHITE);
+        //gridx = coluna, gridy = linha, weightx = quanto espaco horizontal(0 nao estica, 1.0 estica para preencher)
+        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0;
+        linha.add(lbI, gbc);
+
+        JComboBox<ProdutoSelectResponse> comboInsumo = new JComboBox<>();
+        gbc.gridx = 1; gbc.weightx = 1.0;
         produtoController.listarInsumos()
             .forEach(p ->
                     comboInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
             );
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        linha.add(comboInsumo, gbc);
+
+
+        JLabel lbQ = new JLabel("Qtde:");
+        lbQ.setForeground(java.awt.Color.WHITE);
+        gbc.gridx = 2; gbc.weightx = 0;
+        linha.add(lbQ, gbc);
 
         JTextField campoQtde = new JTextField(8);
+        gbc.gridx = 3; gbc.weightx = 1.0;
+        linha.add(campoQtde, gbc);
 
-        JLabel lbI = new JLabel("Insumo:");
-        JLabel lbQ = new JLabel("Qtde:");
-        lbI.setForeground(java.awt.Color.WHITE);
-        lbQ.setForeground(java.awt.Color.WHITE);
+        JButton btnRemove = new JButton("-");
+        //estilizacao copiada direto do que foi carregado no init do netBeans
+        btnRemove.setBackground(new java.awt.Color(51, 51, 51));
+        btnRemove.setForeground(new java.awt.Color(255, 255, 0));
+        btnRemove.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnRemove.setBorderPainted(false);
+        btnRemove.setFocusable(false);
 
-        linha.add(lbI);
-        linha.add(comboInsumo);
-        linha.add(lbQ);
-        linha.add(campoQtde);
+        btnRemove.addActionListener(e->{
+            addMaisInsumos.remove(linha);
+            linhasInsumo.removeIf(obj -> obj[0] == comboInsumo);
+            addMaisInsumos.revalidate();
+            addMaisInsumos.repaint();
+        });
+        gbc.gridx = 4; gbc.weightx = 0;
+        linha.add(btnRemove);
 
         linhasInsumo.add(new Object[]{comboInsumo, campoQtde});
 
@@ -695,7 +659,6 @@ public class ProdutoView extends javax.swing.JFrame {
         addMaisInsumos.repaint();
     }
 
-    //Aqui ------------------------------------------------------------------
     private List<String> rules()
     {
         List<String> errors = new ArrayList<>();
@@ -749,8 +712,6 @@ public class ProdutoView extends javax.swing.JFrame {
         txtProduto.setText("");
         txtValorUnit.setText("");
         txtObservacao.setText("");
-//        selectInsumo.setSelectedIndex(0);
-//        txtInsumosQtde.setText("");
         linhasInsumo.clear();
         addMaisInsumos.removeAll();
         addMaisInsumos.revalidate();
@@ -784,6 +745,7 @@ public class ProdutoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane PainelInsumos;
     private javax.swing.JPanel addMaisInsumos;
     private javax.swing.JButton btnAdcInsumos;
     private javax.swing.JButton btnAdicionar;
@@ -794,7 +756,6 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbEstoque;
     private javax.swing.JLabel lbGrupo;

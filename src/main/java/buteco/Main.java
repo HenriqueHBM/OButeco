@@ -109,7 +109,7 @@ public class Main {
         ProdutosControllerInterface produtosController =
                 new ProdutosControllerImpl(produtoService, categoriaService, grupoService, insumosProdutoService);
         view.clicarProdutoAction(e -> {
-            ProdutoView produtoView = new ProdutoView(produtoService, insumosProdutoService, produtosController);
+            ProdutoView produtoView = new ProdutoView(produtosController);
             produtoView.setVisible(true);
         });
 //        view.clicarEstoqueAction(e -> {
