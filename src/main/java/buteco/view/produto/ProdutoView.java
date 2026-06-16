@@ -130,7 +130,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnVoltar.setBorder(null);
         btnVoltar.setBorderPainted(false);
         btnVoltar.setContentAreaFilled(false);
-        btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnVoltar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         btnVoltar.setDefaultCapable(false);
         btnVoltar.setRolloverEnabled(false);
@@ -165,13 +165,10 @@ public class ProdutoView extends javax.swing.JFrame {
         lbTitulo.setText("Cadastro de Produtos");
 
         txtProduto.setMaximumSize(new java.awt.Dimension(64, 24));
-        txtProduto.addActionListener(this::txtProdutoActionPerformed);
 
         lbProduto.setBackground(new java.awt.Color(0, 0, 0));
         lbProduto.setForeground(new java.awt.Color(255, 255, 255));
         lbProduto.setText("Produto");
-
-        txtValorUnit.addActionListener(this::txtValorUnitActionPerformed);
 
         lbValUnit.setBackground(new java.awt.Color(0, 0, 0));
         lbValUnit.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,7 +186,6 @@ public class ProdutoView extends javax.swing.JFrame {
         selectStatus.setMaximumSize(new java.awt.Dimension(64, 24));
         selectStatus.setMinimumSize(new java.awt.Dimension(64, 24));
         selectStatus.setPreferredSize(new java.awt.Dimension(64, 24));
-        selectStatus.addActionListener(this::selectStatusActionPerformed);
 
         txtObservacao.setColumns(20);
         txtObservacao.setRows(5);
@@ -203,6 +199,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnAdicionar.setForeground(new java.awt.Color(255, 255, 0));
         btnAdicionar.setText("Adicionar");
         btnAdicionar.setBorderPainted(false);
+        btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdicionar.setFocusable(false);
         btnAdicionar.addActionListener(this::btnAdicionarActionPerformed);
 
@@ -210,6 +207,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnEditar.setForeground(new java.awt.Color(255, 255, 0));
         btnEditar.setText("Editar");
         btnEditar.setBorderPainted(false);
+        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditar.setFocusPainted(false);
         btnEditar.addActionListener(this::btnEditarActionPerformed);
 
@@ -267,6 +265,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnAdcInsumos.setForeground(new java.awt.Color(255, 255, 0));
         btnAdcInsumos.setText("+");
         btnAdcInsumos.setBorderPainted(false);
+        btnAdcInsumos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdcInsumos.setFocusPainted(false);
         btnAdcInsumos.addActionListener(this::btnAdcInsumosActionPerformed);
 
@@ -501,18 +500,6 @@ public class ProdutoView extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
-
-    private void txtProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProdutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProdutoActionPerformed
-
-    private void txtValorUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorUnitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtValorUnitActionPerformed
-
-    private void selectStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_selectStatusActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt)
     {
