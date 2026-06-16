@@ -598,27 +598,59 @@ public class ProdutoView extends javax.swing.JFrame {
     private void btnAdcInsumosActionPerformed(java.awt.event.ActionEvent evt)
     {
         // TODO add your handling code here:
-        JPanel linha = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        JPanel linha = new JPanel(new GridBagLayout());
         linha.setBackground(new java.awt.Color(28, 28, 30));
 
-        JComboBox<ProdutoSelectResponse> comboInsumo = new JComboBox<>();
+        //obj de config que diz para o GridBagLayout() onde e cada componente deve ficar na "grade"
+        GridBagConstraints gbc = new GridBagConstraints();
+        //espacamento externo
+        gbc.insets = new Insets(5, 6, 0, 6);
+        //alinhamento a esquerda do painel
+        gbc.anchor = GridBagConstraints.WEST;
+        //preenche toda a largura horizontal do painel
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        JLabel lbI = new JLabel("Insumo:");
+        lbI.setForeground(java.awt.Color.WHITE);
+        //gridx = coluna, gridy = linha, weightx = quanto espaco horizontal(0 nao estica, 1.0 estica para preencher)
+        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0;
+        linha.add(lbI, gbc);
+
+        JComboBox<ProdutoSelectResponse> comboInsumo = new JComboBox<>();
+        gbc.gridx = 1; gbc.weightx = 1.0;
         produtoController.listarInsumos()
             .forEach(p ->
                     comboInsumo.addItem(produtoController.selectProduto(p.id(),p.nome()))
             );
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        linha.add(comboInsumo, gbc);
+
+
+        JLabel lbQ = new JLabel("Qtde:");
+        lbQ.setForeground(java.awt.Color.WHITE);
+        gbc.gridx = 2; gbc.weightx = 0;
+        linha.add(lbQ, gbc);
 
         JTextField campoQtde = new JTextField(8);
+        gbc.gridx = 3; gbc.weightx = 1.0;
+        linha.add(campoQtde, gbc);
 
-        JLabel lbI = new JLabel("Insumo:");
-        JLabel lbQ = new JLabel("Qtde:");
-        lbI.setForeground(java.awt.Color.WHITE);
-        lbQ.setForeground(java.awt.Color.WHITE);
+        JButton btnRemove = new JButton("-");
+        //estilizacao copiada direto do que foi carregado no init do netBeans
+        btnRemove.setBackground(new java.awt.Color(51, 51, 51));
+        btnRemove.setForeground(new java.awt.Color(255, 255, 0));
+        btnRemove.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnRemove.setBorderPainted(false);
+        btnRemove.setFocusable(false);
 
-        linha.add(lbI);
-        linha.add(comboInsumo);
-        linha.add(lbQ);
-        linha.add(campoQtde);
+        btnRemove.addActionListener(e->{
+            addMaisInsumos.remove(linha);
+            linhasInsumo.removeIf(obj -> obj[0] == comboInsumo);
+            addMaisInsumos.revalidate();
+            addMaisInsumos.repaint();
+        });
+        gbc.gridx = 4; gbc.weightx = 0;
+        linha.add(btnRemove);
 
         linhasInsumo.add(new Object[]{comboInsumo, campoQtde});
 
