@@ -110,7 +110,7 @@ public class Main {
                 new EstoquesControllerImpl(produtoService, conversoesService, estoqueService, movimentacoesEstoqueService, usuarioService);
 
         view.clicarProdutoAction(e -> {
-            ProdutoView produtoView = new ProdutoView(produtoService, insumosProdutoService, produtosController);
+            ProdutoView produtoView = new ProdutoView(produtosController);
             produtoView.setVisible(true);
         });
         view.clicarEstoqueAction(e -> {
