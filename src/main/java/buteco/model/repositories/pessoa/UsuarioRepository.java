@@ -30,7 +30,7 @@ public class UsuarioRepository {
     }
 
     public java.util.List<UsuarioEntity> findAll() {
-        return em.createQuery("Select u From Usuario u", UsuarioEntity.class).getResultList();
+        return em.createQuery("Select u From UsuarioEntity u", UsuarioEntity.class).getResultList();
     }
 
     public void update(UsuarioEntity usuarioEntity) {

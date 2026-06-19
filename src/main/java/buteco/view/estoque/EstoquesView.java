@@ -4,17 +4,11 @@
  */
 package buteco.view.estoque;
 
-import buteco.controller.estoque.EstoquesController;
-import buteco.model.entity.conversao.ConversoesEntity;
-import buteco.model.entity.pessoa.UsuarioEntity;
-import buteco.model.enums.EStatus;
-import buteco.model.entity.estoque.EstoqueEntity;
-import buteco.model.entity.estoque.MovimentacoesEstoqueEntity;
-import buteco.model.entity.produto.ProdutoEntity;
+import buteco.controller.estoque.EstoquesControllerInterface;
+import buteco.controller.estoque.dto.ConversaoResponse;
+import buteco.controller.estoque.dto.ProdutoSelectResponse;
 
 import javax.swing.*;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,22 +17,20 @@ import java.util.List;
  * @author henrique
  */
 public class EstoquesView extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EstoquesView.class.getName());
 
-    private final EstoquesController estoquesController;
-    private List<ProdutoEntity> listaProdutoEntities;
-    private List<ConversoesEntity> listaConversoes;
-    private final UsuarioEntity usuarioEntityLogado;
-    private List<ProdutoEntity> produtosExibidos = new ArrayList<>();
+    private final EstoquesControllerInterface estoquesController;
+    private List<ProdutoSelectResponse> listaProdutos;
+    private List<ConversaoResponse> listaConversoes;
+    private final Long idUsuarioLogado;
+    private List<ProdutoSelectResponse> produtosExibidos = new ArrayList<>();
 
 
     /**
      * Creates new form EstoquesView
      */
-    public EstoquesView(EstoquesController estoquesController, UsuarioEntity usuarioEntityLogado) {
+    public EstoquesView(EstoquesControllerInterface estoquesController,Long idUsuarioLogado) {
         this.estoquesController = estoquesController;
-        this.usuarioEntityLogado = usuarioEntityLogado;
+        this.idUsuarioLogado = idUsuarioLogado;
 
         initComponents();
 
@@ -63,26 +55,19 @@ public class EstoquesView extends javax.swing.JFrame {
         carregarTabelaMovimentacoes();
     }
 
-
+    //---------------------------------------------------------------------------------------------------------------------------------------------
     //metodos para carregar o DADOS do DB
     public void carregarProdutos(){
-        listaProdutoEntities = estoquesController.getProdutos();
+        listaProdutos = estoquesController.getProdutos();
         selectProduto.removeAllItems();
         produtosExibidos.clear();
 
-        for(ProdutoEntity p : listaProdutoEntities) {
-            if (!p.getStatus().equals(EStatus.ATIVO)) {
+        for(ProdutoSelectResponse p : listaProdutos) {
+            if (p.categoria().equals("SERVICO")) {
                 continue;
             }
-
-            // ignora serviços
-            if (p.getCategoria().getCategoria().equals("SERVICO")) {
-                continue;
-            }
-
-            String texto = p.getNome() + " - " + p.getCategoria().getCategoria();
+            String texto = p.nome() + " - " + p.categoria();
             selectProduto.addItem(texto);
-
             produtosExibidos.add(p);
         }
     }
@@ -92,23 +77,23 @@ public class EstoquesView extends javax.swing.JFrame {
         selectUnidade.removeAllItems();
         selectUnEntrada.removeAllItems();
 
-        for(ConversoesEntity c : listaConversoes) {
-            selectUnidade.addItem(c.getNomenclatura());
-            selectUnEntrada.addItem(c.getNomenclatura());
+        for(ConversaoResponse c : listaConversoes) {
+            selectUnidade.addItem(c.nomenclatura());
+            selectUnEntrada.addItem(c.nomenclatura());
         }
     }
 
     public void carregarTabelaEstoque(){
         var listaEstoques = estoquesController.getEstoque();
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbEstoque.getModel();
-        model.setRowCount(0); //comeca do primeiro e zera se tiver outra informacao perdida
-        for (EstoqueEntity e : listaEstoques) {
+        model.setRowCount(0);
+        for (var e : listaEstoques) {
             model.addRow(new Object[]{
-                e.getId(),
-                e.getProduto() != null ? e.getProduto().getNome() : "-",
-                e.getQntdEstoque(),
-                e.getConversoes() != null ? e.getConversoes().getNomenclatura() : "-",
-                e.getLocal() != null ? e.getLocal() : "-"
+                    e.id(),
+                    e.nomeProduto(),
+                    e.quantidade(),
+                    e.unidade(),
+                    e.local()
             });
         }
     }
@@ -117,20 +102,15 @@ public class EstoquesView extends javax.swing.JFrame {
         var listaMovimentacoes = estoquesController.getMovimentacoes();
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbMovimentacoes.getModel();
         model.setRowCount(0);
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.of("UTC"));
-        for (MovimentacoesEstoqueEntity m : listaMovimentacoes) {
-            if (m.getProduto() == null) continue;
-            String data = m.getDataMovimentacao() != null ?
-                    fmt.format(m.getDataMovimentacao()) : "-";
-
+        for (var m : listaMovimentacoes) {
             model.addRow(new Object[]{
-                    m.getId(),
-                    m.getProduto().getNome(),
-                    m.getConversoes().getNomenclatura(),
-                    m.getQuantidade(),
-                    data,
-                    m.getUsuario() != null ? m.getUsuario().getNome() : "-",
-                    m.getTipo()
+                    m.id(),
+                    m.nomeProduto(),
+                    m.unidade(),
+                    m.quantidade(),
+                    m.data(),
+                    m.usuario(),
+                    m.tipo()
             });
         }
     }
@@ -144,8 +124,8 @@ public class EstoquesView extends javax.swing.JFrame {
         selectUnidade.setSelectedIndex(0);
         selectUnEntrada.setSelectedIndex(0);
     }
-
-
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    // Componentes do GUI Builder - Netbeans
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -503,6 +483,8 @@ public class EstoquesView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    // Metodos de Actions
     private void btnEntradaAction(java.awt.event.ActionEvent evt) {
         try {
             int indexProduto = selectProduto.getSelectedIndex();
@@ -513,8 +495,8 @@ public class EstoquesView extends javax.swing.JFrame {
                 return;
             }
 
-            ProdutoEntity produtoEntity = produtosExibidos.get(indexProduto);
-            ConversoesEntity unidadeEntrada = listaConversoes.get(indexUnEntrada);
+            ProdutoSelectResponse produto = produtosExibidos.get(indexProduto);
+            ConversaoResponse unidadeEntrada = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if(qtdeStr.isEmpty()) {
@@ -524,8 +506,8 @@ public class EstoquesView extends javax.swing.JFrame {
             double qtde = Double.parseDouble(qtdeStr);
 
             String fatorStr = txtConversao.getText().trim();
-            boolean mesmaUnidade = unidadeEntrada.getId().equals(
-                    listaConversoes.get(selectUnidade.getSelectedIndex()).getId()
+            boolean mesmaUnidade = unidadeEntrada.id().equals(
+                    listaConversoes.get(selectUnidade.getSelectedIndex()).id()
             );
             double fator;
             if (mesmaUnidade) {
@@ -546,7 +528,7 @@ public class EstoquesView extends javax.swing.JFrame {
 
             String observacao = txtAreaObservacao.getText().trim();
 
-            estoquesController.cadastrarEntrada(produtoEntity, qtde, unidadeEntrada.getId(), fator, local, usuarioEntityLogado, observacao);
+            estoquesController.cadastrarEntrada(produto.id(), produto.categoria(), qtde, unidadeEntrada.id(), fator, local, idUsuarioLogado, observacao);
 
             JOptionPane.showMessageDialog(this, "Entrada cadastrada com sucesso!");
 
@@ -570,8 +552,8 @@ public class EstoquesView extends javax.swing.JFrame {
                 return;
             }
 
-            ProdutoEntity produtoEntity = produtosExibidos.get(indexProduto);
-            ConversoesEntity unidadeSaida = listaConversoes.get(indexUnEntrada);
+            ProdutoSelectResponse produto = produtosExibidos.get(indexProduto);
+            ConversaoResponse unidadeSaida = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if (qtdeStr.isEmpty()) {
@@ -580,8 +562,8 @@ public class EstoquesView extends javax.swing.JFrame {
             }
             double qtde = Double.parseDouble(qtdeStr);
 
-            boolean mesmaUnidade = unidadeSaida.getId().equals(
-                    listaConversoes.get(selectUnidade.getSelectedIndex()).getId()
+            boolean mesmaUnidade = unidadeSaida.id().equals(
+                    listaConversoes.get(selectUnidade.getSelectedIndex()).id()
             );
             double fator;
             if (mesmaUnidade) {
@@ -597,8 +579,7 @@ public class EstoquesView extends javax.swing.JFrame {
 
             String observacao = txtAreaObservacao.getText().trim();
 
-            estoquesController.cadastarSaida(produtoEntity, qtde, unidadeSaida.getId(), fator, usuarioEntityLogado, observacao);
-
+            estoquesController.cadastrarSaida(produto.id(), produto.categoria(), qtde, unidadeSaida.id(), fator, idUsuarioLogado, observacao);
             JOptionPane.showMessageDialog(this, "Saída cadastrada com sucesso!");
             carregarTabelaEstoque();
             carregarTabelaMovimentacoes();
@@ -640,52 +621,6 @@ public class EstoquesView extends javax.swing.JFrame {
 
     private Long idMovimentacaoSelecionada = null;
 
-    private void preencherFormularioComMovimentacao() {
-        int linha = tbMovimentacoes.getSelectedRow();
-        if(linha < 0) return;
-
-        idMovimentacaoSelecionada = (Long) tbMovimentacoes.getValueAt(linha, 0);
-        String nomeProduto = (String) tbMovimentacoes.getValueAt(linha, 1);
-        String nomenclatura = (String) tbMovimentacoes.getValueAt(linha, 2);
-        double quantidade = (double) tbMovimentacoes.getValueAt(linha, 3);
-
-        //preenche o produto
-        for (int i = 0; i < produtosExibidos.size(); i++) {
-            if (produtosExibidos.get(i).getNome().equals(nomeProduto)) {
-                selectProduto.setSelectedIndex(i);
-                break;
-            }
-        }
-
-        //preenche unidade do estoque buscando pelo produto selecionado
-        ProdutoEntity produtoEntity = listaProdutoEntities.stream()
-                .filter(p -> p.getNome().equals(nomeProduto))
-                .findFirst().orElse(null);
-
-        if (produtoEntity != null) {
-            String unidadeEstoque = estoquesController.getUnidadeEstoquePorProduto(produtoEntity.getId());
-            for (int i = 0; i < listaConversoes.size(); i++) {
-                if (listaConversoes.get(i).getNomenclatura().equals(unidadeEstoque)) {
-                    selectUnidade.setSelectedIndex(i);
-                    break;
-                }
-            }
-        }
-
-        //preenche unidade entrada
-        for (int i = 0; i < listaConversoes.size(); i++) {
-            if (listaConversoes.get(i).getNomenclatura().equals(nomenclatura)){
-                selectUnEntrada.setSelectedIndex(i);
-                break;
-            }
-        }
-
-        txtQuantidade.setText(String.valueOf(quantidade));
-
-        String observacao = estoquesController.getObservacaoMovimentacao(idMovimentacaoSelecionada);
-        txtAreaObservacao.setText(observacao != null ? observacao : "");
-    }
-
     private void btnEditarAction (java.awt.event.ActionEvent evt) {
         if (idMovimentacaoSelecionada == null) {
             JOptionPane.showMessageDialog(this, "Selecione uma movimentacao para editar!");
@@ -696,8 +631,8 @@ public class EstoquesView extends javax.swing.JFrame {
             int indexProduto = selectProduto.getSelectedIndex();
             int indexUnEntrada = selectUnEntrada.getSelectedIndex();
 
-            ProdutoEntity produtoEntity = produtosExibidos.get(indexProduto);
-            ConversoesEntity unidade = listaConversoes.get(indexUnEntrada);
+            ProdutoSelectResponse produto = produtosExibidos.get(indexProduto);
+            ConversaoResponse unidade = listaConversoes.get(indexUnEntrada);
 
             String qtdeStr = txtQuantidade.getText().trim();
             if (qtdeStr.isEmpty()) {
@@ -706,8 +641,8 @@ public class EstoquesView extends javax.swing.JFrame {
             }
             double qtde = Double.parseDouble(qtdeStr);
 
-            boolean mesmaUnidade = unidade.getId().equals(
-                    listaConversoes.get(selectUnidade.getSelectedIndex()).getId()
+            boolean mesmaUnidade = unidade.id().equals(
+                    listaConversoes.get(selectUnidade.getSelectedIndex()).id()
             );
             double fator;
             if(mesmaUnidade) {
@@ -723,8 +658,7 @@ public class EstoquesView extends javax.swing.JFrame {
 
             String observacao = txtAreaObservacao.getText().trim();
 
-            estoquesController.editarMovimentacao(idMovimentacaoSelecionada, produtoEntity, qtde, unidade.getId(), fator, observacao);
-
+            estoquesController.editarMovimentacao(idMovimentacaoSelecionada, produto.id(), qtde, unidade.id(), fator, observacao);
             JOptionPane.showMessageDialog(this, "Movimentacao editada com sucesso!");
             idMovimentacaoSelecionada = null;
             carregarTabelaEstoque();
@@ -738,40 +672,70 @@ public class EstoquesView extends javax.swing.JFrame {
         }
     }
 
+    private void preencherFormularioComMovimentacao() {
+        int linha = tbMovimentacoes.getSelectedRow();
+        if(linha < 0) return;
+
+        idMovimentacaoSelecionada = (Long) tbMovimentacoes.getValueAt(linha, 0);
+        String nomeProduto = (String) tbMovimentacoes.getValueAt(linha, 1);
+        String nomenclatura = (String) tbMovimentacoes.getValueAt(linha, 2);
+        double quantidade = (double) tbMovimentacoes.getValueAt(linha, 3);
+
+        //preenche o produto
+        for (int i = 0; i < produtosExibidos.size(); i++) {
+            if (produtosExibidos.get(i).nome().equals(nomeProduto)) {
+                selectProduto.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        //preenche unidade do estoque buscando pelo produto selecionado
+        ProdutoSelectResponse produtoDTO = listaProdutos.stream()
+                .filter(p -> p.nome().equals(nomeProduto))
+                .findFirst().orElse(null);
+
+        if (produtoDTO != null) {
+            String unidadeEstoque = estoquesController.getUnidadeEstoquePorProduto(produtoDTO.id());
+            for (int i = 0; i < listaConversoes.size(); i++) {
+                if (listaConversoes.get(i).nomenclatura().equals(unidadeEstoque)) {
+                    selectUnidade.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+
+        //preenche unidade entrada
+        for (int i = 0; i < listaConversoes.size(); i++) {
+            if (listaConversoes.get(i).nomenclatura().equals(nomenclatura)){
+                selectUnEntrada.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        txtQuantidade.setText(String.valueOf(quantidade));
+
+        String observacao = estoquesController.getObservacaoMovimentacao(idMovimentacaoSelecionada);
+        txtAreaObservacao.setText(observacao != null ? observacao : "");
+    }
+
+
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
+        this.dispose(); //fecha janela
     }//GEN-LAST:event_btnVoltarActionPerformed
-
-    private void txtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtQuantidadeActionPerformed
-
-    private void txtLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLocalActionPerformed
-
-    private void txtConversaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConversaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtConversaoActionPerformed
-
-    private void selectUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectUnidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_selectUnidadeActionPerformed
 
     private void selectProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectProdutoActionPerformed
         int index = selectProduto.getSelectedIndex();
 
-        if (index < 0 || listaProdutoEntities == null || listaConversoes == null) {
+        if (index < 0 || listaProdutos == null || listaConversoes == null) {
             return;
         }
 
-        ProdutoEntity produtoEntity = produtosExibidos.get(index);
-        String unidadeEstoque = estoquesController.getUnidadeEstoquePorProduto(produtoEntity.getId());
+        ProdutoSelectResponse produto = produtosExibidos.get(index);
+        String unidadeEstoque = estoquesController.getUnidadeEstoquePorProduto(produto.id());
 
         if (unidadeEstoque != null) {
             for (int i = 0; i < listaConversoes.size(); i++) {
-                if (listaConversoes.get(i).getNomenclatura().equals(unidadeEstoque)) {
+                if (listaConversoes.get(i).nomenclatura().equals(unidadeEstoque)) {
                     selectUnidade.setSelectedIndex(i);
                     break;
                 }
@@ -779,30 +743,27 @@ public class EstoquesView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_selectProdutoActionPerformed
 
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    //sao usados nos metodos de Action
+
+    private void txtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeActionPerformed
+    }//GEN-LAST:event_txtQuantidadeActionPerformed
+
+    private void txtLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocalActionPerformed
+    }//GEN-LAST:event_txtLocalActionPerformed
+
+    private void txtConversaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConversaoActionPerformed
+    }//GEN-LAST:event_txtConversaoActionPerformed
+
+    private void selectUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectUnidadeActionPerformed
+
+    }//GEN-LAST:event_selectUnidadeActionPerformed
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-//            logger.log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(() -> new EstoquesView().setVisible(true));
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;

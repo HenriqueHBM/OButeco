@@ -1,7 +1,8 @@
 package buteco;
 
 import buteco.config.FlyWayconfig;
-import buteco.controller.estoque.EstoquesController;
+import buteco.controller.estoque.EstoquesControllerInterface;
+import buteco.controller.estoque.impl.EstoquesControllerImpl;
 import buteco.controller.produtos.ProdutosControllerInterface;
 import buteco.controller.produtos.impl.ProdutosControllerImpl;
 import buteco.model.entity.pessoa.UsuarioEntity;
@@ -17,7 +18,6 @@ import buteco.model.repositories.produto.InsumosProdutoRepository;
 import buteco.model.repositories.produto.ProdutoRepository;
 import buteco.model.service.*;
 import buteco.model.service.entradas.ConversoesService;
-import buteco.model.service.entradas.ErroEntrada;
 import buteco.view.*;
 import buteco.view.components.Cards;
 import buteco.view.components.Colors;
@@ -64,12 +64,11 @@ public class Main {
         CargoRepository cargoRepository = new CargoRepository(em);
         //
 
-        ErroEntrada errorEntrada = new ErroEntrada(sc);
         UsuarioEntity usuarioEntityLogado = new UsuarioEntity();
 
         //Services
-        EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository, errorEntrada);
-        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository, estoqueService, conversoesRepository, produtoRepository, errorEntrada, usuarioRepository);
+        EstoqueService estoqueService = new EstoqueService(estoqueRepository, produtoRepository, conversoesRepository);
+        MovimentacoesEstoqueService movimentacoesEstoqueService = new MovimentacoesEstoqueService(movimentacoesEstoqueRepository, estoqueRepository, estoqueService, conversoesRepository, produtoRepository, usuarioRepository);
         CategoriaService categoriaService = new CategoriaService(categoriaRepository);
         GrupoService grupoService = new GrupoService(grupoRepository);
         ProdutoService produtoService = new ProdutoService(produtoRepository);
@@ -82,7 +81,6 @@ public class Main {
 //        ProdutosController produtosController = new ProdutosController(sc, errorEntrada, produtoRepository, categoriaService, grupoService, produtoService, insumosProdutoService, estoqueService);
 //        EstoqueController estoqueController = new EstoqueController(sc, errorEntrada, estoqueRepository, produtoRepository, estoqueService, movimentacoesEstoqueService, conversoesRepository, produtoService);
 //        UsuariosController usuariosController = new UsuariosController(sc, errorEntrada, cargoRepository, usuarioRepository, usuarioService, usuarioLogado);
-        EstoquesController estoquesController = new EstoquesController(produtoService, conversoesService, estoqueService, movimentacoesEstoqueService);
 
 //        LoginView loginView = new LoginView(usuarioService);
 //
@@ -108,28 +106,17 @@ public class Main {
 
         ProdutosControllerInterface produtosController =
                 new ProdutosControllerImpl(produtoService, categoriaService, grupoService, insumosProdutoService);
+        EstoquesControllerInterface estoquesController =
+                new EstoquesControllerImpl(produtoService, conversoesService, estoqueService, movimentacoesEstoqueService, usuarioService);
+
         view.clicarProdutoAction(e -> {
             ProdutoView produtoView = new ProdutoView(produtoService, insumosProdutoService, produtosController);
             produtoView.setVisible(true);
         });
-//        view.clicarEstoqueAction(e -> {
-//            EstoquesView estoquesView = new EstoquesView(estoquesController, usuarioEntityFinal);
-//            estoquesView.setVisible(true);
-//        });
-
-
-//        do{
-//            // Funcao para tentar tratar caso usuario passe um caracter
-//            entradaMenu = errorEntrada.trataEntradaInt("[1] - PRODUTOS; [2] - ESTOQUE; [3] - USUARIOS;  [0] - SAIR");
-//            switch (entradaMenu){
-//                case 1 -> produtosController.index();
-//                case 2 -> estoqueController.index();
-//                case 3 -> usuariosController.index();
-//                case 0 -> System.out.println("ATE MAIS!!!");
-//                default -> System.out.println("VALOR INVALIDO!!!");
-//
-//            }
-//        }while(entradaMenu != 0 );
+        view.clicarEstoqueAction(e -> {
+            EstoquesView estoquesView = new EstoquesView(estoquesController, 1L);
+            estoquesView.setVisible(true);
+        });
 
         view.clicarSair(e -> {
             em.close();
@@ -137,50 +124,6 @@ public class Main {
             System.exit(0);
         });
 
-        //criando a tabela e um valor nela já
-//        Grupo grupo = new Grupo();
-//        grupo.setGrupo("Comida");
-//        grupoRepository.create(grupo);
-//
-//        //criando uma categoria nova
-//        Categoria new_cat = new Categoria();
-//        new_cat.setCategoria("COM_INSUMO");
-//        categoriaRepository.create(new_cat);
-
-        //buscando as info no banco
-//        var cat = categoriaRepository.findById(1L);
-//        var grupo_tb = grupoRepository.findById(1L);
-//
-//        //setando um ingrediente
-//        Produto p2 = new Produto();
-//        p2.setNome("Queijo");
-//        p2.setPrecoVenda(0.50);
-//        p2.setCategoria(cat);
-//        p2.setGrupo(grupo_tb);
-//        produtoRepository.create(p2);
-//
-//        //setando um novo produto
-//        Produto p1 = new Produto();
-//        p1.setNome("Pizza");
-//        p1.setPrecoVenda(45.00);
-//        p1.setCategoria(cat);
-//        p1.setGrupo(grupo_tb);
-//        produtoRepository.create(p1);
-//
-//        //relacao de produto e insumos
-//        InsumosProduto rel = new InsumosProduto();
-//        rel.setProduto(p1);
-//        rel.setInsumo(p2);
-//        rel.setQtde(200);
-//
-//        insumosProdutoRepository.create(rel);
-//
-//        //pegando a relacao do produto(pizza) e add um ingrediente na lista
-//        p1.getInsumos().add(rel);
-////
-//        //p
-//        System.out.println(p1);;
-//
 
     }
 }

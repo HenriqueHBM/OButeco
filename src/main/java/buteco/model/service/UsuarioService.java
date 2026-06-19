@@ -28,4 +28,8 @@ public class UsuarioService {
         UsuarioEntity u = new UsuarioEntity(null, nome, login, senha, cargoEntity);
         usuarioRepository.create(u);
     }
+
+    public UsuarioEntity findById(Long id) {
+        return usuarioRepository.findById(id);
+    }
 }
