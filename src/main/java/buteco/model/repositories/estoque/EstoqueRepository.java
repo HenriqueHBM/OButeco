@@ -17,7 +17,7 @@ public class EstoqueRepository {
     }
 
     public EstoqueEntity findByProdutoId(Long idProduto) {
-        var resultado = em.createQuery("select e from Estoque e where e.produto.id = :idProduto", EstoqueEntity.class)
+        var resultado = em.createQuery("select e from EstoqueEntity e where e.produtoEntity.id = :idProduto", EstoqueEntity.class)
                 .setParameter("idProduto", idProduto)
                 .getResultList();
 
@@ -25,7 +25,7 @@ public class EstoqueRepository {
     }//getResultList no lugar de getSingleResult para poder aparecer a mensagem certa de erro na entrada
 
         public List<EstoqueEntity> findAll() {
-            return em.createQuery("select e from Estoque e order by e.id asc", EstoqueEntity.class).getResultList();
+            return em.createQuery("select e from EstoqueEntity e order by e.id asc", EstoqueEntity.class).getResultList();
         }
 
     public void create(EstoqueEntity estoqueEntity){

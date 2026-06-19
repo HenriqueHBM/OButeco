@@ -16,7 +16,7 @@ public class ConversoesRepository {
     }
 
     public List<ConversoesEntity> findAllConversoes() {
-        return em.createQuery("select c from Conversoes c", ConversoesEntity.class).getResultList();
+        return em.createQuery("select c from ConversoesEntity c", ConversoesEntity.class).getResultList();
     }
 
     public void create(ConversoesEntity conversoesEntity){

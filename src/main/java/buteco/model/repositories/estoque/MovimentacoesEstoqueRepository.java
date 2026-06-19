@@ -17,7 +17,7 @@ public class MovimentacoesEstoqueRepository {
     }
 
     public List<MovimentacoesEstoqueEntity> findAll() {
-        return em.createQuery("select m from MovimentacoesEstoque m order by m.id asc", MovimentacoesEstoqueEntity.class).getResultList();
+        return em.createQuery("select m from MovimentacoesEstoqueEntity m order by m.id asc", MovimentacoesEstoqueEntity.class).getResultList();
     }
 
     public void create(MovimentacoesEstoqueEntity movimentacoesEstoqueEntity){

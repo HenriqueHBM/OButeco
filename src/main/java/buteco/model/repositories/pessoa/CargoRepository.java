@@ -21,7 +21,7 @@ public class CargoRepository {
     }
 
     public List<CargoEntity> findAll(){
-        return em.createQuery("Select c From Cargo c", CargoEntity.class)
+        return em.createQuery("Select c From CargoEntity c", CargoEntity.class)
                 .getResultList();
     }
 }

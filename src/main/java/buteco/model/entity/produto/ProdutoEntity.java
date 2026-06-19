@@ -35,8 +35,7 @@ public class ProdutoEntity {
     private GrupoEntity grupoEntity;
 
     //um prod tem varios insumos | mapped by essa relacao nao e a dona, quem manda é o produto | cascade tudo que fizer com o produto, faco com os insumos
-    @OneToMany(cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "produtoEntity", cascade = CascadeType.ALL)
     private List<InsumosProdutoEntity> insumos = new ArrayList<>();
 
 
@@ -54,8 +53,7 @@ public class ProdutoEntity {
     @Column(name = "observacao", nullable = true)
     private String observacao;
 
-    @OneToMany(cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "produtoEntity", cascade = CascadeType.ALL)
     private List<EstoqueEntity> estoqueEntities = new ArrayList<>();
 
 //    @ManyToMany
