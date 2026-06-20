@@ -30,19 +30,19 @@
         <!-- Mapeamento das entidades -->
 
         <!-- Produto -->
-        <mapping class="buteco.model.produto.Produto" />
-        <mapping class="buteco.model.produto.Categoria" />
-        <mapping class="buteco.model.conversao.Conversoes" />
-        <mapping class="buteco.model.produto.InsumosProduto" />
-        <mapping class="buteco.model.produto.Grupo" />
+        <mapping class="buteco.model.entity.produto.ProdutoEntity" />
+        <mapping class="buteco.model.entity.produto.CategoriaEntity" />
+        <mapping class="buteco.model.entity.conversao.ConversoesEntity" />
+        <mapping class="buteco.model.entity.produto.InsumosProdutoEntity" />
+        <mapping class="buteco.model.entity.produto.GrupoEntity" />
 
         <!-- Estoque -->
-        <mapping class="buteco.model.estoque.Estoque" />
-        <mapping class="buteco.model.estoque.MovimentacoesEstoque" />
+        <mapping class="buteco.model.entity.estoque.EstoqueEntity" />
+        <mapping class="buteco.model.entity.estoque.MovimentacoesEstoqueEntity" />
 
         <!-- Usuario -->
-        <mapping class="buteco.model.pessoa.Usuario" />
-        <mapping class="buteco.model.pessoa.Cargo" />
+        <mapping class="buteco.model.entity.pessoa.UsuarioEntity" />
+        <mapping class="buteco.model.entity.pessoa.CargoEntity" />
 
         <!-- Fim Produto -->
     </session-factory>
