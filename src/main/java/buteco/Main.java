@@ -5,6 +5,8 @@ import buteco.controller.estoque.EstoquesControllerInterface;
 import buteco.controller.estoque.impl.EstoquesControllerImpl;
 import buteco.controller.produtos.ProdutosControllerInterface;
 import buteco.controller.produtos.impl.ProdutosControllerImpl;
+import buteco.controller.usuarios.UsuarioControllerInterface;
+import buteco.controller.usuarios.impl.UsuariosControllerImpl;
 import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.repositories.*;
 import buteco.model.repositories.estoque.ConversoesRepository;
@@ -23,6 +25,7 @@ import buteco.view.components.Cards;
 import buteco.view.components.Colors;
 import buteco.view.estoque.EstoquesView;
 import buteco.view.pessoa.LoginView;
+import buteco.view.pessoa.UsuarioView;
 import buteco.view.produto.ProdutoView;
 import jakarta.persistence.EntityManager;
 
@@ -75,6 +78,7 @@ public class Main {
         InsumosProdutoService insumosProdutoService = new InsumosProdutoService(insumosProdutoRepository);
         UsuarioService usuarioService = new UsuarioService(usuarioRepository);
         ConversoesService conversoesService = new ConversoesService(conversoesRepository);
+        CargoService cargoService = new CargoService(cargoRepository);
         //
 
 ////      Declarando os controllers
@@ -99,11 +103,15 @@ public class Main {
         Cards cards = new Cards(colors);
         MainView view = new MainView(colors, cards);
 
-//        view.clicarUsuarioAction(e -> {
-//            UsuarioView usuarioView = new UsuarioView(usuarioService, cargoRepository, usuarioRepository);
-//            usuarioView.setVisible(true);
-//        });
+        UsuariosControllerImpl controller = new UsuariosControllerImpl(usuarioService, cargoService);
 
+        view.clicarUsuarioAction(e -> {
+            UsuarioView usuarioView = new UsuarioView(controller);
+            usuarioView.setVisible(true);
+        });
+
+        UsuariosControllerImpl usuariosController =
+                new UsuariosControllerImpl(usuarioService, cargoService);
         ProdutosControllerInterface produtosController =
                 new ProdutosControllerImpl(produtoService, categoriaService, grupoService, insumosProdutoService);
         EstoquesControllerInterface estoquesController =

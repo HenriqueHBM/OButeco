@@ -4,6 +4,8 @@
  */
 package buteco.view.pessoa;
 
+import buteco.controller.usuarios.dto.UsuarioResponse;
+import buteco.controller.usuarios.impl.UsuariosControllerImpl;
 import buteco.model.entity.pessoa.CargoEntity;
 import buteco.model.entity.pessoa.UsuarioEntity;
 import buteco.model.repositories.pessoa.CargoRepository;
@@ -19,18 +21,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class UsuarioView extends JFrame {
 
-    private UsuarioService usuarioService;
-    private CargoRepository cargoRepository;
-    private UsuarioRepository usuarioRepository;
-
     /**
      * Creates new form CadastroUsuario
      */
-    public UsuarioView(UsuarioService usuarioService, CargoRepository cargoRepository, UsuarioRepository usuarioRepository) {
-        this.usuarioService = usuarioService;
-        this.cargoRepository = cargoRepository;
-        this.usuarioRepository = usuarioRepository;
 
+    private UsuariosControllerImpl controller;
+
+    public UsuarioView(UsuariosControllerImpl controller) {
+        this.controller = controller;
         initComponents();
 
         carregarTabela();
@@ -45,19 +43,13 @@ public class UsuarioView extends JFrame {
 
     private void cadastrarUsuario() {
 
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        controller.cadastrarUsuario(
 
-        usuarioEntity.setNome(txtNome.getText());
-        usuarioEntity.setLogin(txtLogin.getText());
-        usuarioEntity.setSenha(txtSenha.getText());
-
-        CargoEntity cargoEntity = cargoRepository.findById(
-                Long.parseLong(jTextField4.getText())
+        txtNome.getText(),
+        txtLogin.getText(),
+        txtSenha.getText(),
+        Long.parseLong(jTextField4.getText())
         );
-
-        usuarioEntity.setCargo(cargoEntity);
-
-        usuarioRepository.create(usuarioEntity);
 
         carregarTabela();
 
@@ -69,8 +61,8 @@ public class UsuarioView extends JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
 
-        for (UsuarioEntity u : usuarioRepository.findAll()) {
-            model.addRow(new Object[]{u.getId(), u.getNome(), u.getLogin(), u.getCargo().getNome()});
+        for (UsuarioResponse u : controller.listarUsuarios()) {
+            model.addRow(new Object[]{u.id(), u.nome(), u.login(), u.cargo()});
         }
     }
 
@@ -101,12 +93,13 @@ public class UsuarioView extends JFrame {
         }
 
         Long idUsuario = (Long) jTable2.getValueAt(linha, 0);
-
-        UsuarioEntity usuarioEntity = usuarioRepository.findById(idUsuario);
-        usuarioEntity.setNome(txtNome.getText());
-        usuarioEntity.setLogin(txtLogin.getText());
-        usuarioEntity.setSenha(txtSenha.getText());
-        usuarioRepository.update(usuarioEntity);
+        controller.editarUsuario(
+                idUsuario,
+                txtNome.getText(),
+                txtLogin.getText(),
+                txtSenha.getText(),
+                Long.parseLong(jTextField4.getText())
+        );
 
         carregarTabela();
 
@@ -123,8 +116,8 @@ public class UsuarioView extends JFrame {
         }
 
         Long idUsuario = (Long) jTable2.getValueAt(linha, 0);
-        UsuarioEntity usuarioEntity = usuarioRepository.findById(idUsuario);
-        usuarioRepository.delete(usuarioEntity);
+        controller.deletarUsuario(idUsuario);
+        carregarTabela();
         carregarTabela();
     }
 

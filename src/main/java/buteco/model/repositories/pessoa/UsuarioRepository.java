@@ -16,7 +16,7 @@ public class UsuarioRepository {
 
     public UsuarioEntity findByLogin(String login) {
         return em.createQuery(
-                        "Select u From Usuario u Where u.login = :login",
+                        "Select u From UsuarioEntity u Where u.login = :login",
                         UsuarioEntity.class
                 )
                 .setParameter("login", login)
